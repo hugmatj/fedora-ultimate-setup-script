@@ -157,22 +157,6 @@ EOL
 }
 
 #==================================================================================================
-# setup shfmt
-#
-# *used for vs code shell format extension
-# *binary needed https://github.com/mvdan/sh/releases/download/v2.5.1/shfmt_v2.5.1_linux_amd64
-#==================================================================================================
-function setup_shfmt() {
-    echo "${BOLD}Setting up shfmt...${RESET}"
-    if [[ -f ./shfmt_v2.5.1_linux_amd64 ]]; then
-        chmod +x shfmt_v2.5.1_linux_amd64
-        sudo mv shfmt_v2.5.1_linux_amd64 /usr/local/bin/shfmt
-    else
-        echo "Could not find ${GREEN}shfmt_v2.5.1_linux_amd64${RESET} file, skipping install"
-    fi
-}
-
-#==================================================================================================
 # setup git
 #==================================================================================================
 setup_git() {
@@ -332,7 +316,6 @@ EOL
     *' code '*)
         echo "${BOLD}Setting up Visual Studio Code...${RESET}"
         setup_vscode
-        setup_shfmt
         ;;&
     *' nodejs '*)
         echo "${BOLD}Setting up pnpm...${RESET}"
