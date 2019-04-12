@@ -12,7 +12,7 @@
 #               https://dl.fedoraproject.org/pub/fedora/linux/releases/29/Workstation/x86_64/iso/
 #       AUTHOR: David Else
 #      COMPANY: Else Web Development
-#      VERSION: 2.0
+#      VERSION: 2.01
 #==================================================================================================
 
 # WARNING sudo time outs and you need to enter password a few times
