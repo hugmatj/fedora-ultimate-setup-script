@@ -8,11 +8,11 @@
 #  DESCRIPTION: Post-installation setup script for Fedora 29 Workstation
 #      WEBSITE: https://www.elsewebdevelopment.com/
 #
-# REQUIREMENTS: Fresh copy of Fedora 29 installed on your computer
+# REQUIREMENTS: Fresh copy of Fedora 29/30 installed on your computer
 #               https://dl.fedoraproject.org/pub/fedora/linux/releases/29/Workstation/x86_64/iso/
 #       AUTHOR: David Else
 #      COMPANY: Else Web Development
-#      VERSION: 2.1.0
+#      VERSION: 2.2.0
 #==================================================================================================
 
 # WARNING sudo time outs and you need to enter password a few times
@@ -40,7 +40,7 @@ create_package_list() {
         ['audio']='jack-audio-connection-kit'
         ['backup_sync']='borgbackup syncthing'
         ['languages']='java-1.8.0-openjdk nodejs php php-json'
-        ['webdev']='code chromium chromium-libs-media-freeworld docker docker-compose zeal ShellCheck'
+        ['webdev']='code chromium chromium-libs-media-freeworld docker docker-compose ShellCheck'
         ['firefox extensions']='mozilla-https-everywhere mozilla-privacy-badger mozilla-ublock-origin'
     )
     for package in "${!packages[@]}"; do
