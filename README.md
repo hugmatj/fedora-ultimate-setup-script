@@ -122,3 +122,14 @@ code --list-extensions
 ```
 
 My entire user settings file is stored here, please copy and paste your own.
+
+### FAQ
+
+**Q**: Does this script disable the caps lock key? I've noticed that it works
+during login but after that it stops working all together.
+
+**A**: It makes the caps lock into a delete for touch typing purposes, the line
+that does it is:
+https://github.com/David-Else/fedora-ultimate-setup-script/blob/e160dd36ec708e8eebf92568937024f1cfe6726e/fedora-ultimate-setup-script.sh#L358
+
+You can delete the `'caps:backspace',` to rectify the situation.
