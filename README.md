@@ -130,6 +130,9 @@ during login but after that it stops working all together.
 
 **A**: It makes the caps lock into a delete for touch typing purposes, the line
 that does it is:
-https://github.com/David-Else/fedora-ultimate-setup-script/blob/e160dd36ec708e8eebf92568937024f1cfe6726e/fedora-ultimate-setup-script.sh#L358
+
+```
+ gsettings set org.gnome.desktop.input-sources xkb-options "['caps:backspace', 'terminate:ctrl_alt_bksp']"
+```
 
 You can delete the `'caps:backspace',` to rectify the situation.
