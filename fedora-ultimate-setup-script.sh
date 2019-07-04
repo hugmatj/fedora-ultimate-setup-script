@@ -12,7 +12,7 @@
 #               https://dl.fedoraproject.org/pub/fedora/linux/releases/29/Workstation/x86_64/iso/
 #       AUTHOR: David Else
 #      COMPANY: Else Web Development
-#      VERSION: 2.2.0
+#      VERSION: 2.2.1
 #==================================================================================================
 
 # WARNING sudo time outs and you need to enter password a few times
@@ -83,36 +83,48 @@ setup_vscode() {
     cat >"$HOME/.config/Code/User/settings.json" <<EOL
 // Place your settings in this file to overwrite the default settings
 {
-  // VS Code 1.28.0 general settings
+  // VS Code 1.36 general settings
   "editor.renderWhitespace": "all",
   "editor.dragAndDrop": false,
   "editor.formatOnSave": true,
   "editor.minimap.enabled": false,
   "editor.detectIndentation": false,
-  "editor.showUnused": false,
+  "editor.tabSize": 2,
   "workbench.activityBar.visible": false,
+  "workbench.tree.renderIndentGuides": "none",
+  "workbench.list.keyboardNavigation": "filter",
   "window.menuBarVisibility": "toggle",
-  "window.titleBarStyle": "custom",
-  "zenMode.fullScreen": false,
-  "zenMode.centerLayout": false,
   "zenMode.restore": true,
-  "telemetry.enableTelemetry": false,
+  "zenMode.centerLayout": false,
+  "zenMode.fullScreen": false,
   "git.autofetch": true,
   "git.enableSmartCommit": true,
   "git.decorations.enabled": false,
-  "php.validate.executablePath": "/usr/bin/php",
+  "npm.enableScriptExplorer": true,
+  "explorer.decorations.colors": false,
+  "search.followSymlinks": false,
+  // Privacy
+  "telemetry.enableTelemetry": false,
   "extensions.showRecommendationsOnlyOnDemand": true,
+  // Language settings
+  "php.validate.executablePath": "/usr/bin/php",
+  "javascript.preferences.quoteStyle": "single",
+  "typescript.updateImportsOnFileMove.enabled": "always",
+  "files.exclude": {
+    "**/*.js": { "when": "$(basename).ts" },
+    "**/*.js.map": true
+  },
   "[javascript]": {
-    "editor.tabSize": 2
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[typescript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
   "[json]": {
-    "editor.tabSize": 2
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
-  "[css]": {
-    "editor.tabSize": 2
-  },
-  "[html]": {
-    "editor.tabSize": 2
+  "[jsonc]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
   // Shell Format extension
   "shellformat.flag": "-i 4",
@@ -120,22 +132,15 @@ setup_vscode() {
   "liveServer.settings.donotShowInfoMsg": true,
   "liveServer.settings.ChromeDebuggingAttachment": true,
   "liveServer.settings.AdvanceCustomBrowserCmdLine": "/usr/bin/chromium-browser --remote-debugging-port=9222",
-  // Prettier formatting extension
+  // Prettier extension
   "prettier.singleQuote": true,
   "prettier.trailingComma": "all",
-  // Various
-  "workbench.statusBar.feedback.visible": false,
-  "css.lint.zeroUnits": "warning",
-  "css.lint.important": "warning",
-  "css.lint.universalSelector": "warning",
-  "npm.enableScriptExplorer": true,
-  "explorer.decorations.colors": false,
-  "javascript.updateImportsOnFileMove.enabled": "always",
-  "javascript.preferences.quoteStyle": "single",
-  "html-css-class-completion.enableEmmetSupport": true,
-  "json.format.enable": false,
-  "editor.lineNumbers": "off",
-  "search.followSymlinks": false
+  "prettier.proseWrap": "always",
+  // Spellright extension
+  "spellright.language": ["English (British)"],
+  "spellright.documentTypes": ["markdown", "latex", "plaintext"]
+  // "typescript.referencesCodeLens.enabled": true,
+  // "javascript.referencesCodeLens.enabled": true,
 }
 EOL
 }
