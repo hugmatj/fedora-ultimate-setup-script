@@ -71,11 +71,16 @@ add_repositories() {
 # setup visual studio code
 #==================================================================================================
 setup_vscode() {
-    local code_extensions=(ban.spellright bierner.comment-tagged-templates
-        dbaeumer.vscode-eslint deerawan.vscode-dash esbenp.prettier-vscode
-        foxundermoon.shell-format mkaufman.HTMLHint msjsdiag.debugger-for-chrome
-        ritwickdey.LiveServer timonwong.shellcheck WallabyJs.quokka-vscode
-        Zignd.html-css-class-completion bierner.markdown-preview-github-styles)
+    local code_extensions=(ban.spellright
+        bierner.markdown-preview-github-styles
+        deerawan.vscode-dash
+        esbenp.prettier-vscode
+        foxundermoon.shell-format
+        ms-vsliveshare.vsliveshare
+        msjsdiag.debugger-for-chrome
+        ritwickdey.LiveServer
+        timonwong.shellcheck
+        WallabyJs.quokka-vscode)
     for extension in "${code_extensions[@]}"; do
         code --install-extension "$extension"
     done
