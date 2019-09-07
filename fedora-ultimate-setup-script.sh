@@ -25,7 +25,7 @@ BOLD=$(tput bold)
 RESET=$(tput sgr0)
 
 if [ "$(id -u)" != 0 ]; then
-    echo "You're not root! Use sudo ./test123.sh"
+    echo "You're not root! Use sudo ./fedora-ultimate-setup-script.sh"
     exit 1
 fi
 
