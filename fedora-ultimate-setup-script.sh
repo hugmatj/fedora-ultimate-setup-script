@@ -91,7 +91,7 @@ dnf_packages_to_install+=("${fedora[@]}" "${rpmfusion[@]}" "${WineHQ[@]}" "${vsc
 # end of user settings
 
 #==============================================================================
-# display packages to be installed and ask user for computer's name
+# display user settings and ask user for computer's name
 #==============================================================================
 clear
 echo -e "${BOLD}Packages to install${RESET}"
@@ -246,7 +246,7 @@ echo "${BOLD}Setting up PHP dev environment...${RESET}"
 
 # add composer global executables to the PATH
 cat >>"/home/$USERNAME/.bash_profile" <<EOL
-PATH=$PATH:$HOME/.config/composer/vendor/bin
+PATH=$PATH:/home/$USERNAME/.config/composer/vendor/bin
 EOL
 
 # change PHP settings to mirror the production server
