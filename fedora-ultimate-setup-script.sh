@@ -245,7 +245,7 @@ echo "${BOLD}Setting up PHP dev environment...${RESET}"
 "/home/$USERNAME/.config/composer/vendor/bin/phpcs" --config-show
 
 # add composer global executables to the PATH
-cat >>"/home/$USERNAME/.bash_profile" <<EOL
+cat >>"/home/$USERNAME/.bash_profile" <<'EOL'
 PATH=$PATH:/home/$USERNAME/.config/composer/vendor/bin
 EOL
 
