@@ -16,7 +16,7 @@
 #==============================================================================
 
 #==============================================================================
-# script settings
+# script settings and checks
 #==============================================================================
 set -euo pipefail
 
@@ -25,8 +25,11 @@ BOLD=$(tput bold)
 RESET=$(tput sgr0)
 
 if [ "$(id -u)" != 0 ]; then
-    echo "You're not root! Use sudo ./fedora-ultimate-setup-script.sh"
-    exit 1
+    echo "You're not root! Use sudo ./fedora-ultimate-setup-script.sh" && exit 1
+fi
+
+if [[ $(rpm -E %fedora) -lt 29 ]]; then
+    echo >&2 "You must install at least ${GREEN}Fedora 29${RESET} to use this script" && exit 1
 fi
 
 # start of user settings
