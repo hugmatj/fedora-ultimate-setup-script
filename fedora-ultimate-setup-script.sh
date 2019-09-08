@@ -119,8 +119,8 @@ dnf -y remove "${packages_to_remove[@]}"
 
 echo "${BOLD}Updating Fedora, enabling module streams, and installing packages...${RESET}"
 dnf -y --refresh upgrade
-dnf module enable nodejs:12
-dnf -y install "${fedora[@]}"
+dnf -y module enable nodejs:12
+dnf -y install "${dnf_packages_to_install[@]}"
 
 echo "${BOLD}Installing flathub packages...${RESET}"
 flatpak install -y flathub "${flathub_packages_to_install[@]}"
