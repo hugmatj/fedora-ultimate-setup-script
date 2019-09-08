@@ -94,23 +94,32 @@ dnf_packages_to_install+=("${fedora[@]}" "${rpmfusion[@]}" "${WineHQ[@]}" "${vsc
 # display user settings and ask user for computer's name
 #==============================================================================
 clear
-echo -e "${BOLD}Packages to install${RESET}"
-echo -e "${BOLD}-------------------${RESET}\n"
-echo -e "DNF packages: ${GREEN}${dnf_packages_to_install[*]}${RESET}\n"
-echo -e "Flathub packages: ${GREEN}${flathub_packages_to_install[*]}${RESET}\n"
-echo -e "Composer packages: ${GREEN}${composer_packages_to_install[*]}${RESET}\n"
-echo -e "Visual Studio Code extensions: ${GREEN}${code_extensions[*]}${RESET}\n"
-echo -e "${BOLD}Packages to remove${RESET}"
-echo -e "${BOLD}------------------${RESET}\n"
-echo -e "DNF packages to REMOVE: ${GREEN}${packages_to_remove[*]}${RESET}\n"
-echo -e "${BOLD}Additional settings${RESET}"
-echo -e "${BOLD}-------------------${RESET}\n"
-echo -e "Git identity: Name:${GREEN}$git_user_name${RESET} Email:${GREEN}$git_email${RESET}\n"
-echo -e "idle_delay: ${GREEN}$idle_delay${RESET}"
-echo -e "title_bar_buttons_on: ${GREEN}$title_bar_buttons_on${RESET}"
-echo -e "clock_show_date: ${GREEN}$clock_show_date${RESET}"
-echo -e "capslock_delete: ${GREEN}$capslock_delete${RESET}"
-echo -e "night_light: ${GREEN}$night_light${RESET}\n"
+cat <<EOL
+${BOLD}Packages to install${RESET}
+${BOLD}-------------------${RESET}
+DNF packages: ${GREEN}${dnf_packages_to_install[*]}${RESET}
+
+Flathub packages: ${GREEN}${flathub_packages_to_install[*]}${RESET}
+
+Composer packages: ${GREEN}${composer_packages_to_install[*]}${RESET}
+
+Visual Studio Code extensions: ${GREEN}${code_extensions[*]}${RESET}
+
+${BOLD}Packages to remove${RESET}
+${BOLD}------------------${RESET}
+DNF packages: ${GREEN}${packages_to_remove[*]}${RESET}
+
+${BOLD}Additional settings${RESET}
+${BOLD}-------------------${RESET}
+Git identity: Name:${GREEN}$git_user_name${RESET} Email:${GREEN}$git_email${RESET}
+
+idle_delay: ${GREEN}$idle_delay${RESET}
+title_bar_buttons_on: ${GREEN}$title_bar_buttons_on${RESET}
+clock_show_date: ${GREEN}$clock_show_date${RESET}
+capslock_delete: ${GREEN}$capslock_delete${RESET}
+night_light: ${GREEN}$night_light${RESET}
+
+EOL
 
 read -rp "What is this computer's name? [$HOSTNAME] " hostname
 if [[ ! -z "$hostname" ]]; then
