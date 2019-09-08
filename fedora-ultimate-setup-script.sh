@@ -91,10 +91,11 @@ dnf_packages_to_install+=("${fedora[@]}" "${rpmfusion[@]}" "${WineHQ[@]}" "${vsc
 # display packages to be installed and ask user for computer's name
 #==============================================================================
 clear
-echo -e "${BOLD}dnf packages to install: ${RESET}${GREEN}${dnf_packages_to_install[*]}${RESET}\n"
-echo -e "${BOLD}flathub packages to install: ${RESET}${GREEN}${flathub_packages_to_install[*]}${RESET}\n"
-echo -e "${BOLD}composer packages to install: ${RESET}${GREEN}${composer_packages_to_install[*]}${RESET}\n"
-echo -e "${BOLD}visual studio code extensions to install: ${RESET}${GREEN}${code_extensions[*]}${RESET}\n"
+echo -e "DNF packages: ${GREEN}${dnf_packages_to_install[*]}${RESET}\n"
+echo -e "Flathub packages: ${GREEN}${flathub_packages_to_install[*]}${RESET}\n"
+echo -e "Composer packages: ${GREEN}${composer_packages_to_install[*]}${RESET}\n"
+echo -e "Visual Studio Code extensions: ${GREEN}${code_extensions[*]}${RESET}\n"
+echo -e "Git identity: Name:${GREEN}$git_user_name${RESET} Email:${GREEN}$git_email${RESET}\n"
 
 read -rp "What is this computer's name? [$HOSTNAME] " hostname
 if [[ ! -z "$hostname" ]]; then
