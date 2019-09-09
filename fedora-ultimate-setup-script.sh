@@ -177,6 +177,8 @@ Flathub packages: ${GREEN}${flathub_packages_to_install[*]}${RESET}
 
 Composer packages: ${GREEN}${composer_packages_to_install[*]}${RESET}
 
+Node packages: ${GREEN}${node_global_packages_to_install[*]}${RESET}
+
 Visual Studio Code extensions: ${GREEN}${code_extensions[*]}${RESET}
 
 ${BOLD}Packages to remove${RESET}
