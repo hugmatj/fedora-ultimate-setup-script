@@ -32,7 +32,7 @@ if [[ $(rpm -E %fedora) -lt 29 ]]; then
     echo >&2 "You must install at least ${GREEN}Fedora 29${RESET} to use this script" && exit 1
 fi
 
-# start of user settings
+# >>>>>> start of user settings <<<<<<
 # note: if you delete packages you might need to remove their settings later
 
 #==============================================================================
@@ -58,6 +58,8 @@ packages_to_remove=(gnome-photos gnome-documents rhythmbox totem cheese)
 #==============================================================================
 # packages to install
 #==============================================================================
+modules_to_enable=(nodejs:12)
+
 fedora=(shotwell sendmail java-1.8.0-openjdk jack-audio-connection-kit
     gnome-shell-extension-auto-move-windows.noarch dolphin-emu
     gnome-shell-extension-pomodoro syncthing nodejs php php-json
@@ -88,7 +90,7 @@ code_extensions=(ban.spellright
 
 dnf_packages_to_install+=("${fedora[@]}" "${rpmfusion[@]}" "${WineHQ[@]}" "${vscode[@]}")
 
-# end of user settings
+# >>>>>> end of user settings <<<<<<
 
 #==============================================================================
 # display user settings and ask user for computer's name
@@ -97,6 +99,8 @@ clear
 cat <<EOL
 ${BOLD}Packages to install${RESET}
 ${BOLD}-------------------${RESET}
+DNF modules to enable: ${GREEN}${modules_to_enable[*]}${RESET}
+
 DNF packages: ${GREEN}${dnf_packages_to_install[*]}${RESET}
 
 Flathub packages: ${GREEN}${flathub_packages_to_install[*]}${RESET}
@@ -144,7 +148,11 @@ dnf -y remove "${packages_to_remove[@]}"
 
 echo "${BOLD}Updating Fedora, enabling module streams, and installing packages...${RESET}"
 dnf -y --refresh upgrade
-dnf -y module enable nodejs:12
+
+if [[ ${modules_to_enable[@]} ]]; then
+    dnf -y module enable "${modules_to_enable[@]}"
+fi
+
 dnf -y install "${dnf_packages_to_install[@]}"
 
 echo "${BOLD}Installing flathub packages...${RESET}"
