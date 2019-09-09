@@ -133,6 +133,10 @@ if [[ $REPLY =~ ^[Yy]$ ]]; then
         wp-coding-standards/wpcs
         wp-cli/wp-cli-bundle)
 
+    node_global_packages_to_install=(
+        pnpm
+        npm-check)
+
     vscode=(
         code)
 
@@ -228,10 +232,13 @@ dnf -y install "${dnf_packages_to_install[@]}"
 echo "${BOLD}Installing flathub packages...${RESET}"
 flatpak install -y flathub "${flathub_packages_to_install[@]}"
 
-# for development add composer and vs code extensions
+# for development install composer / node and vs code extensions as user
 if [[ $REPLY =~ ^[Yy]$ ]]; then
     echo "${BOLD}Installing global composer packages...${RESET}"
     /usr/bin/su - "$USERNAME" -c "composer global require ${composer_packages_to_install[*]}"
+
+    echo "${BOLD}Installing global Node packages...${RESET}"
+    /usr/bin/su - "$USERNAME" -c "npm install -g ${node_global_packages_to_install[*]}"
 
     echo "${BOLD}Installing Visual Studio Code extensions...${RESET}"
     for extension in "${code_extensions[@]}"; do
@@ -264,7 +271,6 @@ fi
 if [[ "${capslock_delete}" == "true" ]]; then
     gsettings set org.gnome.desktop.input-sources \
         xkb-options "['caps:backspace', 'terminate:ctrl_alt_bksp']"
-
 fi
 
 if [[ "${night_light}" == "true" ]]; then
@@ -336,9 +342,10 @@ if [[ $REPLY =~ ^[Yy]$ ]]; then
     "/home/$USERNAME/.config/composer/vendor/bin/phpcs" --config-set default_standard PSR12
     "/home/$USERNAME/.config/composer/vendor/bin/phpcs" --config-show
 
-    # add composer global executables to the PATH
+    # add composer global executables to the PATH and add npm check setting
     cat >>"/home/$USERNAME/.bash_profile" <<'EOL'
 PATH=$PATH:/home/$USERNAME/.config/composer/vendor/bin
+export NPM_CHECK_INSTALLER=pnpm
 EOL
 
     # change PHP settings to mirror the production server
