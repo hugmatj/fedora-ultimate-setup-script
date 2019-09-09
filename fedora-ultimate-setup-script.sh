@@ -12,7 +12,7 @@
 #               https://dl.fedoraproject.org/pub/fedora/linux/releases/30/Workstation/x86_64/iso/
 #       AUTHOR: David Else
 #      COMPANY: Else Web Development
-#      VERSION: 3
+#      VERSION: 3.0
 #==============================================================================
 
 #==============================================================================
@@ -61,7 +61,7 @@ packages_to_remove=(
     cheese)
 
 #==============================================================================
-# common packages to install * arrays can be left empty, but don't delete them
+# common packages to install *arrays can be left empty, but don't delete them
 #==============================================================================
 fedora=(
     shotwell
