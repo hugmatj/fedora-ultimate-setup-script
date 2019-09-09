@@ -5,7 +5,7 @@
 #         FILE: fedora-ultimate-setup-script.sh
 #        USAGE: fedora-ultimate-setup-script.sh
 #
-#  DESCRIPTION: Post-installation setup script for Fedora 29 Workstation
+#  DESCRIPTION: Post-installation setup script for Fedora 29/30 Workstation
 #      WEBSITE: https://www.elsewebdevelopment.com/
 #
 # REQUIREMENTS: Fresh copy of Fedora 29/30 installed on your computer
@@ -36,7 +36,7 @@ fi
 # note: if you delete packages you might need to remove their settings later
 
 #==============================================================================
-# git settings
+# git settings * not applied unless you select developer option
 #==============================================================================
 git_email='example@example.com'
 git_user_name='example-name'
@@ -53,49 +53,115 @@ night_light="true"
 #==============================================================================
 # packages to remove
 #==============================================================================
-packages_to_remove=(gnome-photos gnome-documents rhythmbox totem cheese)
+packages_to_remove=(
+    gnome-photos
+    gnome-documents
+    rhythmbox
+    totem
+    cheese)
 
 #==============================================================================
-# packages to install
+# common packages to install * arrays can be left empty, but don't delete them
 #==============================================================================
-modules_to_enable=(nodejs:12)
+fedora=(
+    shotwell
+    java-1.8.0-openjdk
+    jack-audio-connection-kit
+    mediainfo
+    syncthing
+    borgbackup
+    gnome-tweaks
+    mkvtoolnix-gui
+    tldr
+    dolphin-emu
+    mame
+    chromium
+    youtube-dl
+    keepassxc
+    transmission-gtk
+    lshw
+    fuse-exfat
+    mpv
+    gnome-shell-extension-pomodoro
+    gnome-shell-extension-auto-move-windows.noarch
+)
 
-fedora=(shotwell sendmail java-1.8.0-openjdk jack-audio-connection-kit
-    gnome-shell-extension-auto-move-windows.noarch dolphin-emu
-    gnome-shell-extension-pomodoro syncthing nodejs php php-json
-    phpmyadmin php-mysqlnd php-opcache composer mariadb-server mediainfo
-    mame borgbackup gnome-tweaks chromium ShellCheck zeal youtube-dl
-    keepassxc transmission-gtk lshw fuse-exfat mpv mkvtoolnix-gui tldr)
+rpmfusion=(
+    libva-intel-driver
+    chromium-libs-media-freeworld
+    ffmpeg)
 
-rpmfusion=(libva-intel-driver chromium-libs-media-freeworld ffmpeg)
+WineHQ=(
+    winehq-stable)
 
-WineHQ=(winehq-stable)
+flathub_packages_to_install=(
+    org.kde.krita
+    org.kde.okular
+    fr.handbrake.ghb
+    net.sf.fuse_emulator)
 
-vscode=(code)
+clear
+#==============================================================================
+# Ask for user input
+#==============================================================================
+read -p "Are you going to use this machine for software development? (y/n) " -n 1
+echo
+echo
 
-flathub_packages_to_install=(org.kde.krita org.kde.okular fr.handbrake.ghb net.sf.fuse_emulator)
+if [[ $REPLY =~ ^[Yy]$ ]]; then
+    #==========================================================================
+    # packages for software development option
+    #==========================================================================
+    modules_to_enable=(
+        nodejs:12)
 
-composer_packages_to_install=(squizlabs/php_codesniffer wp-coding-standards/wpcs wp-cli/wp-cli-bundle)
+    fedora_developer=(
+        nodejs
+        php
+        php-json
+        phpmyadmin
+        php-mysqlnd
+        php-opcache
+        sendmail
+        composer
+        mariadb-server
+        ShellCheck
+        zeal)
 
-code_extensions=(ban.spellright
-    bierner.markdown-preview-github-styles
-    bmewburn.vscode-intelephense-client
-    deerawan.vscode-dash
-    esbenp.prettier-vscode
-    foxundermoon.shell-format
-    msjsdiag.debugger-for-chrome
-    ritwickdey.LiveServer
-    timonwong.shellcheck
-    WallabyJs.quokka-vscode)
+    composer_packages_to_install=(
+        squizlabs/php_codesniffer
+        wp-coding-standards/wpcs
+        wp-cli/wp-cli-bundle)
 
-dnf_packages_to_install+=("${fedora[@]}" "${rpmfusion[@]}" "${WineHQ[@]}" "${vscode[@]}")
+    vscode=(
+        code)
+
+    code_extensions=(
+        ban.spellright
+        bierner.markdown-preview-github-styles
+        bmewburn.vscode-intelephense-client
+        deerawan.vscode-dash
+        esbenp.prettier-vscode
+        foxundermoon.shell-format
+        msjsdiag.debugger-for-chrome
+        ritwickdey.LiveServer
+        timonwong.shellcheck
+        WallabyJs.quokka-vscode)
+
+    dnf_packages_to_install+=("${fedora[@]}" "${rpmfusion[@]}" "${WineHQ[@]}" "${fedora_developer[@]}" "${vscode[@]}")
+
+elif [[ $REPLY =~ ^[Nn]$ ]]; then
+    dnf_packages_to_install+=("${fedora[@]}" "${rpmfusion[@]}" "${WineHQ[@]}")
+
+else
+    echo "Invalid selection" && exit 1
+fi
 
 # >>>>>> end of user settings <<<<<<
 
 #==============================================================================
 # display user settings and ask user for computer's name
 #==============================================================================
-clear
 cat <<EOL
 ${BOLD}Packages to install${RESET}
 ${BOLD}-------------------${RESET}
@@ -137,8 +203,12 @@ echo "${BOLD}Adding repositories...${RESET}"
 dnf -y install https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
 flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
 dnf config-manager --add-repo https://dl.winehq.org/wine-builds/fedora/30/winehq.repo
-rpm --import https://packages.microsoft.com/keys/microsoft.asc
-sh -c 'echo -e "[code]\nname=Visual Studio Code\nbaseurl=https://packages.microsoft.com/yumrepos/vscode\nenabled=1\ngpgcheck=1\ngpgkey=https://packages.microsoft.com/keys/microsoft.asc" > /etc/yum.repos.d/vscode.repo'
+
+# for development add vs code repo
+if [[ $REPLY =~ ^[Yy]$ ]]; then
+    rpm --import https://packages.microsoft.com/keys/microsoft.asc
+    sh -c 'echo -e "[code]\nname=Visual Studio Code\nbaseurl=https://packages.microsoft.com/yumrepos/vscode\nenabled=1\ngpgcheck=1\ngpgkey=https://packages.microsoft.com/keys/microsoft.asc" > /etc/yum.repos.d/vscode.repo'
+fi
 
 #==============================================================================
 # update/install/remove packages
@@ -158,13 +228,16 @@ dnf -y install "${dnf_packages_to_install[@]}"
 echo "${BOLD}Installing flathub packages...${RESET}"
 flatpak install -y flathub "${flathub_packages_to_install[@]}"
 
-echo "${BOLD}Installing composer packages...${RESET}"
-/usr/bin/su - "$USERNAME" -c "composer global require ${composer_packages_to_install[*]}"
+# for development add composer and vs code extensions
+if [[ $REPLY =~ ^[Yy]$ ]]; then
+    echo "${BOLD}Installing global composer packages...${RESET}"
+    /usr/bin/su - "$USERNAME" -c "composer global require ${composer_packages_to_install[*]}"
 
-echo "${BOLD}Installing Visual Studio Code extensions...${RESET}"
-for extension in "${code_extensions[@]}"; do
-    /usr/bin/su - "$USERNAME" -c "code --install-extension $extension"
-done
+    echo "${BOLD}Installing Visual Studio Code extensions...${RESET}"
+    for extension in "${code_extensions[@]}"; do
+        /usr/bin/su - "$USERNAME" -c "code --install-extension $extension"
+    done
+fi
 
 #==============================================================================
 # setup gnome desktop gsettings
@@ -200,7 +273,7 @@ if [[ "${night_light}" == "true" ]]; then
 fi
 
 #==============================================================================
-# setup pulse audio
+# setup pulse audio with the best sound quality possible
 #
 # *pacmd list-sinks | grep sample and see bit-depth available for interface
 # *pulseaudio --dump-re-sample-methods and see re-sampling available
@@ -227,7 +300,7 @@ tee /etc/security/limits.d/95-jack.conf <<EOL
 EOL
 
 #==============================================================================
-# setup MPV
+# setup MPV for best quality and default to full screen
 #==============================================================================
 mkdir -p "/home/$USERNAME/.config/mpv"
 cat >"/home/$USERNAME/.config/mpv/mpv.conf" <<EOL
@@ -236,49 +309,51 @@ hwdec=auto
 fullscreen=yes
 EOL
 
-#==============================================================================
-# setup git user name and email if none exist
-#==============================================================================
-if [[ -z $(git config --get user.name) ]]; then
-    git config --global user.name $git_user_name
-    echo "No global git user name was set, I have set it to ${BOLD}$git_user_name${RESET}"
-fi
+# for development
+if [[ $REPLY =~ ^[Yy]$ ]]; then
+    #==============================================================================
+    # setup git user name and email if none exist
+    #==============================================================================
+    if [[ -z $(git config --get user.name) ]]; then
+        git config --global user.name $git_user_name
+        echo "No global git user name was set, I have set it to ${BOLD}$git_user_name${RESET}"
+    fi
 
-if [[ -z $(git config --get user.email) ]]; then
-    git config --global user.email $git_email
-    echo "No global git email was set, I have set it to ${BOLD}$git_email${RESET}"
-fi
+    if [[ -z $(git config --get user.email) ]]; then
+        git config --global user.email $git_email
+        echo "No global git email was set, I have set it to ${BOLD}$git_email${RESET}"
+    fi
 
-#==================================================================================================
-# setup PHP dev environment
-#
-# use 'phpcbf --standard=WordPress file.php' to autofix and format Wordpress code
-# use 'composer global show / outdated / update' to manage these packages
-#==================================================================================================
-echo "${BOLD}Setting up PHP dev environment...${RESET}"
+    #==================================================================================================
+    # setup PHP dev environment
+    #
+    # use 'phpcbf --standard=WordPress file.php' to autofix and format Wordpress code
+    # use 'composer global show / outdated / update' to manage these packages
+    #==================================================================================================
+    echo "${BOLD}Setting up PHP dev environment...${RESET}"
 
-"/home/$USERNAME/.config/composer/vendor/bin/phpcs" --config-set installed_paths ~/.config/composer/vendor/wp-coding-standards/wpcs
-"/home/$USERNAME/.config/composer/vendor/bin/phpcs" --config-set default_standard PSR12
-"/home/$USERNAME/.config/composer/vendor/bin/phpcs" --config-show
+    "/home/$USERNAME/.config/composer/vendor/bin/phpcs" --config-set installed_paths ~/.config/composer/vendor/wp-coding-standards/wpcs
+    "/home/$USERNAME/.config/composer/vendor/bin/phpcs" --config-set default_standard PSR12
+    "/home/$USERNAME/.config/composer/vendor/bin/phpcs" --config-show
 
-# add composer global executables to the PATH
-cat >>"/home/$USERNAME/.bash_profile" <<'EOL'
+    # add composer global executables to the PATH
+    cat >>"/home/$USERNAME/.bash_profile" <<'EOL'
 PATH=$PATH:/home/$USERNAME/.config/composer/vendor/bin
 EOL
 
-# change PHP settings to mirror the production server
-upload_max_filesize=128M # namesco default setting
-post_max_size=128M       # namesco default setting
-max_execution_time=60    # namesco default setting
+    # change PHP settings to mirror the production server
+    upload_max_filesize=128M # namesco default setting
+    post_max_size=128M       # namesco default setting
+    max_execution_time=60    # namesco default setting
 
-for key in upload_max_filesize post_max_size max_execution_time; do
-    sed -i "s/^\($key\).*/\1 = $(eval echo \${$key})/" /etc/php.ini
-done
+    for key in upload_max_filesize post_max_size max_execution_time; do
+        sed -i "s/^\($key\).*/\1 = $(eval echo \${$key})/" /etc/php.ini
+    done
 
-#==============================================================================
-# setup visual studio code * 'EOL' stops parameter expansion in here-doc
-#==============================================================================
-cat >"/home/$USERNAME/.config/Code/User/settings.json" <<'EOL'
+    #==============================================================================
+    # setup visual studio code * 'EOL' stops parameter expansion in here-doc
+    #==============================================================================
+    cat >"/home/$USERNAME/.config/Code/User/settings.json" <<'EOL'
 // Place your settings in this file to overwrite the default settings
 {
   // VS Code 1.36 general settings
@@ -341,6 +416,7 @@ cat >"/home/$USERNAME/.config/Code/User/settings.json" <<'EOL'
 }
 EOL
 
+fi
 #==============================================================================================
 # make a few little changes to finish up
 #==============================================================================================
