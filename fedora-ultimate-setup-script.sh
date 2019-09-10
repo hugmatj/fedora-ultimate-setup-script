@@ -15,6 +15,8 @@
 #      VERSION: 3.0
 #==============================================================================
 
+# ! how to stop multiple writes to config files?
+
 # use 'phpcbf --standard=WordPress file.php' to autofix and format Wordpress code
 # use 'composer global show / outdated / update' to manage composer packages
 
