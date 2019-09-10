@@ -1,5 +1,22 @@
 #!/bin/bash
 
+#!/bin/bash
+
+# (process:7497): dconf-WARNING **: 17:34:50.608: failed to commit changes to dconf: Failed to execute child process “dbus-launch” (No such file or directory)
+
+echo $DBUS_SESSION_BUS_ADDRESS # empty in sudo, normal user = unix:path=/run/user/1000/bus
+
+/usr/bin/su - "$USERNAME" -c gsettings set org.gnome.shell.extensions.auto-move-windows \
+    application-list "['org.gnome.Nautilus.desktop:2', 'org.gnome.Terminal.desktop:3', 'code.desktop:1', 'firefox.desktop:1']"
+
+# dbus-launch gsettings set set org.gnome.shell.extensions.auto-move-windows \
+#     application-list "['org.gnome.Nautilus.desktop:2', 'org.gnome.Terminal.desktop:3', 'code.desktop:1', 'firefox.desktop:1']"
+
+# HTTP_PROXY=val sudo -E bash -c 'echo $DBUS_SESSION_BUS_ADDRESS'
+# echo $HTTP_PROXY
+
+exit
+
 #==============================================================================
 #
 #         FILE: fedora-ultimate-setup-script.sh
