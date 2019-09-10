@@ -33,7 +33,6 @@ if [[ $(rpm -E %fedora) -lt 29 ]]; then
 fi
 
 # >>>>>> start of user settings <<<<<<
-# note: if you delete packages you might need to remove their settings later
 
 #==============================================================================
 # git settings
@@ -100,11 +99,11 @@ flathub_packages_to_install=(
     fr.handbrake.ghb
     net.sf.fuse_emulator)
 
-clear
 #==============================================================================
 # Ask for user input
 #==============================================================================
-read -p "Are you going to use this machine for software development? (y/n) " -n 1
+clear
+read -p "Are you going to use this machine for web development? (y/n) " -n 1
 echo
 echo
 
