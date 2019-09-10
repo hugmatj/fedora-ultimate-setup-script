@@ -353,34 +353,34 @@ esac
 #==============================================================================
 # setup gnome desktop gsettings
 #==============================================================================
-echo "${BOLD}Setting up gnome desktop gsettings...${RESET}"
+# echo "${BOLD}Setting up gnome desktop gsettings...${RESET}"
 
-gsettings set org.gnome.desktop.session \
-    idle-delay $idle_delay
-gsettings set org.gnome.shell.extensions.auto-move-windows \
-    application-list "['org.gnome.Nautilus.desktop:2', 'org.gnome.Terminal.desktop:3', 'code.desktop:1', 'firefox.desktop:1']"
-gsettings set org.gnome.shell enabled-extensions \
-    "['pomodoro@arun.codito.in', 'auto-move-windows@gnome-shell-extensions.gcampax.github.com']"
+# gsettings set org.gnome.desktop.session \
+#     idle-delay $idle_delay
+# gsettings set org.gnome.shell.extensions.auto-move-windows \
+#     application-list "['org.gnome.Nautilus.desktop:2', 'org.gnome.Terminal.desktop:3', 'code.desktop:1', 'firefox.desktop:1']"
+# gsettings set org.gnome.shell enabled-extensions \
+#     "['pomodoro@arun.codito.in', 'auto-move-windows@gnome-shell-extensions.gcampax.github.com']"
 
-if [[ "${title_bar_buttons_on}" == "true" ]]; then
-    gsettings set org.gnome.desktop.wm.preferences \
-        button-layout 'appmenu:minimize,maximize,close'
-fi
+# if [[ "${title_bar_buttons_on}" == "true" ]]; then
+#     gsettings set org.gnome.desktop.wm.preferences \
+#         button-layout 'appmenu:minimize,maximize,close'
+# fi
 
-if [[ "${clock_show_date}" == "true" ]]; then
-    gsettings set org.gnome.desktop.interface \
-        clock-show-date true
-fi
+# if [[ "${clock_show_date}" == "true" ]]; then
+#     gsettings set org.gnome.desktop.interface \
+#         clock-show-date true
+# fi
 
-if [[ "${capslock_delete}" == "true" ]]; then
-    gsettings set org.gnome.desktop.input-sources \
-        xkb-options "['caps:backspace', 'terminate:ctrl_alt_bksp']"
-fi
+# if [[ "${capslock_delete}" == "true" ]]; then
+#     gsettings set org.gnome.desktop.input-sources \
+#         xkb-options "['caps:backspace', 'terminate:ctrl_alt_bksp']"
+# fi
 
-if [[ "${night_light}" == "true" ]]; then
-    gsettings set org.gnome.settings-daemon.plugins.color \
-        night-light-enabled true
-fi
+# if [[ "${night_light}" == "true" ]]; then
+#     gsettings set org.gnome.settings-daemon.plugins.color \
+#         night-light-enabled true
+# fi
 
 #==============================================================================
 # setup pulse audio with the best sound quality possible
