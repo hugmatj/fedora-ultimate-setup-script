@@ -258,9 +258,10 @@ case " ${dnf_packages_to_install[*]} " in
     post_max_size=128M       # namesco default setting
     max_execution_time=60    # namesco default setting
 
-    # for key in upload_max_filesize post_max_size max_execution_time; do
-    #     sed -i "s/^\($key\).*/\1 = $(eval echo \${$key})/" /etc/php.ini
-    # done
+    for key in upload_max_filesize post_max_size max_execution_time; do
+        # sed -i "s/^\($key\).*/\1 = $(eval echo \${$key})/" /etc/php.ini
+        sed -i "s/^\($key\).*/\1 = ${!key}/" /etc/php.ini
+    done
 
     sed -i "s/^\($key\).*/\1 = ${!key}/" /etc/php.ini
 
