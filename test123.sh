@@ -4,6 +4,29 @@
 
 # (process:7497): dconf-WARNING **: 17:34:50.608: failed to commit changes to dconf: Failed to execute child process “dbus-launch” (No such file or directory)
 
+exec 2> >(tee "error_log_$(date -Iseconds).txt")
+
+echo 'hello'
+fuckoff
+ff
+exit
+
+STATUSFILE="install.log_$(date -Iseconds)"
+LOGFILE="install.error_log_$(date -Iseconds)"
+exec > >(tee "${STATUSFILE}") 2> >(tee "${LOGFILE}" >&2)
+
+### All output to one file and all output to the screen
+#exec > >(tee ${LOGFILE}) 2>&1
+
+echo "hi $SUDO_USER"
+echo "hi $USERNAME"
+
+fffasdfsdfsd
+
+echo "The Following errors were written to the log file in current directory ${LOGFILE}"
+
+exit
+
 echo $DBUS_SESSION_BUS_ADDRESS # empty in sudo, normal user = unix:path=/run/user/1000/bus
 
 /usr/bin/su - "$USERNAME" -c gsettings set org.gnome.shell.extensions.auto-move-windows \

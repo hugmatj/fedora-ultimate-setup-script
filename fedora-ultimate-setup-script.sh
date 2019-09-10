@@ -19,6 +19,7 @@
 # script settings and checks
 #==============================================================================
 set -euo pipefail
+exec 2> >(tee "error_log_$(date -Iseconds).txt")
 
 GREEN=$(tput setaf 2)
 BOLD=$(tput bold)
@@ -247,11 +248,11 @@ case " ${dnf_packages_to_install[*]} " in
     #==============================================================================
     echo "${BOLD}Installing global composer packages and setting up PHP dev environment...${RESET}"
 
-    /usr/bin/su - "$USERNAME" -c "composer global require ${composer_packages_to_install[*]}"
+    /usr/bin/su - "$SUDO_USER" -c "composer global require ${composer_packages_to_install[*]}"
 
-    "/home/$USERNAME/.config/composer/vendor/bin/phpcs" --config-set installed_paths ~/.config/composer/vendor/wp-coding-standards/wpcs
-    "/home/$USERNAME/.config/composer/vendor/bin/phpcs" --config-set default_standard PSR12
-    "/home/$USERNAME/.config/composer/vendor/bin/phpcs" --config-show
+    "/home/$SUDO_USER/.config/composer/vendor/bin/phpcs" --config-set installed_paths ~/.config/composer/vendor/wp-coding-standards/wpcs
+    "/home/$SUDO_USER/.config/composer/vendor/bin/phpcs" --config-set default_standard PSR12
+    "/home/$SUDO_USER/.config/composer/vendor/bin/phpcs" --config-show
 
     upload_max_filesize=128M # namesco default setting
     post_max_size=128M       # namesco default setting
@@ -261,7 +262,7 @@ case " ${dnf_packages_to_install[*]} " in
         sed -i "s/^\($key\).*/\1 = $(eval echo \${$key})/" /etc/php.ini
     done
 
-    cat >>"/home/$USERNAME/.bash_profile" <<'EOL'
+    cat >>"/home/$SUDO_USER/.bash_profile" <<'EOL'
 PATH=$PATH:/home/$USERNAME/.config/composer/vendor/bin
 EOL
     ;;
@@ -271,9 +272,9 @@ EOL
     #==============================================================================
     echo "${BOLD}Installing global NodeJS packages...${RESET}"
 
-    /usr/bin/su - "$USERNAME" -c "npm install -g ${node_global_packages_to_install[*]}"
+    /usr/bin/su - "$SUDO_USER" -c "npm install -g ${node_global_packages_to_install[*]}"
 
-    cat >>"/home/$USERNAME/.bash_profile" <<'EOL'
+    cat >>"/home/$SUDO_USER/.bash_profile" <<'EOL'
 export NPM_CHECK_INSTALLER=pnpm
 EOL
     ;;
@@ -283,9 +284,9 @@ EOL
     #==============================================================================
     echo "${BOLD}Installing Visual Studio Code extensions...${RESET}"
     for extension in "${code_extensions[@]}"; do
-        /usr/bin/su - "$USERNAME" -c "code --install-extension $extension"
+        /usr/bin/su - "$SUDO_USER" -c "code --install-extension $extension"
     done
-    cat >"/home/$USERNAME/.config/Code/User/settings.json" <<'EOL'
+    cat >"/home/$SUDO_USER/.config/Code/User/settings.json" <<'EOL'
 // Place your settings in this file to overwrite the default settings
 {
   // VS Code 1.36 general settings
@@ -398,7 +399,7 @@ sed -i "s/; avoid-resampling = false/avoid-resampling = true/g" /etc/pulse/daemo
 #==============================================================================
 # setup jack audio for real time use
 #==============================================================================
-usermod -a -G jackuser "$USERNAME" # Add current user to jackuser group
+usermod -a -G jackuser "$SUDO_USER" # Add current user to jackuser group
 tee /etc/security/limits.d/95-jack.conf <<EOL
 # Default limits for users of jack-audio-connection-kit
 
@@ -412,8 +413,8 @@ EOL
 #==============================================================================
 # setup MPV for best quality and default to full screen
 #==============================================================================
-mkdir -p "/home/$USERNAME/.config/mpv"
-cat >"/home/$USERNAME/.config/mpv/mpv.conf" <<EOL
+mkdir -p "/home/$SUDO_USER/.config/mpv"
+cat >"/home/$SUDO_USER/.config/mpv/mpv.conf" <<EOL
 profile=gpu-hq
 hwdec=auto
 fullscreen=yes
@@ -435,17 +436,18 @@ fi
 #==============================================================================================
 # make a few little changes to finish up
 #==============================================================================================
-echo "Xft.lcdfilter: lcdlight" >>"/home/$USERNAME/.Xresources"
+echo "Xft.lcdfilter: lcdlight" >>"/home/$SUDO_USER/.Xresources"
 echo fs.inotify.max_user_watches=524288 | tee -a /etc/sysctl.conf && sysctl -p
-touch /home/$USERNAME/Templates/empty-file # so you can create new documents from nautilus
-cat >>"/home/$USERNAME/.bashrc" <<EOL
+touch /home/$SUDO_USER/Templates/empty-file # so you can create new documents from nautilus
+cat >>"/home/$SUDO_USER/.bashrc" <<EOL
 alias ls="ls -ltha --color --group-directories-first" # l=long listing format, t=sort by modification time (newest first), h=human readable sizes, a=print hidden files
 alias tree="tree -Catr --noreport --dirsfirst --filelimit 100" # -C=colorization on, a=print hidden files, t=sort by modification time, r=reversed sort by time (newest first)
 EOL
 
 cat <<EOL
   ===================================================
-  REBOOT NOW!!!! (or things may not work as expected)
-  shutdown -r
+  error_log file generated in current directory
+
+  Please reboot (or things may not work as expected)
   ===================================================
 EOL
