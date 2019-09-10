@@ -208,13 +208,17 @@ fi
 echo "${BOLD}Adding repositories...${RESET}"
 dnf -y install https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
 flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
-dnf config-manager --add-repo https://dl.winehq.org/wine-builds/fedora/30/winehq.repo
 
-# for development add vs code repo
-if [[ $REPLY =~ ^[Yy]$ ]]; then
+# note the spaces to make sure something like 'notnode' could not trigger 'nodejs' using [*]
+case " ${dnf_packages_to_install[*]} " in
+*' code '*)
     rpm --import https://packages.microsoft.com/keys/microsoft.asc
     sh -c 'echo -e "[code]\nname=Visual Studio Code\nbaseurl=https://packages.microsoft.com/yumrepos/vscode\nenabled=1\ngpgcheck=1\ngpgkey=https://packages.microsoft.com/keys/microsoft.asc" > /etc/yum.repos.d/vscode.repo'
-fi
+    ;;
+*' winehq-stable '*)
+    dnf config-manager --add-repo https://dl.winehq.org/wine-builds/fedora/30/winehq.repo
+    ;;
+esac
 
 #==============================================================================
 # update/install/remove packages
@@ -234,19 +238,22 @@ dnf -y install "${dnf_packages_to_install[@]}"
 echo "${BOLD}Installing flathub packages...${RESET}"
 flatpak install -y flathub "${flathub_packages_to_install[@]}"
 
-# for development install composer / node and vs code extensions as user
-if [[ $REPLY =~ ^[Yy]$ ]]; then
+case " ${dnf_packages_to_install[*]} " in
+*' composer '*)
     echo "${BOLD}Installing global composer packages...${RESET}"
     /usr/bin/su - "$USERNAME" -c "composer global require ${composer_packages_to_install[*]}"
-
-    echo "${BOLD}Installing global Node packages...${RESET}"
+    ;;
+*' nodejs '*)
+    echo "${BOLD}Installing global NodeJS packages...${RESET}"
     /usr/bin/su - "$USERNAME" -c "npm install -g ${node_global_packages_to_install[*]}"
-
+    ;;
+*' code '*)
     echo "${BOLD}Installing Visual Studio Code extensions...${RESET}"
     for extension in "${code_extensions[@]}"; do
         /usr/bin/su - "$USERNAME" -c "code --install-extension $extension"
     done
-fi
+    ;;
+esac
 
 #==============================================================================
 # setup gnome desktop gsettings
