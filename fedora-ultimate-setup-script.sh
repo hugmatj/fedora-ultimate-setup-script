@@ -36,7 +36,7 @@ fi
 # note: if you delete packages you might need to remove their settings later
 
 #==============================================================================
-# git settings * not applied unless you select developer option
+# git settings
 #==============================================================================
 git_email='example@example.com'
 git_user_name='example-name'
@@ -221,7 +221,7 @@ case " ${dnf_packages_to_install[*]} " in
 esac
 
 #==============================================================================
-# update/install/remove packages
+# update/install/remove packages/setup specific dev environments
 #==============================================================================
 echo "${BOLD}Removing unwanted programs...${RESET}"
 dnf -y remove "${packages_to_remove[@]}"
@@ -240,18 +240,114 @@ flatpak install -y flathub "${flathub_packages_to_install[@]}"
 
 case " ${dnf_packages_to_install[*]} " in
 *' composer '*)
-    echo "${BOLD}Installing global composer packages...${RESET}"
+    #==============================================================================
+    # setup PHP dev environment
+    #
+    # use 'phpcbf --standard=WordPress file.php' to autofix and format Wordpress code
+    # use 'composer global show / outdated / update' to manage composer packages
+    #==============================================================================
+    echo "${BOLD}Installing global composer packages and setting up PHP dev environment...${RESET}"
+
     /usr/bin/su - "$USERNAME" -c "composer global require ${composer_packages_to_install[*]}"
+
+    "/home/$USERNAME/.config/composer/vendor/bin/phpcs" --config-set installed_paths ~/.config/composer/vendor/wp-coding-standards/wpcs
+    "/home/$USERNAME/.config/composer/vendor/bin/phpcs" --config-set default_standard PSR12
+    "/home/$USERNAME/.config/composer/vendor/bin/phpcs" --config-show
+
+    upload_max_filesize=128M # namesco default setting
+    post_max_size=128M       # namesco default setting
+    max_execution_time=60    # namesco default setting
+
+    for key in upload_max_filesize post_max_size max_execution_time; do
+        sed -i "s/^\($key\).*/\1 = $(eval echo \${$key})/" /etc/php.ini
+    done
+
+    cat >>"/home/$USERNAME/.bash_profile" <<'EOL'
+PATH=$PATH:/home/$USERNAME/.config/composer/vendor/bin
+EOL
     ;;
 *' nodejs '*)
+    #==============================================================================
+    # setup NodeJS dev environment
+    #==============================================================================
     echo "${BOLD}Installing global NodeJS packages...${RESET}"
+
     /usr/bin/su - "$USERNAME" -c "npm install -g ${node_global_packages_to_install[*]}"
+
+    cat >>"/home/$USERNAME/.bash_profile" <<'EOL'
+export NPM_CHECK_INSTALLER=pnpm
+EOL
     ;;
 *' code '*)
+    #==============================================================================
+    # setup Visual Studio Code dev environment
+    #==============================================================================
     echo "${BOLD}Installing Visual Studio Code extensions...${RESET}"
     for extension in "${code_extensions[@]}"; do
         /usr/bin/su - "$USERNAME" -c "code --install-extension $extension"
     done
+    cat >"/home/$USERNAME/.config/Code/User/settings.json" <<'EOL'
+// Place your settings in this file to overwrite the default settings
+{
+  // VS Code 1.36 general settings
+  "editor.renderWhitespace": "all",
+  "editor.dragAndDrop": false,
+  "editor.formatOnSave": true,
+  "editor.minimap.enabled": false,
+  "editor.detectIndentation": false,
+  "editor.tabSize": 2,
+  "workbench.activityBar.visible": false,
+  "workbench.tree.renderIndentGuides": "none",
+  "workbench.list.keyboardNavigation": "filter",
+  "window.menuBarVisibility": "toggle",
+  "zenMode.restore": true,
+  "zenMode.centerLayout": false,
+  "zenMode.fullScreen": false,
+  "git.autofetch": true,
+  "git.enableSmartCommit": true,
+  "git.decorations.enabled": false,
+  "npm.enableScriptExplorer": true,
+  "explorer.decorations.colors": false,
+  "search.followSymlinks": false,
+  // Privacy
+  "telemetry.enableTelemetry": false,
+  "extensions.showRecommendationsOnlyOnDemand": true,
+  // Language settings
+  "javascript.preferences.quoteStyle": "single",
+  "typescript.updateImportsOnFileMove.enabled": "always",
+  "files.exclude": {
+    "**/*.js": { "when": "$(basename).ts" },
+    "**/*.js.map": true
+  },
+  "[javascript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[typescript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[json]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[jsonc]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  // Shell Format extension
+  "shellformat.flag": "-i 4",
+  // Live Server extension
+  "liveServer.settings.donotShowInfoMsg": true,
+  "liveServer.settings.ChromeDebuggingAttachment": true,
+  "liveServer.settings.AdvanceCustomBrowserCmdLine": "/usr/bin/chromium-browser --remote-debugging-port=9222",
+  // Prettier extension
+  "prettier.singleQuote": true,
+  "prettier.trailingComma": "all",
+  "prettier.proseWrap": "always",
+  // Spellright extension
+  "spellright.language": ["English (British)"],
+  "spellright.documentTypes": ["markdown", "latex", "plaintext"]
+  // "typescript.referencesCodeLens.enabled": true,
+  // "javascript.referencesCodeLens.enabled": true,
+}
+EOL
     ;;
 esac
 
@@ -324,115 +420,19 @@ hwdec=auto
 fullscreen=yes
 EOL
 
-# for development
-if [[ $REPLY =~ ^[Yy]$ ]]; then
-    #==============================================================================
-    # setup git user name and email if none exist
-    #==============================================================================
-    if [[ -z $(git config --get user.name) ]]; then
-        git config --global user.name $git_user_name
-        echo "No global git user name was set, I have set it to ${BOLD}$git_user_name${RESET}"
-    fi
-
-    if [[ -z $(git config --get user.email) ]]; then
-        git config --global user.email $git_email
-        echo "No global git email was set, I have set it to ${BOLD}$git_email${RESET}"
-    fi
-
-    #==================================================================================================
-    # setup PHP dev environment
-    #
-    # use 'phpcbf --standard=WordPress file.php' to autofix and format Wordpress code
-    # use 'composer global show / outdated / update' to manage these packages
-    #==================================================================================================
-    echo "${BOLD}Setting up PHP dev environment...${RESET}"
-
-    "/home/$USERNAME/.config/composer/vendor/bin/phpcs" --config-set installed_paths ~/.config/composer/vendor/wp-coding-standards/wpcs
-    "/home/$USERNAME/.config/composer/vendor/bin/phpcs" --config-set default_standard PSR12
-    "/home/$USERNAME/.config/composer/vendor/bin/phpcs" --config-show
-
-    # add composer global executables to the PATH and add npm check setting
-    cat >>"/home/$USERNAME/.bash_profile" <<'EOL'
-PATH=$PATH:/home/$USERNAME/.config/composer/vendor/bin
-export NPM_CHECK_INSTALLER=pnpm
-EOL
-
-    # change PHP settings to mirror the production server
-    upload_max_filesize=128M # namesco default setting
-    post_max_size=128M       # namesco default setting
-    max_execution_time=60    # namesco default setting
-
-    for key in upload_max_filesize post_max_size max_execution_time; do
-        sed -i "s/^\($key\).*/\1 = $(eval echo \${$key})/" /etc/php.ini
-    done
-
-    #==============================================================================
-    # setup visual studio code * 'EOL' stops parameter expansion in here-doc
-    #==============================================================================
-    cat >"/home/$USERNAME/.config/Code/User/settings.json" <<'EOL'
-// Place your settings in this file to overwrite the default settings
-{
-  // VS Code 1.36 general settings
-  "editor.renderWhitespace": "all",
-  "editor.dragAndDrop": false,
-  "editor.formatOnSave": true,
-  "editor.minimap.enabled": false,
-  "editor.detectIndentation": false,
-  "editor.tabSize": 2,
-  "workbench.activityBar.visible": false,
-  "workbench.tree.renderIndentGuides": "none",
-  "workbench.list.keyboardNavigation": "filter",
-  "window.menuBarVisibility": "toggle",
-  "zenMode.restore": true,
-  "zenMode.centerLayout": false,
-  "zenMode.fullScreen": false,
-  "git.autofetch": true,
-  "git.enableSmartCommit": true,
-  "git.decorations.enabled": false,
-  "npm.enableScriptExplorer": true,
-  "explorer.decorations.colors": false,
-  "search.followSymlinks": false,
-  // Privacy
-  "telemetry.enableTelemetry": false,
-  "extensions.showRecommendationsOnlyOnDemand": true,
-  // Language settings
-  "javascript.preferences.quoteStyle": "single",
-  "typescript.updateImportsOnFileMove.enabled": "always",
-  "files.exclude": {
-    "**/*.js": { "when": "$(basename).ts" },
-    "**/*.js.map": true
-  },
-  "[javascript]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
-  },
-  "[typescript]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
-  },
-  "[json]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
-  },
-  "[jsonc]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
-  },
-  // Shell Format extension
-  "shellformat.flag": "-i 4",
-  // Live Server extension
-  "liveServer.settings.donotShowInfoMsg": true,
-  "liveServer.settings.ChromeDebuggingAttachment": true,
-  "liveServer.settings.AdvanceCustomBrowserCmdLine": "/usr/bin/chromium-browser --remote-debugging-port=9222",
-  // Prettier extension
-  "prettier.singleQuote": true,
-  "prettier.trailingComma": "all",
-  "prettier.proseWrap": "always",
-  // Spellright extension
-  "spellright.language": ["English (British)"],
-  "spellright.documentTypes": ["markdown", "latex", "plaintext"]
-  // "typescript.referencesCodeLens.enabled": true,
-  // "javascript.referencesCodeLens.enabled": true,
-}
-EOL
-
+#==============================================================================
+# setup git user name and email if none exist
+#==============================================================================
+if [[ -z $(git config --get user.name) ]]; then
+    git config --global user.name $git_user_name
+    echo "No global git user name was set, I have set it to ${BOLD}$git_user_name${RESET}"
 fi
+
+if [[ -z $(git config --get user.email) ]]; then
+    git config --global user.email $git_email
+    echo "No global git email was set, I have set it to ${BOLD}$git_email${RESET}"
+fi
+
 #==============================================================================================
 # make a few little changes to finish up
 #==============================================================================================
