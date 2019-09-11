@@ -213,17 +213,17 @@ case " ${dnf_packages_to_install[*]} " in
 *' composer '*)
     echo "${BOLD}Installing global composer packages...${RESET}"
     /usr/bin/su - "$SUDO_USER" -c "composer global require ${composer_packages_to_install[*]}"
-    ;;
+    ;&
 
 *' nodejs '*)
     echo "${BOLD}Installing global NodeJS packages...${RESET}"
-    /usr/bin/su - "$SUDO_USER" -c "npm install -g ${node_global_packages_to_install[*]}"
-    ;;
+    npm install -g "${node_global_packages_to_install[@]}"
+    ;&
 
 *' code '*)
     echo "${BOLD}Installing Visual Studio Code extensions...${RESET}"
     for extension in "${code_extensions[@]}"; do
         /usr/bin/su - "$SUDO_USER" -c "code --install-extension $extension"
     done
-    ;;
+    ;&
 esac

@@ -19,6 +19,8 @@
 
 # use 'phpcbf --standard=WordPress file.php' to autofix and format Wordpress code
 # use 'composer global show / outdated / update' to manage composer packages
+BOLD=$(tput bold)
+RESET=$(tput sgr0)
 
 if [ "$(id -u)" = 0 ]; then
     echo "You're root! Use ./fedora-ultimate-setup-script.sh" && exit 1
