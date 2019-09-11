@@ -111,30 +111,36 @@ hash code 2>/dev/null &&
         cat >"$HOME/.config/Code/User/settings.json" <<'EOL'
 // Place your settings in this file to overwrite the default settings
 {
-  // VS Code 1.36 general settings
+  // VS Code 1.37 general settings
   "editor.renderWhitespace": "all",
   "editor.dragAndDrop": false,
   "editor.formatOnSave": true,
   "editor.minimap.enabled": false,
   "editor.detectIndentation": false,
   "editor.tabSize": 2,
+  "editor.codeActionsOnSave": {
+    "source.organizeImports": true
+  },
   "workbench.activityBar.visible": false,
   "workbench.tree.renderIndentGuides": "none",
   "workbench.list.keyboardNavigation": "filter",
-  "window.menuBarVisibility": "toggle",
+  "window.menuBarVisibility": "hidden",
+  "window.enableMenuBarMnemonics": false,
   "zenMode.restore": true,
   "zenMode.centerLayout": false,
   "zenMode.fullScreen": false,
   "git.autofetch": true,
   "git.enableSmartCommit": true,
   "git.decorations.enabled": false,
-  "npm.enableScriptExplorer": true,
   "explorer.decorations.colors": false,
   "search.followSymlinks": false,
   // Privacy
   "telemetry.enableTelemetry": false,
   "extensions.showRecommendationsOnlyOnDemand": true,
   // Language settings
+  // "php.validate.executablePath": "/usr/bin/php",
+  // "php.validate.run":"onType",
+  // "phpcs.standard":"WordPress",
   "javascript.preferences.quoteStyle": "single",
   "typescript.updateImportsOnFileMove.enabled": "always",
   "files.exclude": {
@@ -165,7 +171,11 @@ hash code 2>/dev/null &&
   "prettier.proseWrap": "always",
   // Spellright extension
   "spellright.language": ["English (British)"],
-  "spellright.documentTypes": ["markdown", "latex", "plaintext"]
+  "spellright.documentTypes": ["markdown", "latex", "plaintext"],
+  "prettier.quoteProps": "consistent",
+  "[html]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  }
   // "typescript.referencesCodeLens.enabled": true,
   // "javascript.referencesCodeLens.enabled": true,
 }
