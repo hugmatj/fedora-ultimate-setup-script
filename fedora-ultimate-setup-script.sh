@@ -89,7 +89,7 @@ hash php 2>/dev/null &&
         max_execution_time=60    # namesco default setting
 
         for key in upload_max_filesize post_max_size max_execution_time; do
-            sed -i "s/^\($key\).*/\1 = ${!key}/" /etc/php.ini
+            sudo sed -i "s/^\($key\).*/\1 = ${!key}/" /etc/php.ini
         done
     }
 
@@ -217,9 +217,9 @@ fi
 # *MAKE SURE your interface can handle s32le 32bit rather than the default 16bit
 #==============================================================================
 echo "${BOLD}Setting up Pulse Audio...${RESET}"
-sed -i "s/; default-sample-format = s16le/default-sample-format = s32le/g" /etc/pulse/daemon.conf
-sed -i "s/; resample-method = speex-float-1/resample-method = speex-float-10/g" /etc/pulse/daemon.conf
-sed -i "s/; avoid-resampling = false/avoid-resampling = true/g" /etc/pulse/daemon.conf
+sudo sed -i "s/; default-sample-format = s16le/default-sample-format = s32le/g" /etc/pulse/daemon.conf
+sudo sed -i "s/; resample-method = speex-float-1/resample-method = speex-float-10/g" /etc/pulse/daemon.conf
+sudo sed -i "s/; avoid-resampling = false/avoid-resampling = true/g" /etc/pulse/daemon.conf
 
 #==============================================================================
 # setup jack audio for real time use
@@ -252,7 +252,7 @@ fi
 # make a few little changes to finish up
 #==============================================================================================
 echo "Xft.lcdfilter: lcdlight" >>"$HOME/.Xresources"
-echo fs.inotify.max_user_watches=524288 | tee -a /etc/sysctl.conf && sysctl -p
+echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf && sysctl -p
 touch $HOME/Templates/empty-file # so you can create new documents from nautilus
 cat >>"$HOME/.bashrc" <<EOL
 alias ls="ls -ltha --color --group-directories-first" # l=long listing format, t=sort by modification time (newest first), h=human readable sizes, a=print hidden files
