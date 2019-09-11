@@ -224,8 +224,8 @@ sudo sed -i "s/; avoid-resampling = false/avoid-resampling = true/g" /etc/pulse/
 #==============================================================================
 # setup jack audio for real time use
 #==============================================================================
-usermod -a -G jackuser "$SUDO_USER" # Add current user to jackuser group
-tee /etc/security/limits.d/95-jack.conf <<EOL
+sudo usermod -a -G jackuser "$USERNAME" # Add current user to jackuser group
+sudo tee /etc/security/limits.d/95-jack.conf <<EOL
 # Default limits for users of jack-audio-connection-kit
 
 @jackuser - rtprio 98
