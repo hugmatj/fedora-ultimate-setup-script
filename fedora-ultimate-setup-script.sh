@@ -252,7 +252,7 @@ fi
 # make a few little changes to finish up
 #==============================================================================================
 echo "Xft.lcdfilter: lcdlight" >>"$HOME/.Xresources"
-echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf && sysctl -p
+echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf && sudo sysctl -p
 touch $HOME/Templates/empty-file # so you can create new documents from nautilus
 cat >>"$HOME/.bashrc" <<EOL
 alias ls="ls -ltha --color --group-directories-first" # l=long listing format, t=sort by modification time (newest first), h=human readable sizes, a=print hidden files

@@ -171,6 +171,7 @@ ${BOLD}------------------${RESET}
 DNF packages: ${GREEN}${packages_to_remove[*]}${RESET}
 
 EOL
+read -rp "Press enter to install, or ctrl+c to quit"
 
 #==============================================================================
 # add repositories
