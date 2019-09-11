@@ -43,6 +43,13 @@ night_light="true"
 git_email='example@example.com'
 git_user_name='example-name'
 
+#==============================================================================
+# php.ini settings
+#==============================================================================
+upload_max_filesize=128M # namesco default setting
+post_max_size=128M       # namesco default setting
+max_execution_time=60    # namesco default setting
+
 # >>>>>> end of user settings <<<<<<
 
 #==============================================================================
@@ -84,10 +91,6 @@ hash php 2>/dev/null &&
     # PHP
     #==========================================================================
     {
-        upload_max_filesize=128M # namesco default setting
-        post_max_size=128M       # namesco default setting
-        max_execution_time=60    # namesco default setting
-
         for key in upload_max_filesize post_max_size max_execution_time; do
             sudo sed -i "s/^\($key\).*/\1 = ${!key}/" /etc/php.ini
         done
