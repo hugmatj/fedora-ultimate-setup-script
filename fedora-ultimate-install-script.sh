@@ -101,6 +101,8 @@ if [[ $REPLY =~ ^[Yy]$ ]]; then
         nodejs:12)
 
     fedora_developer=(
+        docker
+        docker-compose
         nodejs
         php
         php-json
