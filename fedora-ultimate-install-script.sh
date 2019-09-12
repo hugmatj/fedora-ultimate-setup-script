@@ -6,12 +6,12 @@
 #        USAGE: sudo fedora-ultimate-install-script.sh
 #
 #  DESCRIPTION: Post-installation setup script for Fedora 29/30 Workstation
-#      WEBSITE: https://www.elsewebdevelopment.com/
+#      WEBSITE: https://github.com/David-Else/fedora-ultimate-setup-script
 #
 # REQUIREMENTS: Fresh copy of Fedora 29/30 installed on your computer
 #               https://dl.fedoraproject.org/pub/fedora/linux/releases/30/Workstation/x86_64/iso/
 #       AUTHOR: David Else
-#      COMPANY: Else Web Development
+#      COMPANY: https://www.elsewebdevelopment.com/
 #      VERSION: 3.0
 #==============================================================================
 

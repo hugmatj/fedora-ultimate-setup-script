@@ -6,19 +6,18 @@
 #        USAGE: fedora-ultimate-setup-script.sh
 #
 #  DESCRIPTION: Post-installation setup script for Fedora 29/30 Workstation
-#      WEBSITE: https://www.elsewebdevelopment.com/
+#      WEBSITE: https://github.com/David-Else/fedora-ultimate-setup-script
 #
 # REQUIREMENTS: Fresh copy of Fedora 29/30 installed on your computer
 #               https://dl.fedoraproject.org/pub/fedora/linux/releases/30/Workstation/x86_64/iso/
 #       AUTHOR: David Else
-#      COMPANY: Else Web Development
+#      COMPANY: https://www.elsewebdevelopment.com/
 #      VERSION: 3.0
+#
+# Use 'phpcbf --standard=WordPress file.php' to autofix and format Wordpress code
+# Use 'composer global show / outdated / update' to manage composer packages
 #==============================================================================
 
-# ! how to stop multiple writes to config files?
-
-# use 'phpcbf --standard=WordPress file.php' to autofix and format Wordpress code
-# use 'composer global show / outdated / update' to manage composer packages
 BOLD=$(tput bold)
 RESET=$(tput sgr0)
 
@@ -29,7 +28,7 @@ fi
 # >>>>>> start of user settings <<<<<<
 
 #==============================================================================
-# gnome settings
+# gnome desktop settings
 #==============================================================================
 idle_delay=1200
 title_bar_buttons_on="true"
@@ -44,11 +43,11 @@ git_email='example@example.com'
 git_user_name='example-name'
 
 #==============================================================================
-# php.ini settings
+# php.ini settings *namesco default setting
 #==============================================================================
-upload_max_filesize=128M # namesco default setting
-post_max_size=128M       # namesco default setting
-max_execution_time=60    # namesco default setting
+upload_max_filesize=128M
+post_max_size=128M
+max_execution_time=60
 
 # >>>>>> end of user settings <<<<<<
 
@@ -196,7 +195,7 @@ EOL
 #==============================================================================
 # setup gnome desktop gsettings
 #==============================================================================
-echo "${BOLD}Setting up gnome desktop gsettings...${RESET}"
+echo "${BOLD}Setting up Gnome desktop gsettings...${RESET}"
 
 gsettings set org.gnome.desktop.session \
     idle-delay $idle_delay
@@ -266,18 +265,25 @@ if [[ -z $(git config --get user.email) ]]; then
 fi
 
 #==============================================================================================
-# make a few little changes to finish up
+# turn on subpixel rendering for fonts
 #==============================================================================================
-if ! grep -xq "Xft.lcdfilter: lcdlight" "$HOME/.Xresources"; then
-    echo "Xft.lcdfilter: lcdlight" >>"$HOME/.Xresources"
+if ! grep -xq "Xft.lcdfilter: lcddefault" "$HOME/.Xresources"; then
+    echo "Xft.lcdfilter: lcddefault" >>"$HOME/.Xresources"
 fi
 
+#==============================================================================================
+# improve ls and tree commands output
+#==============================================================================================
 cat >>"$HOME/.bashrc" <<EOL
 alias ls="ls -ltha --color --group-directories-first" # l=long listing format, t=sort by modification time (newest first), h=human readable sizes, a=print hidden files
 alias tree="tree -Catr --noreport --dirsfirst --filelimit 100" # -C=colorization on, a=print hidden files, t=sort by modification time, r=reversed sort by time (newest first)
 EOL
 
+#==============================================================================================
+# increase the amount of inotify watchers
+#==============================================================================================
 echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf && sudo sysctl -p
+
 touch $HOME/Templates/empty-file # so you can create new documents from nautilus
 
 cat <<EOL
