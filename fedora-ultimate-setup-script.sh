@@ -81,9 +81,11 @@ hash pnpm 2>/dev/null &&
     # pnpm
     #==========================================================================
     {
-        cat >>"$HOME/.bash_profile" <<'EOL'
+        if ! grep -xq "export NPM_CHECK_INSTALLER=pnpm" "$HOME/.bash_profile"; then
+            cat >>"$HOME/.bash_profile" <<'EOL'
 export NPM_CHECK_INSTALLER=pnpm
 EOL
+        fi
     }
 
 hash php 2>/dev/null &&
@@ -101,9 +103,11 @@ hash composer 2>/dev/null &&
     # Composer
     #==========================================================================
     {
-        cat >>"$HOME/.bash_profile" <<'EOL'
+        if ! grep -xq 'PATH=$PATH:/home/$USERNAME/.config/composer/vendor/bin' "$HOME/.bash_profile"; then
+            cat >>"$HOME/.bash_profile" <<'EOL'
 PATH=$PATH:/home/$USERNAME/.config/composer/vendor/bin
 EOL
+        fi
     }
 
 hash code 2>/dev/null &&
@@ -264,13 +268,17 @@ fi
 #==============================================================================================
 # make a few little changes to finish up
 #==============================================================================================
-echo "Xft.lcdfilter: lcdlight" >>"$HOME/.Xresources"
-echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf && sudo sysctl -p
-touch $HOME/Templates/empty-file # so you can create new documents from nautilus
+if ! grep -xq "Xft.lcdfilter: lcdlight" "$HOME/.Xresources"; then
+    echo "Xft.lcdfilter: lcdlight" >>"$HOME/.Xresources"
+fi
+
 cat >>"$HOME/.bashrc" <<EOL
 alias ls="ls -ltha --color --group-directories-first" # l=long listing format, t=sort by modification time (newest first), h=human readable sizes, a=print hidden files
 alias tree="tree -Catr --noreport --dirsfirst --filelimit 100" # -C=colorization on, a=print hidden files, t=sort by modification time, r=reversed sort by time (newest first)
 EOL
+
+echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf && sudo sysctl -p
+touch $HOME/Templates/empty-file # so you can create new documents from nautilus
 
 cat <<EOL
   ===================================================
