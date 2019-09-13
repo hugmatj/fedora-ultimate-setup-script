@@ -96,6 +96,7 @@ echo
 if [[ $REPLY =~ ^[Yy]$ ]]; then
     #==========================================================================
     # packages for software development option
+    # *LAMP: mariadb-server php php-json phpmyadmin php-mysqlnd php-opcache sendmail
     #==========================================================================
     modules_to_enable=(
         nodejs:12)
@@ -104,14 +105,7 @@ if [[ $REPLY =~ ^[Yy]$ ]]; then
         docker
         docker-compose
         nodejs
-        php
-        php-json
-        phpmyadmin
-        php-mysqlnd
-        php-opcache
-        sendmail
         composer
-        mariadb-server
         ShellCheck
         zeal)
 
