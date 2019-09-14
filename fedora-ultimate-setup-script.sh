@@ -186,6 +186,114 @@ hash code 2>/dev/null &&
   // "javascript.referencesCodeLens.enabled": true,
 }
 EOL
+
+        cat >"$HOME/.config/Code/User/keybindings.json" <<'EOL'
+// Place your key bindings in this file to overwrite the defaults
+[
+  // capslock delete
+  {
+    "key": "capslock",
+    "command": "deleteLeft",
+    "when": "textInputFocus && !editorReadonly"
+  },
+  // expand/shrink selection vim style
+  {
+    "key": "shift+alt+l",
+    "command": "editor.action.smartSelect.expand",
+    "when": "editorTextFocus"
+  },
+  {
+    "key": "shift+alt+h",
+    "command": "editor.action.smartSelect.shrink",
+    "when": "editorTextFocus"
+  },
+  // navigate back forward position
+  {
+    "key": "alt+left",
+    "command": "workbench.action.navigateBack"
+  },
+  {
+    "key": "alt+right",
+    "command": "workbench.action.navigateForward"
+  },
+  // terminal style jump back and forward over words
+  {
+    "key": "alt+b",
+    "command": "cursorWordStartLeft",
+    "when": "textInputFocus"
+  },
+  {
+    "key": "alt+f",
+    "command": "cursorWordEndRight",
+    "when": "textInputFocus"
+  },
+  // terminal style delete back and forward over words
+  {
+    "key": "alt+capslock",
+    "command": "deleteWordLeft",
+    "when": "textInputFocus && !editorReadonly"
+  },
+  {
+    "key": "alt+d",
+    "command": "deleteWordRight",
+    "when": "textInputFocus && !editorReadonly"
+  },
+  // Lists with vim style shortcuts
+  {
+    "key": "alt+j",
+    "command": "list.focusDown",
+    "when": "listFocus"
+  },
+  {
+    "key": "alt+k",
+    "command": "list.focusUp",
+    "when": "listFocus"
+  },
+  // Autosuggest with vim style shortcuts
+  {
+    "key": "alt+j",
+    "command": "selectNextSuggestion",
+    "when": "editorTextFocus && suggestWidgetMultipleSuggestions && suggestWidgetVisible"
+  },
+  {
+    "key": "alt+k",
+    "command": "selectPrevSuggestion",
+    "when": "editorTextFocus && suggestWidgetMultipleSuggestions && suggestWidgetVisible"
+  },
+  // Quick open with vim style shortcuts
+  {
+    "key": "alt+j",
+    "command": "workbench.action.quickOpenSelectNext",
+    "when": "!editorFocus"
+  },
+  {
+    "key": "alt+k",
+    "command": "workbench.action.quickOpenSelectPrevious",
+    "when": "!editorFocus"
+  },
+  // Cursor movement with vim style shortcuts
+  {
+    "key": "alt+k",
+    "command": "cursorUp",
+    "when": "textInputFocus && !suggestWidgetVisible"
+  },
+  {
+    "key": "alt+j",
+    "command": "cursorDown",
+    "when": "textInputFocus && !suggestWidgetVisible"
+  },
+  {
+    "key": "alt+h",
+    "command": "cursorLeft",
+    "when": "textInputFocus && !suggestWidgetVisible"
+  },
+  {
+    "key": "alt+l",
+    "command": "cursorRight",
+    "when": "textInputFocus && !suggestWidgetVisible"
+  }
+]
+EOL
     }
 
 "$HOME/.config/composer/vendor/bin/phpcs" --config-set installed_paths ~/.config/composer/vendor/wp-coding-standards/wpcs
