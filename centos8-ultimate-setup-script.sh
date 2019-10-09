@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# tested 7/10/19
+# tested 9/10/19
 
 GREEN=$(tput setaf 2)
 BOLD=$(tput bold)
@@ -381,14 +381,6 @@ if [[ -z $(git config --get user.email) ]]; then
 fi
 
 #==============================================================================================
-# turn on subpixel rendering for fonts
-#==============================================================================================
-echo "${BOLD}Setting up subpixel rendering for fonts...${RESET}"
-if ! grep -xq "Xft.lcdfilter: lcddefault" "$HOME/.Xresources"; then
-    echo "Xft.lcdfilter: lcddefault" >>"$HOME/.Xresources"
-fi
-
-#==============================================================================================
 # improve ls and tree commands output
 #==============================================================================================
 cat >>"$HOME/.bashrc" <<EOL
@@ -413,6 +405,7 @@ cat <<EOL
   https://addons.mozilla.org/en-GB/firefox/addon/ublock-origin/
 
   Change settings/details/default applications
+  Change tweaks/fonts/ to Subpixel (for LCD screens)
 
   Please reboot (or things may not work as expected)
   =================================================================
