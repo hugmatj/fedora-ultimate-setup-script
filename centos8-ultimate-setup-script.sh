@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# tested 9/10/19
+# FINAL tested 16/10/19
 
 GREEN=$(tput setaf 2)
 BOLD=$(tput bold)
@@ -25,7 +25,7 @@ night_light="true"
 # git settings
 #==============================================================================
 git_email='example@example.com'
-git_user_name='example-name'
+git_user_name='example_name'
 
 #==============================================================================
 # php.ini settings
@@ -88,18 +88,6 @@ profile=gpu-hq
 hwdec=auto
 fullscreen=yes
 EOL
-    }
-
-hash pnpm 2>/dev/null &&
-    #==========================================================================
-    # pnpm
-    #==========================================================================
-    {
-        if ! grep -xq "export NPM_CHECK_INSTALLER=pnpm" "$HOME/.bash_profile"; then
-            cat >>"$HOME/.bash_profile" <<'EOL'
-export NPM_CHECK_INSTALLER=pnpm
-EOL
-        fi
     }
 
 hash php 2>/dev/null &&
@@ -387,6 +375,13 @@ cat >>"$HOME/.bashrc" <<EOL
 alias ls="ls -ltha --color --group-directories-first" # l=long listing format, t=sort by modification time (newest first), h=human readable sizes, a=print hidden files
 alias tree="tree -Catr --noreport --dirsfirst --filelimit 100" # -C=colorization on, a=print hidden files, t=sort by modification time, r=reversed sort by time (newest first)
 EOL
+
+#==============================================================================================
+# turn on subpixel rendering for fonts without fontconfig support
+#==============================================================================================
+if ! grep -xq "Xft.lcdfilter: lcddefault" "$HOME/.Xresources"; then
+    echo "Xft.lcdfilter: lcddefault" >>"$HOME/.Xresources"
+fi
 
 #==============================================================================================
 # misc

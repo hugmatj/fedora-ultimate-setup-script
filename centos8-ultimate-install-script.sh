@@ -2,7 +2,7 @@
 
 # select SOFTWARE / Software Selection / Base Environment > Workstation
 # when you create user tick 'make user administrator'
-# tested 7/10/19, still unreleased ntfs-3g fuse-exfat borgbackup syncthing wine
+# FINAL tested 16/10/19, still unreleased ntfs-3g borgbackup syncthing wine
 
 #==============================================================================
 # script settings and checks
@@ -37,8 +37,10 @@ packages_to_install=(
     keepassxc
     lshw
     mpv
+    deadbeef
     libva-intel-driver
-    ffmpeg)
+    ffmpeg
+    fuse-exfat)
 
 flathub_packages_to_install=(
     org.kde.krita
@@ -71,8 +73,7 @@ if [[ $REPLY =~ ^[Yy]$ ]]; then
         code)
 
     node_global_packages_to_install=(
-        pnpm
-        npm-check)
+        pnpm)
 
     code_extensions=(
         ban.spellright
