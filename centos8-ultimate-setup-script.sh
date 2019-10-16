@@ -402,6 +402,15 @@ cat <<EOL
   Change settings/details/default applications
   Change tweaks/fonts/ to Subpixel (for LCD screens)
 
+  For VS Code:
+
+  go to terminal type 'ibus-setup'
+  go to Emoji tab, press the '...' next to Emoji choice to get 'select keyboard shortcut for switching' window
+  use the delete button to delete the shortcut and leave nothing there, press OK
+  Close
+
+  add alias code="GTK_IM_MODULE=ibus code" to .bashrc
+
   Please reboot (or things may not work as expected)
   =================================================================
 EOL
