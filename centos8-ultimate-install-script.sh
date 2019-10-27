@@ -2,7 +2,7 @@
 
 # select SOFTWARE / Software Selection / Base Environment > Workstation
 # when you create user tick 'make user administrator'
-# FINAL tested 27/10/19, still unreleased syncthing wine
+# FINAL tested 27/10/19, still unreleased syncthing wine mediainfo
 
 #==============================================================================
 # script settings and checks
