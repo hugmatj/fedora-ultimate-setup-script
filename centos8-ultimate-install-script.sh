@@ -2,7 +2,7 @@
 
 # select SOFTWARE / Software Selection / Base Environment > Workstation
 # when you create user tick 'make user administrator'
-# FINAL tested 16/10/19, still unreleased ntfs-3g borgbackup syncthing wine
+# FINAL tested 27/10/19, still unreleased syncthing wine
 
 #==============================================================================
 # script settings and checks
@@ -32,6 +32,8 @@ packages_to_remove=(
 
 packages_to_install=(
     # brave-browser
+    borgbackup
+    ntfs-3g
     gnome-tweaks
     youtube-dl
     keepassxc
@@ -170,12 +172,6 @@ curl -LOf https://github.com/syncthing/syncthing/releases/download/v1.3.0/syncth
 echo "f70981750dffe089420f7f20ccf9df2f21e90acb168d5f8d691e01b4b5a1f8e67c9711bf8d35ee175fd2ee17048f6f17a03e7aec99143c86a069faebfa8c6073  ./syncthing-linux-amd64-v1.3.0.tar.gz" |
     sha512sum --check
 tar -C /usr/local/bin/ -xf syncthing-linux-amd64-v1.3.0.tar.gz --no-anchored 'syncthing' --strip=1 --exclude='etc/*'
-
-curl -LOf https://github.com/borgbackup/borg/releases/download/1.1.10/borg-linux64
-echo "b798ff9f3f6bfe619cf56d0dd630d64ec076d1a1291ae665bbd15ff0034e12fa524394dbf57cf5fccdf8feadef709f79657ffb0c4ac5878bbb62f890eabe126b ./borg-linux64" |
-    sha512sum --check
-mv borg-linux64 /usr/local/bin/borg
-chmod +x /usr/local/bin/borg
 
 case " ${packages_to_install[*]} " in
 *' nodejs '*)
