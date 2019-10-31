@@ -26,7 +26,7 @@ BOLD=$(tput bold)
 RESET=$(tput sgr0)
 
 if [ "$(id -u)" != 0 ]; then
-    echo "You're not root! Use sudo ./fedora-ultimate-setup-script.sh" && exit 1
+    echo "You're not root! Use sudo ./fedora-ultimate-install-script.sh" && exit 1
 fi
 
 if [[ $(rpm -E %fedora) -lt 29 ]]; then
