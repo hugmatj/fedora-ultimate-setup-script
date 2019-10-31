@@ -17,10 +17,6 @@ possible, and in the process split it into two parts. This solves a super
 annoying problem with the original in that you had to keep coming back to the
 machine and saying yes to continue when the `sudo` privileges timed out.
 
-Now we have an install script AND a setup script, only the install requires
-being ran with `sudo`, which also means the security minded only need check the
-install script for signs of me installing crypto miners :)
-
 #### Fedora Installation and running
 
 Download this repository using git, CD into the directory, and run:
