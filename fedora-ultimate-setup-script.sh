@@ -5,11 +5,11 @@
 #         FILE: fedora-ultimate-setup-script.sh
 #        USAGE: fedora-ultimate-setup-script.sh
 #
-#  DESCRIPTION: Post-installation setup script for Fedora 29/30 Workstation
+#  DESCRIPTION: Post-installation setup script for Fedora 29/30/31 Workstation
 #      WEBSITE: https://github.com/David-Else/fedora-ultimate-setup-script
 #
 # REQUIREMENTS: Fresh copy of Fedora 29/30 installed on your computer
-#               https://dl.fedoraproject.org/pub/fedora/linux/releases/30/Workstation/x86_64/iso/
+#               https://dl.fedoraproject.org/pub/fedora/linux/releases/31/Workstation/x86_64/iso/
 #       AUTHOR: David Else
 #      COMPANY: https://www.elsewebdevelopment.com/
 #      VERSION: 3.0
@@ -373,7 +373,7 @@ if [[ -z $(git config --get user.email) ]]; then
 fi
 
 #==============================================================================================
-# turn on subpixel rendering for fonts
+# turn on subpixel rendering for fonts without fontconfig support
 #==============================================================================================
 if ! grep -xq "Xft.lcdfilter: lcddefault" "$HOME/.Xresources"; then
     echo "Xft.lcdfilter: lcddefault" >>"$HOME/.Xresources"
