@@ -1,295 +1,91 @@
 #!/bin/bash
 
-#==============================================================================
+#==================================================================================================
 #
 #         FILE: fedora-ultimate-setup-script.sh
 #        USAGE: fedora-ultimate-setup-script.sh
 #
-#  DESCRIPTION: Post-installation setup script for Fedora 29/30 Workstation
+#  DESCRIPTION: Post-installation setup script for Fedora 29 Workstation
 #      WEBSITE: https://www.elsewebdevelopment.com/
 #
 # REQUIREMENTS: Fresh copy of Fedora 29/30 installed on your computer
-#               https://dl.fedoraproject.org/pub/fedora/linux/releases/30/Workstation/x86_64/iso/
+#               https://dl.fedoraproject.org/pub/fedora/linux/releases/29/Workstation/x86_64/iso/
 #       AUTHOR: David Else
 #      COMPANY: Else Web Development
-#      VERSION: 3.0
-#==============================================================================
+#      VERSION: 2.2.1
+#==================================================================================================
 
-#==============================================================================
-# script settings and checks
-#==============================================================================
-set -euo pipefail
-exec 2> >(tee "error_log_$(date -Iseconds).txt")
+# WARNING sudo time outs and you need to enter password a few times
 
 GREEN=$(tput setaf 2)
 BOLD=$(tput bold)
 RESET=$(tput sgr0)
 
-if [ "$(id -u)" != 0 ]; then
-    echo "You're not root! Use sudo ./fedora-ultimate-setup-script.sh" && exit 1
-fi
+#==================================================================================================
+# set user preferences
+#==================================================================================================
+system_updates_dir="$HOME/offline-system-updates"
+user_updates_dir="$HOME/offline-user-packages"
+GIT_EMAIL='example@example.com'
+GIT_USER_NAME='example-name'
+REMOVE_LIST=(gnome-photos gnome-documents rhythmbox totem cheese)
 
-if [[ $(rpm -E %fedora) -lt 29 ]]; then
-    echo >&2 "You must install at least ${GREEN}Fedora 29${RESET} to use this script" && exit 1
-fi
+create_package_list() {
+    declare -A packages=(
+        ['drivers']='libva-intel-driver fuse-exfat'
+        ['multimedia']='mpv ffmpeg mkvtoolnix-gui shotwell'
+        ['utils']='gnome-tweaks tldr whipper keepassx transmission-gtk lshw mediainfo klavaro youtube-dl'
+        ['gnome_extensions']='gnome-shell-extension-auto-move-windows.noarch gnome-shell-extension-pomodoro'
+        ['emulation']='winehq-stable dolphin-emu mame'
+        ['audio']='jack-audio-connection-kit'
+        ['backup_sync']='borgbackup syncthing'
+        ['languages']='java-1.8.0-openjdk nodejs php php-json'
+        ['webdev']='code chromium chromium-libs-media-freeworld docker docker-compose ShellCheck'
+        ['firefox extensions']='mozilla-https-everywhere mozilla-privacy-badger mozilla-ublock-origin'
+    )
+    for package in "${!packages[@]}"; do
+        echo "$package: ${GREEN}${packages[$package]}${RESET}" >&2
+        PACKAGES_TO_INSTALL+=(${packages[$package]})
+    done
+}
 
-# >>>>>> start of user settings <<<<<<
+#==================================================================================================
+# add repositories
+#==================================================================================================
+add_repositories() {
+    echo "${BOLD}Adding repositories...${RESET}"
+    sudo dnf -y install https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
+    sudo flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
 
-#==============================================================================
-# git settings
-#==============================================================================
-git_email='example@example.com'
-git_user_name='example-name'
+    if [[ ${PACKAGES_TO_INSTALL[*]} == *'winehq-stable'* ]]; then
+        sudo dnf config-manager --add-repo https://dl.winehq.org/wine-builds/fedora/29/winehq.repo
+    fi
 
-#==============================================================================
-# gnome settings
-#==============================================================================
-idle_delay=1200
-title_bar_buttons_on="true"
-clock_show_date="true"
-capslock_delete="true"
-night_light="true"
+    if [[ ${PACKAGES_TO_INSTALL[*]} == *'code'* ]]; then
+        sudo rpm --import https://packages.microsoft.com/keys/microsoft.asc
+        sudo sh -c 'echo -e "[code]\nname=Visual Studio Code\nbaseurl=https://packages.microsoft.com/yumrepos/vscode\nenabled=1\ngpgcheck=1\ngpgkey=https://packages.microsoft.com/keys/microsoft.asc" > /etc/yum.repos.d/vscode.repo'
+    fi
+}
 
-#==============================================================================
-# packages to remove
-#==============================================================================
-packages_to_remove=(
-    gnome-photos
-    gnome-documents
-    rhythmbox
-    totem
-    cheese)
-
-#==============================================================================
-# common packages to install *arrays can be left empty, but don't delete them
-#==============================================================================
-fedora=(
-    shotwell
-    java-1.8.0-openjdk
-    jack-audio-connection-kit
-    mediainfo
-    syncthing
-    borgbackup
-    gnome-tweaks
-    mkvtoolnix-gui
-    tldr
-    dolphin-emu
-    mame
-    chromium
-    youtube-dl
-    keepassxc
-    transmission-gtk
-    lshw
-    fuse-exfat
-    mpv
-    gnome-shell-extension-pomodoro
-    gnome-shell-extension-auto-move-windows.noarch
-)
-
-rpmfusion=(
-    libva-intel-driver
-    chromium-libs-media-freeworld
-    ffmpeg)
-
-WineHQ=(
-    winehq-stable)
-
-flathub_packages_to_install=(
-    org.kde.krita
-    org.kde.okular
-    fr.handbrake.ghb
-    net.sf.fuse_emulator)
-
-#==============================================================================
-# Ask for user input
-#==============================================================================
-clear
-read -p "Are you going to use this machine for web development? (y/n) " -n 1
-echo
-echo
-
-if [[ $REPLY =~ ^[Yy]$ ]]; then
-    #==========================================================================
-    # packages for software development option
-    #==========================================================================
-    modules_to_enable=(
-        nodejs:12)
-
-    fedora_developer=(
-        nodejs
-        php
-        php-json
-        phpmyadmin
-        php-mysqlnd
-        php-opcache
-        sendmail
-        composer
-        mariadb-server
-        ShellCheck
-        zeal)
-
-    composer_packages_to_install=(
-        squizlabs/php_codesniffer
-        wp-coding-standards/wpcs
-        wp-cli/wp-cli-bundle)
-
-    node_global_packages_to_install=(
-        pnpm
-        npm-check)
-
-    vscode=(
-        code)
-
-    code_extensions=(
-        ban.spellright
+#==================================================================================================
+# setup visual studio code
+#==================================================================================================
+setup_vscode() {
+    local code_extensions=(ban.spellright
         bierner.markdown-preview-github-styles
-        bmewburn.vscode-intelephense-client
         deerawan.vscode-dash
         esbenp.prettier-vscode
         foxundermoon.shell-format
+        ms-vsliveshare.vsliveshare
         msjsdiag.debugger-for-chrome
         ritwickdey.LiveServer
         timonwong.shellcheck
         WallabyJs.quokka-vscode)
-
-    dnf_packages_to_install+=("${fedora[@]}" "${rpmfusion[@]}" "${WineHQ[@]}" "${fedora_developer[@]}" "${vscode[@]}")
-
-elif [[ $REPLY =~ ^[Nn]$ ]]; then
-    dnf_packages_to_install+=("${fedora[@]}" "${rpmfusion[@]}" "${WineHQ[@]}")
-
-else
-    echo "Invalid selection" && exit 1
-fi
-
-# >>>>>> end of user settings <<<<<<
-
-#==============================================================================
-# display user settings and ask user for computer's name
-#==============================================================================
-cat <<EOL
-${BOLD}Packages to install${RESET}
-${BOLD}-------------------${RESET}
-DNF modules to enable: ${GREEN}${modules_to_enable[*]}${RESET}
-
-DNF packages: ${GREEN}${dnf_packages_to_install[*]}${RESET}
-
-Flathub packages: ${GREEN}${flathub_packages_to_install[*]}${RESET}
-
-Composer packages: ${GREEN}${composer_packages_to_install[*]}${RESET}
-
-Node packages: ${GREEN}${node_global_packages_to_install[*]}${RESET}
-
-Visual Studio Code extensions: ${GREEN}${code_extensions[*]}${RESET}
-
-${BOLD}Packages to remove${RESET}
-${BOLD}------------------${RESET}
-DNF packages: ${GREEN}${packages_to_remove[*]}${RESET}
-
-${BOLD}Additional settings${RESET}
-${BOLD}-------------------${RESET}
-Git identity: Name:${GREEN}$git_user_name${RESET} Email:${GREEN}$git_email${RESET}
-
-idle_delay: ${GREEN}$idle_delay${RESET}
-title_bar_buttons_on: ${GREEN}$title_bar_buttons_on${RESET}
-clock_show_date: ${GREEN}$clock_show_date${RESET}
-capslock_delete: ${GREEN}$capslock_delete${RESET}
-night_light: ${GREEN}$night_light${RESET}
-
-EOL
-
-read -rp "What is this computer's name? [$HOSTNAME] " hostname
-if [[ ! -z "$hostname" ]]; then
-    hostnamectl set-hostname "$hostname"
-fi
-
-#==============================================================================
-# add repositories
-#==============================================================================
-echo "${BOLD}Adding repositories...${RESET}"
-dnf -y install https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
-flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
-
-# note the spaces to make sure something like 'notnode' could not trigger 'nodejs' using [*]
-case " ${dnf_packages_to_install[*]} " in
-*' code '*)
-    rpm --import https://packages.microsoft.com/keys/microsoft.asc
-    sh -c 'echo -e "[code]\nname=Visual Studio Code\nbaseurl=https://packages.microsoft.com/yumrepos/vscode\nenabled=1\ngpgcheck=1\ngpgkey=https://packages.microsoft.com/keys/microsoft.asc" > /etc/yum.repos.d/vscode.repo'
-    ;;
-*' winehq-stable '*)
-    dnf config-manager --add-repo https://dl.winehq.org/wine-builds/fedora/30/winehq.repo
-    ;;
-esac
-
-#==============================================================================
-# update/install/remove packages/setup specific dev environments
-#==============================================================================
-echo "${BOLD}Removing unwanted programs...${RESET}"
-dnf -y remove "${packages_to_remove[@]}"
-
-echo "${BOLD}Updating Fedora, enabling module streams, and installing packages...${RESET}"
-dnf -y --refresh upgrade
-
-if [[ ${modules_to_enable[@]} ]]; then
-    dnf -y module enable "${modules_to_enable[@]}"
-fi
-
-dnf -y install "${dnf_packages_to_install[@]}"
-
-echo "${BOLD}Installing flathub packages...${RESET}"
-flatpak install -y flathub "${flathub_packages_to_install[@]}"
-
-case " ${dnf_packages_to_install[*]} " in
-*' composer '*)
-    #==============================================================================
-    # setup PHP dev environment
-    #
-    # use 'phpcbf --standard=WordPress file.php' to autofix and format Wordpress code
-    # use 'composer global show / outdated / update' to manage composer packages
-    #==============================================================================
-    echo "${BOLD}Installing global composer packages and setting up PHP dev environment...${RESET}"
-
-    /usr/bin/su - "$SUDO_USER" -c "composer global require ${composer_packages_to_install[*]}"
-
-    "/home/$SUDO_USER/.config/composer/vendor/bin/phpcs" --config-set installed_paths ~/.config/composer/vendor/wp-coding-standards/wpcs
-    "/home/$SUDO_USER/.config/composer/vendor/bin/phpcs" --config-set default_standard PSR12
-    "/home/$SUDO_USER/.config/composer/vendor/bin/phpcs" --config-show
-
-    upload_max_filesize=128M # namesco default setting
-    post_max_size=128M       # namesco default setting
-    max_execution_time=60    # namesco default setting
-
-    for key in upload_max_filesize post_max_size max_execution_time; do
-        # sed -i "s/^\($key\).*/\1 = $(eval echo \${$key})/" /etc/php.ini
-        sed -i "s/^\($key\).*/\1 = ${!key}/" /etc/php.ini
-    done
-
-    sed -i "s/^\($key\).*/\1 = ${!key}/" /etc/php.ini
-
-    cat >>"/home/$SUDO_USER/.bash_profile" <<'EOL'
-PATH=$PATH:/home/$USERNAME/.config/composer/vendor/bin
-EOL
-    ;;
-*' nodejs '*)
-    #==============================================================================
-    # setup NodeJS dev environment
-    #==============================================================================
-    echo "${BOLD}Installing global NodeJS packages...${RESET}"
-
-    /usr/bin/su - "$SUDO_USER" -c "npm install -g ${node_global_packages_to_install[*]}"
-
-    cat >>"/home/$SUDO_USER/.bash_profile" <<'EOL'
-export NPM_CHECK_INSTALLER=pnpm
-EOL
-    ;;
-*' code '*)
-    #==============================================================================
-    # setup Visual Studio Code dev environment
-    #==============================================================================
-    echo "${BOLD}Installing Visual Studio Code extensions...${RESET}"
     for extension in "${code_extensions[@]}"; do
-        /usr/bin/su - "$SUDO_USER" -c "code --install-extension $extension"
+        code --install-extension "$extension"
     done
-    cat >"/home/$SUDO_USER/.config/Code/User/settings.json" <<'EOL'
+
+    cat >"$HOME/.config/Code/User/settings.json" <<EOL
 // Place your settings in this file to overwrite the default settings
 {
   // VS Code 1.36 general settings
@@ -316,6 +112,7 @@ EOL
   "telemetry.enableTelemetry": false,
   "extensions.showRecommendationsOnlyOnDemand": true,
   // Language settings
+  "php.validate.executablePath": "/usr/bin/php",
   "javascript.preferences.quoteStyle": "single",
   "typescript.updateImportsOnFileMove.enabled": "always",
   "files.exclude": {
@@ -351,59 +148,14 @@ EOL
   // "javascript.referencesCodeLens.enabled": true,
 }
 EOL
-    ;;
-esac
+}
 
-#==============================================================================
-# setup gnome desktop gsettings
-#==============================================================================
-# echo "${BOLD}Setting up gnome desktop gsettings...${RESET}"
-
-# gsettings set org.gnome.desktop.session \
-#     idle-delay $idle_delay
-# gsettings set org.gnome.shell.extensions.auto-move-windows \
-#     application-list "['org.gnome.Nautilus.desktop:2', 'org.gnome.Terminal.desktop:3', 'code.desktop:1', 'firefox.desktop:1']"
-# gsettings set org.gnome.shell enabled-extensions \
-#     "['pomodoro@arun.codito.in', 'auto-move-windows@gnome-shell-extensions.gcampax.github.com']"
-
-# if [[ "${title_bar_buttons_on}" == "true" ]]; then
-#     gsettings set org.gnome.desktop.wm.preferences \
-#         button-layout 'appmenu:minimize,maximize,close'
-# fi
-
-# if [[ "${clock_show_date}" == "true" ]]; then
-#     gsettings set org.gnome.desktop.interface \
-#         clock-show-date true
-# fi
-
-# if [[ "${capslock_delete}" == "true" ]]; then
-#     gsettings set org.gnome.desktop.input-sources \
-#         xkb-options "['caps:backspace', 'terminate:ctrl_alt_bksp']"
-# fi
-
-# if [[ "${night_light}" == "true" ]]; then
-#     gsettings set org.gnome.settings-daemon.plugins.color \
-#         night-light-enabled true
-# fi
-
-#==============================================================================
-# setup pulse audio with the best sound quality possible
-#
-# *pacmd list-sinks | grep sample and see bit-depth available for interface
-# *pulseaudio --dump-re-sample-methods and see re-sampling available
-#
-# *MAKE SURE your interface can handle s32le 32bit rather than the default 16bit
-#==============================================================================
-echo "${BOLD}Setting up Pulse Audio...${RESET}"
-sed -i "s/; default-sample-format = s16le/default-sample-format = s32le/g" /etc/pulse/daemon.conf
-sed -i "s/; resample-method = speex-float-1/resample-method = speex-float-10/g" /etc/pulse/daemon.conf
-sed -i "s/; avoid-resampling = false/avoid-resampling = true/g" /etc/pulse/daemon.conf
-
-#==============================================================================
-# setup jack audio for real time use
-#==============================================================================
-usermod -a -G jackuser "$SUDO_USER" # Add current user to jackuser group
-tee /etc/security/limits.d/95-jack.conf <<EOL
+#==================================================================================================
+# setup jack
+#==================================================================================================
+setup_jack() {
+    sudo usermod -a -G jackuser "$USERNAME" # Add current user to jackuser group
+    sudo tee /etc/security/limits.d/95-jack.conf <<EOL
 # Default limits for users of jack-audio-connection-kit
 
 @jackuser - rtprio 98
@@ -412,45 +164,248 @@ tee /etc/security/limits.d/95-jack.conf <<EOL
 @pulse-rt - rtprio 20
 @pulse-rt - nice -20
 EOL
+}
 
-#==============================================================================
-# setup MPV for best quality and default to full screen
-#==============================================================================
-mkdir -p "/home/$SUDO_USER/.config/mpv"
-cat >"/home/$SUDO_USER/.config/mpv/mpv.conf" <<EOL
+#==================================================================================================
+# setup git
+#==================================================================================================
+setup_git() {
+    if [[ -z $(git config --get user.name) ]]; then
+        git config --global user.name $GIT_USER_NAME
+        echo "No global git user name was set, I have set it to ${BOLD}$GIT_USER_NAME${RESET}"
+    fi
+
+    if [[ -z $(git config --get user.email) ]]; then
+        git config --global user.email $GIT_EMAIL
+        echo "No global git email was set, I have set it to ${BOLD}$GIT_EMAIL${RESET}"
+    fi
+}
+
+#==================================================================================================
+# setup mpv (before it is run config file or dir does not exist)
+#==================================================================================================
+setup_mpv() {
+    mkdir "$HOME/.config/mpv"
+    cat >"$HOME/.config/mpv/mpv.conf" <<EOL
 profile=gpu-hq
 hwdec=auto
 fullscreen=yes
 EOL
+}
 
-#==============================================================================
-# setup git user name and email if none exist
-#==============================================================================
-if [[ -z $(git config --get user.name) ]]; then
-    git config --global user.name $git_user_name
-    echo "No global git user name was set, I have set it to ${BOLD}$git_user_name${RESET}"
-fi
+#==================================================================================================
+# install and create offline install
+#==================================================================================================
+create_offline_install() {
+    mkdir "$system_updates_dir" "$user_updates_dir"
 
-if [[ -z $(git config --get user.email) ]]; then
-    git config --global user.email $git_email
-    echo "No global git email was set, I have set it to ${BOLD}$git_email${RESET}"
-fi
+    echo "${BOLD}Updating Fedora, installing packages, and saving .rpm files...${RESET}"
+    sudo dnf -y --refresh upgrade --downloadonly --downloaddir="$system_updates_dir" --setopt=keepcache=1
+    sudo dnf -y install "$system_updates_dir"/*.rpm --setopt=keepcache=1
+    sudo dnf -y install "${PACKAGES_TO_INSTALL[@]}" --downloadonly --downloaddir="$user_updates_dir" --setopt=keepcache=1
+    sudo dnf -y install "$user_updates_dir"/*.rpm --setopt=keepcache=1
 
-#==============================================================================================
-# make a few little changes to finish up
-#==============================================================================================
-echo "Xft.lcdfilter: lcdlight" >>"/home/$SUDO_USER/.Xresources"
-echo fs.inotify.max_user_watches=524288 | tee -a /etc/sysctl.conf && sysctl -p
-touch /home/$SUDO_USER/Templates/empty-file # so you can create new documents from nautilus
-cat >>"/home/$SUDO_USER/.bashrc" <<EOL
+    echo
+    echo "Your .rpm files live in ${GREEN}$system_updates_dir${RESET} and ${GREEN}$user_updates_dir${RESET}"
+    echo "On Fresh Fedora ISO install copy dirs into home folder and run script choosing option 3 (or use ${GREEN}sudo dnf install *.rpm${RESET} in respective directories)"
+}
+
+#==================================================================================================
+# update_and_install_online
+#==================================================================================================
+update_and_install_online() {
+    echo "${BOLD}Updating Fedora and installing packages...${RESET}"
+    sudo dnf -y --refresh upgrade
+    sudo dnf -y install "${PACKAGES_TO_INSTALL[@]}"
+}
+
+#==================================================================================================
+# update_and_install_offline
+#==================================================================================================
+update_and_install_offline() {
+    if [[ ! -d "$system_updates_dir" || ! -d "$user_updates_dir" ]]; then
+        echo "${GREEN}$system_updates_dir${RESET} or ${GREEN}$user_updates_dir${RESET} do not exist!"
+        exit 1
+    else
+        echo "${BOLD}Updating Fedora and installing packages...${RESET}"
+        sudo dnf -y install "$system_updates_dir"/*.rpm --setopt=keepcache=1
+        sudo dnf -y install "$user_updates_dir"/*.rpm --setopt=keepcache=1
+    fi
+}
+
+#==================================================================================================
+# remove_unwanted_programs
+#==================================================================================================
+remove_unwanted_programs() {
+    echo "${BOLD}Removing unwanted programs...${RESET}"
+    sudo dnf -y remove "${REMOVE_LIST[@]}"
+}
+
+#==================================================================================================
+# main
+#==================================================================================================
+main() {
+    if [[ $(rpm -E %fedora) -lt 29 ]]; then
+        echo >&2 "You must install at least ${GREEN}Fedora 29${RESET} to use this script" && exit 1
+    fi
+
+    clear
+    cat <<EOL
+===================================================================================================
+Welcome to the Fedora 29+ Ultimate Setup Script!
+===================================================================================================
+
+${BOLD}Programs to add:${RESET}
+
+EOL
+    create_package_list
+    cat <<EOL
+
+${BOLD}Programs to remove:${RESET}
+
+${GREEN}${REMOVE_LIST[*]}${RESET}
+
+${BOLD}Git globals will be set to:${RESET} USER_NAME ${GREEN}$GIT_USER_NAME${RESET} EMAIL ${GREEN}$GIT_EMAIL${RESET}
+
+Would you like to use your internet connection to:
+
+${BOLD}1${RESET} Download system updates and install/setup user selected programs
+${BOLD}2${RESET} Download system updates and install/setup user selected programs
+  and create offline install files for future use
+
+Or use offline install files created previously to:
+
+${BOLD}3${RESET} Install system updates and install/setup user selected programs
+
+EOL
+
+    #==============================================================================================
+    # choose options and set host name
+    #==============================================================================================
+    read -p "Please select from the above options (1/2/3) " -n 1 -r
+
+    echo
+    local hostname
+    read -rp "What is this computer's name? [$HOSTNAME] " hostname
+    if [[ ! -z "$hostname" ]]; then
+        hostnamectl set-hostname "$hostname"
+    fi
+
+    case $REPLY in
+    1)
+        set -euo pipefail
+        add_repositories
+        remove_unwanted_programs
+        update_and_install_online
+        ;;
+    2)
+        set -euo pipefail
+        add_repositories
+        remove_unwanted_programs
+        create_offline_install
+        ;;
+    3)
+        add_repositories
+        remove_unwanted_programs
+        update_and_install_offline
+        ;;
+    *)
+        echo "$REPLY was an invalid choice"
+        exit
+        ;;
+    esac
+
+    #==============================================================================================
+    # setup software
+    #==============================================================================================
+    echo "${BOLD}Setting up git globals...${RESET}"
+    setup_git
+
+    # note the spaces to make sure something like 'notnode' could not trigger 'nodejs' using [*]
+    case " ${PACKAGES_TO_INSTALL[*]} " in
+    *' code '*)
+        echo "${BOLD}Setting up Visual Studio Code...${RESET}"
+        setup_vscode
+        ;;&
+    *' nodejs '*)
+        echo "${BOLD}Setting up pnpm...${RESET}"
+        sudo npm install -g pnpm npm-check eslint jsdom
+        cat >>"$HOME/.bashrc" <<EOL
+export NPM_CHECK_INSTALLER=pnpm
+EOL
+        ;;&
+    *' mpv '*)
+        echo "${BOLD}Setting up mpv...${RESET}"
+        setup_mpv
+        ;;&
+    *' jack-audio-connection-kit '*)
+        echo "${BOLD}Setting up jack...${RESET}"
+        setup_jack
+        ;;&
+    esac
+
+    #==============================================================================================
+    # setup pulse audio
+    #
+    # *pacmd list-sinks | grep sample and see bit-depth available for interface
+    # *pulseaudio --dump-re-sample-methods and see re-sampling available
+    #
+    # *MAKE SURE your interface can handle s32le 32bit rather than the default 16bit
+    #==============================================================================================
+    echo "${BOLD}Setting up Pulse Audio...${RESET}"
+    sudo sed -i "s/; default-sample-format = s16le/default-sample-format = s32le/g" /etc/pulse/daemon.conf
+    sudo sed -i "s/; resample-method = speex-float-1/resample-method = speex-float-10/g" /etc/pulse/daemon.conf
+    sudo sed -i "s/; avoid-resampling = false/avoid-resampling = true/g" /etc/pulse/daemon.conf
+
+    #==============================================================================================
+    # setup gnome desktop gsettings
+    #==============================================================================================
+    echo "${BOLD}Setting up Gnome...${RESET}"
+    gsettings set org.gnome.settings-daemon.plugins.media-keys max-screencast-length 0 # Ctrl + Shift + Alt + R to start and stop screencast
+    gsettings set org.gnome.desktop.wm.preferences button-layout 'appmenu:minimize,maximize,close'
+    gsettings set org.gnome.desktop.interface clock-show-date true
+    gsettings set org.gnome.desktop.session idle-delay 1200
+    gsettings set org.gnome.desktop.input-sources xkb-options "['caps:backspace', 'terminate:ctrl_alt_bksp']"
+    gsettings set org.gnome.shell.extensions.auto-move-windows application-list "['org.gnome.Nautilus.desktop:2', 'org.gnome.Terminal.desktop:3', 'code.desktop:1', 'firefox.desktop:1']"
+    gsettings set org.gnome.shell enabled-extensions "['pomodoro@arun.codito.in', 'auto-move-windows@gnome-shell-extensions.gcampax.github.com']"
+    gsettings set org.gnome.settings-daemon.plugins.color night-light-enabled true
+
+    #==============================================================================================
+    # make a few little changes
+    #==============================================================================================
+    mkdir "$HOME/sites"
+    echo "Xft.lcdfilter: lcdlight" >>"$HOME/.Xresources"
+    echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf && sudo sysctl -p
+    touch ~/Templates/empty-file # so you can create new documents from nautilus
+    cat >>"$HOME/.bashrc" <<EOL
 alias ls="ls -ltha --color --group-directories-first" # l=long listing format, t=sort by modification time (newest first), h=human readable sizes, a=print hidden files
 alias tree="tree -Catr --noreport --dirsfirst --filelimit 100" # -C=colorization on, a=print hidden files, t=sort by modification time, r=reversed sort by time (newest first)
 EOL
 
-cat <<EOL
+    cat <<EOL
   ===================================================
-  error_log file generated in current directory
-
-  Please reboot (or things may not work as expected)
+  REBOOT NOW!!!! (or things may not work as expected)
+  shutdown -r
   ===================================================
 EOL
+}
+main
+
+# NOTES
+
+# - mpv addition settings include:
+#  gpu-context=drm
+#  video-sync=display-resample
+#  interpolation
+#  tscale=oversample
+#
+# - Install 'Hide Top Bar' extension from Gnome software
+# - Firefox "about:support" what is compositor? If 'basic' open "about:config"
+#   find "layers.acceleration.force-enabled" and switch to true, this will
+#   force OpenGL acceleration
+# - Update .bash_profile with
+#   'PATH=$PATH:$HOME/.local/bin:$HOME/bin:$HOME/Documents/scripts:$HOME/Documents/scripts/borg-backup'
+# - Files > preferences > views > sort folders before files
+# - Change shotwell import directory format to %Y/%m + rename lower case, import photos from external drive
+# - UMS > un-tick general config > enable external network + check force network on interface correct network (wlp2s0)
+# - make symbolic links to media ln -s /run/media/david/WD-Red-2TB/Media/Audio ~/Music
