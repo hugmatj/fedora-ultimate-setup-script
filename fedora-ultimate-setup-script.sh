@@ -19,6 +19,7 @@
 #==============================================================================
 
 BOLD=$(tput bold)
+GREEN=$(tput setaf 2)
 RESET=$(tput sgr0)
 
 if [ "$(id -u)" = 0 ]; then
@@ -50,6 +51,36 @@ post_max_size=128M
 max_execution_time=60
 
 # >>>>>> end of user settings <<<<<<
+
+#==============================================================================
+# display user settings
+#==============================================================================
+clear
+cat <<EOL
+${BOLD}Gnome settings${RESET}
+${BOLD}-------------------${RESET}
+
+Increase the delay before the desktop logs out: ${GREEN}$idle_delay${RESET} seconds
+Add minimize, maximize and close buttons to windows: ${GREEN}$title_bar_buttons_on${RESET}
+Display the date on the desktop: ${GREEN}$clock_show_date${RESET}
+Change caps into a backspace for touch typing: ${GREEN}$capslock_delete${RESET}
+Turn on night light: ${GREEN}$night_light${RESET}
+
+${BOLD}Git settings${RESET}
+${BOLD}-------------------${RESET}
+
+Global email: ${GREEN}$git_email${RESET}
+Global user name: ${GREEN}$git_user_name${RESET}
+
+${BOLD}PHP settings${RESET} (only if PHP is installed)
+${BOLD}-------------------${RESET}
+
+upload_max_filesize: ${GREEN}$upload_max_filesize${RESET}
+post_max_size: ${GREEN}$post_max_size${RESET}
+max_execution_time: ${GREEN}$max_execution_time${RESET}
+
+EOL
+read -rp "Press enter to setup, or ctrl+c to quit"
 
 #==============================================================================
 # set host name
