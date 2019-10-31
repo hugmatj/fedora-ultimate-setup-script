@@ -2,6 +2,8 @@
 
 ## V3 UPDATED VERSION including Centos 8 Scripts
 
+![screenshot](https://github.com/David-Else/fedora-ultimate-setup-script/blob/master/install-script-v3.png)
+
 ### Total rewrite for ease of customization
 
 I came to the conclusion that the original script was over engineered and the
