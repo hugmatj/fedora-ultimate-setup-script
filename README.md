@@ -27,7 +27,7 @@ Download this repository using git, CD into the directory, and run:
 git clone https://github.com/David-Else/fedora-ultimate-setup-script
 cd fedora-ultimate-setup-script
 sudo ./fedora-ultimate-install-script.sh
-./fedora-ultimate-install-script.sh
+./fedora-ultimate-setup-script.sh
 ```
 
 ### Centos 8 Scripts
@@ -44,7 +44,7 @@ Download this repository using git, CD into the directory, and run:
 git clone https://github.com/David-Else/fedora-ultimate-setup-script
 cd fedora-ultimate-setup-script
 sudo ./centos8-ultimate-install-script.sh
-./centos8-ultimate-install-script.sh
+./centos8-ultimate-setup-script.sh
 ```
 
 ## V2 Legacy Version Docs... (ignore unless you want the backup functionality)
