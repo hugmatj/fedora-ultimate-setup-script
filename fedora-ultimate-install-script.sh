@@ -225,3 +225,11 @@ case " ${dnf_packages_to_install[*]} " in
     done
     ;;
 esac
+
+cat <<EOL
+  =================================================================
+  Congratulations, everything is installed!
+
+  Now use the setup script...
+  =================================================================
+EOL
