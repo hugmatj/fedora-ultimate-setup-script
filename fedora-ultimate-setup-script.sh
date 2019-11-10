@@ -148,8 +148,10 @@ hash code 2>/dev/null &&
         cat >"$HOME/.config/Code/User/settings.json" <<'EOL'
 // Place your settings in this file to overwrite the default settings
 {
-  // VS Code 1.37 general settings
-  "editor.renderWhitespace": "all",
+  // VS Code 1.39
+  // General settings
+  "editor.fontSize": 15,
+  "editor.renderWhitespace": "boundary",
   "editor.dragAndDrop": false,
   "editor.formatOnSave": true,
   "editor.minimap.enabled": false,
@@ -163,6 +165,7 @@ hash code 2>/dev/null &&
   "workbench.list.keyboardNavigation": "filter",
   "window.menuBarVisibility": "hidden",
   "window.enableMenuBarMnemonics": false,
+  "window.titleBarStyle": "custom",
   "zenMode.restore": true,
   "zenMode.centerLayout": false,
   "zenMode.fullScreen": false,
@@ -171,30 +174,38 @@ hash code 2>/dev/null &&
   "git.decorations.enabled": false,
   "explorer.decorations.colors": false,
   "search.followSymlinks": false,
+  "breadcrumbs.enabled": false,
+  "markdown.preview.fontSize": 15,
+  "terminal.integrated.fontSize": 15,
   // Privacy
   "telemetry.enableTelemetry": false,
   "extensions.showRecommendationsOnlyOnDemand": true,
   // Language settings
-  // "php.validate.executablePath": "/usr/bin/php",
-  // "php.validate.run":"onType",
-  // "phpcs.standard":"WordPress",
   "javascript.preferences.quoteStyle": "single",
   "typescript.updateImportsOnFileMove.enabled": "always",
   "files.exclude": {
-    "**/*.js": { "when": "$(basename).ts" },
+    "**/*.js": {
+      "when": "$(basename).ts"
+    },
     "**/*.js.map": true
   },
   "[javascript]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
+    "editor.defaultFormatter": "prettier.prettier-vscode"
   },
   "[typescript]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
+    "editor.defaultFormatter": "prettier.prettier-vscode"
+  },
+  "[typescriptreact]": {
+    "editor.defaultFormatter": "prettier.prettier-vscode"
   },
   "[json]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
+    "editor.defaultFormatter": "prettier.prettier-vscode"
+  },
+  "[html]": {
+    "editor.defaultFormatter": "prettier.prettier-vscode"
   },
   "[jsonc]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
+    "editor.defaultFormatter": "vscode.json-language-features"
   },
   // Shell Format extension
   "shellformat.flag": "-i 4",
@@ -202,17 +213,17 @@ hash code 2>/dev/null &&
   "liveServer.settings.donotShowInfoMsg": true,
   "liveServer.settings.ChromeDebuggingAttachment": true,
   "liveServer.settings.AdvanceCustomBrowserCmdLine": "/usr/bin/chromium-browser --remote-debugging-port=9222",
-  // Prettier extension
-  "prettier.singleQuote": true,
-  "prettier.trailingComma": "all",
-  "prettier.proseWrap": "always",
   // Spellright extension
-  "spellright.language": ["English (British)"],
-  "spellright.documentTypes": ["markdown", "latex", "plaintext"],
-  "prettier.quoteProps": "consistent",
-  "[html]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
-  }
+  "spellright.language": [
+    "English (British)"
+  ],
+  "spellright.documentTypes": [
+    "markdown",
+    "latex",
+    "plaintext"
+  ],
+  // Markdown Preview Enhanced extension
+  "markdown-preview-enhanced.usePandocParser": true,
   // "typescript.referencesCodeLens.enabled": true,
   // "javascript.referencesCodeLens.enabled": true,
 }
