@@ -127,7 +127,7 @@ if [[ $REPLY =~ ^[Yy]$ ]]; then
         bierner.markdown-preview-github-styles
         bmewburn.vscode-intelephense-client
         deerawan.vscode-dash
-        esbenp.prettier-vscode
+        prettier.prettier-vscode
         foxundermoon.shell-format
         msjsdiag.debugger-for-chrome
         ritwickdey.LiveServer
