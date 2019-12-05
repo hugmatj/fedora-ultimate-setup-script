@@ -13,6 +13,8 @@
 #       AUTHOR: David Else
 #      COMPANY: https://www.elsewebdevelopment.com/
 #      VERSION: 3.0
+#
+#      TODO if ban.spellright ln -s /usr/share/myspell ~/.config/Code/Dictionaries
 #==============================================================================
 
 #==============================================================================

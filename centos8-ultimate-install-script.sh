@@ -3,6 +3,7 @@
 # select SOFTWARE / Software Selection / Base Environment > Workstation
 # when you create user tick 'make user administrator'
 # FINAL tested 27/10/19, still unreleased syncthing wine mediainfo
+# TODO if ban.spellright ln -s /usr/share/myspell ~/.config/Code/Dictionaries
 
 #==============================================================================
 # script settings and checks
