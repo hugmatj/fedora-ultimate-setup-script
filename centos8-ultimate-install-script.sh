@@ -2,7 +2,7 @@
 
 # select SOFTWARE / Software Selection / Base Environment > Workstation
 # when you create user tick 'make user administrator'
-# FINAL tested 27/10/19, still unreleased syncthing wine mediainfo
+# FINAL tested 27/10/19
 # TODO if ban.spellright ln -s /usr/share/myspell ~/.config/Code/Dictionaries
 
 #==============================================================================
@@ -43,6 +43,7 @@ packages_to_install=(
     deadbeef
     libva-intel-driver
     ffmpeg
+    mediainfo
     fuse-exfat)
 
 flathub_packages_to_install=(
