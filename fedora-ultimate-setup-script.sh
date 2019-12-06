@@ -172,6 +172,7 @@ hash code 2>/dev/null &&
   "git.autofetch": true,
   "git.enableSmartCommit": true,
   "git.decorations.enabled": false,
+  "terminal.integrated.env.linux": {"PS1": "$ "},
   "explorer.decorations.colors": false,
   "search.followSymlinks": false,
   "breadcrumbs.enabled": false,
