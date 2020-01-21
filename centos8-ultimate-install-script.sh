@@ -2,10 +2,7 @@
 
 # select SOFTWARE / Software Selection / Base Environment > Workstation
 # when you create user tick 'make user administrator'
-# FINAL tested 27/10/19 Centos 8
-# TODO if ban.spellright ln -s /usr/share/myspell ~/.config/Code/Dictionaries
-#      syncthing now in repo
-#      watch for shellcheck 0.7.1 - soon
+# tested 21/01/20 CentOS-8.1.1911-x86_64
 
 #==============================================================================
 # script settings and checks
