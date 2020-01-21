@@ -78,7 +78,6 @@ if [[ $webdev =~ ^[Yy]$ ]]; then
         # bmewburn.vscode-intelephense-client
         ban.spellright
         bierner.markdown-preview-github-styles
-        deerawan.vscode-dash
         esbenp.prettier-vscode
         foxundermoon.shell-format
         msjsdiag.debugger-for-chrome
