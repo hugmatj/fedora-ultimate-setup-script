@@ -80,13 +80,14 @@ if [[ $REPLY =~ ^[Yy]$ ]]; then
         pnpm)
 
     code_extensions=(
+        # bmewburn.vscode-intelephense-client
         ban.spellright
         bierner.markdown-preview-github-styles
-        bmewburn.vscode-intelephense-client
         deerawan.vscode-dash
         esbenp.prettier-vscode
         foxundermoon.shell-format
         msjsdiag.debugger-for-chrome
+        nicoespeon.abracadabra
         ritwickdey.LiveServer
         timonwong.shellcheck
         WallabyJs.quokka-vscode)
