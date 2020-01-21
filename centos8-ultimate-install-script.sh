@@ -2,7 +2,7 @@
 
 # select SOFTWARE / Software Selection / Base Environment > Workstation
 # when you create user tick 'make user administrator'
-# tested 21/01/20 CentOS-8.1.1911-x86_64
+# tested 21/01/20 on fresh install of CentOS-8.1.1911-x86_64
 
 #==============================================================================
 # script settings and checks
