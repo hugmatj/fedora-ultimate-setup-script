@@ -6,7 +6,6 @@
 # TODO if ban.spellright ln -s /usr/share/myspell ~/.config/Code/Dictionaries
 #      syncthing now in repo
 #      if nodejs selected install 12 from modular
-#      consider installing specific vs code version due to recent regressions
 #      watch for shellcheck 0.7.1 - soon
 
 #==============================================================================
@@ -63,11 +62,11 @@ flathub_packages_to_install=(
 # Ask for user input
 #==============================================================================
 clear
-read -p "Are you going to use this machine for web development? (y/n) " -n 1
+read -p "Are you going to use this machine for web development? (y/n) " -n 1 webdev
 echo
 echo
 
-if [[ $REPLY =~ ^[Yy]$ ]]; then
+if [[ $webdev =~ ^[Yy]$ ]]; then
     #==========================================================================
     # packages for web development option
     #==========================================================================
@@ -94,7 +93,7 @@ if [[ $REPLY =~ ^[Yy]$ ]]; then
 
     packages_to_install+=("${developer_packages[@]}")
 
-elif [[ ! $REPLY =~ ^[Nn]$ ]]; then
+elif [[ ! $webdev =~ ^[Nn]$ ]]; then
     echo "Invalid selection" && exit 1
 fi
 
@@ -157,7 +156,11 @@ echo "${BOLD}Installing flatpak packages...${RESET}"
 flatpak install -y flathub "${flathub_packages_to_install[@]}"
 flatpak uninstall -y --unused
 
+#==============================================================================
+# install binaries
+#==============================================================================
 echo "${BOLD}Downloading and installing binaries...${RESET}"
+
 curl -Of https://shellcheck.storage.googleapis.com/shellcheck-v0.7.0.linux.x86_64.tar.xz
 echo "84e06bee3c8b8c25f46906350fb32708f4b661636c04e55bd19cdd1071265112d84906055372149678d37f09a1667019488c62a0561b81fe6a6b45ad4fae4ac0 ./shellcheck-v0.7.0.linux.x86_64.tar.xz" |
     sha512sum --check
@@ -172,6 +175,13 @@ curl -LOf https://github.com/syncthing/syncthing/releases/download/v1.3.0/syncth
 echo "f70981750dffe089420f7f20ccf9df2f21e90acb168d5f8d691e01b4b5a1f8e67c9711bf8d35ee175fd2ee17048f6f17a03e7aec99143c86a069faebfa8c6073  ./syncthing-linux-amd64-v1.3.0.tar.gz" |
     sha512sum --check
 tar -C /usr/local/bin/ -xf syncthing-linux-amd64-v1.3.0.tar.gz --no-anchored 'syncthing' --strip=1 --exclude='etc/*'
+
+#==============================================================================
+# install extras conditionally
+#==============================================================================
+if [[ $webdev =~ ^[Yy]$ ]]; then
+    curl -fsSL https://deno.land/x/install/install.sh | sh
+fi
 
 case " ${packages_to_install[*]} " in
 *' nodejs '*)
