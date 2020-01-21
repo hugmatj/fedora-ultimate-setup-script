@@ -121,7 +121,7 @@ hash code 2>/dev/null &&
         cat >"$HOME/.config/Code/User/settings.json" <<'EOL'
 // Place your settings in this file to overwrite the default settings
 {
-  // VS Code 1.39
+  // VS Code 1.41.1
   // General settings
   "editor.fontSize": 15,
   "editor.renderWhitespace": "boundary",
@@ -130,9 +130,7 @@ hash code 2>/dev/null &&
   "editor.minimap.enabled": false,
   "editor.detectIndentation": false,
   "editor.tabSize": 2,
-  "editor.codeActionsOnSave": {
-    "source.organizeImports": true
-  },
+  "problems.showCurrentInStatus": true,
   "workbench.activityBar.visible": false,
   "workbench.tree.renderIndentGuides": "none",
   "workbench.list.keyboardNavigation": "filter",
@@ -145,7 +143,9 @@ hash code 2>/dev/null &&
   "git.autofetch": true,
   "git.enableSmartCommit": true,
   "git.decorations.enabled": false,
-  "terminal.integrated.env.linux": {"PS1": "$ "},
+  "terminal.integrated.env.linux": {
+    "PS1": "$ "
+  },
   "explorer.decorations.colors": false,
   "search.followSymlinks": false,
   "breadcrumbs.enabled": false,
@@ -157,12 +157,6 @@ hash code 2>/dev/null &&
   // Language settings
   "javascript.preferences.quoteStyle": "single",
   "typescript.updateImportsOnFileMove.enabled": "always",
-  "files.exclude": {
-    "**/*.js": {
-      "when": "$(basename).ts"
-    },
-    "**/*.js.map": true
-  },
   "[javascript]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
@@ -181,16 +175,18 @@ hash code 2>/dev/null &&
   "[jsonc]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
-  // Shell Format extension
+  // Shell extensions
   "shellformat.flag": "-i 4",
+  "shellcheck.enableQuickFix": true,
   // Live Server extension
   "liveServer.settings.donotShowInfoMsg": true,
   "liveServer.settings.ChromeDebuggingAttachment": true,
   "liveServer.settings.AdvanceCustomBrowserCmdLine": "/usr/bin/chromium-browser --remote-debugging-port=9222",
   // Spellright extension
   "spellright.language": [
-    "English (British)"
+    "en_GB"
   ],
+  "spellright.notificationClass": "warning",
   "spellright.documentTypes": [
     "markdown",
     "latex",
