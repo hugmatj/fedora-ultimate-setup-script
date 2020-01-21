@@ -2,10 +2,9 @@
 
 # select SOFTWARE / Software Selection / Base Environment > Workstation
 # when you create user tick 'make user administrator'
-# FINAL tested 27/10/19
+# FINAL tested 27/10/19 Centos 8
 # TODO if ban.spellright ln -s /usr/share/myspell ~/.config/Code/Dictionaries
 #      syncthing now in repo
-#      if nodejs selected install 12 from modular
 #      watch for shellcheck 0.7.1 - soon
 
 #==============================================================================
@@ -71,12 +70,8 @@ if [[ $webdev =~ ^[Yy]$ ]]; then
     # packages for web development option * deno added if selected
     #==========================================================================
     developer_packages=(
-        nodejs
         php
         code)
-
-    node_global_packages_to_install=(
-        pnpm)
 
     code_extensions=(
         # bmewburn.vscode-intelephense-client
@@ -107,8 +102,6 @@ ${BOLD}-------------------${RESET}
 DNF packages: ${GREEN}${packages_to_install[*]}${RESET}
 
 Flathub packages: ${GREEN}${flathub_packages_to_install[*]}${RESET}
-
-NodeJS global packages: ${GREEN}${node_global_packages_to_install[*]}${RESET}
 
 Visual Studio Code extensions: ${GREEN}${code_extensions[*]}${RESET}
 
@@ -184,10 +177,6 @@ if [[ $webdev =~ ^[Yy]$ ]]; then
 fi
 
 case " ${packages_to_install[*]} " in
-*' nodejs '*)
-    echo "${BOLD}Installing global NodeJS packages...${RESET}"
-    npm install -g "${node_global_packages_to_install[@]}"
-    ;;&
 *' code '*)
     echo "${BOLD}Installing Visual Studio Code extensions...${RESET}"
     for extension in "${code_extensions[@]}"; do
@@ -199,6 +188,10 @@ esac
 cat <<EOL
   =================================================================
   Congratulations, everything is installed!
+
+  To install nodejs 12 'sudo dnf module install nodejs:12/common'
+  or for latest https://github.com/nodejs/help/wiki/Installation
+  (don't forget to install PNPM globally)
 
   Now use the setup script...
   =================================================================

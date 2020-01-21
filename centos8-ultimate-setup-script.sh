@@ -117,6 +117,7 @@ hash code 2>/dev/null &&
     # Visual Studio Code
     #==========================================================================
     {
+        ln -s /usr/share/myspell $HOME/.config/Code/Dictionaries
         cat >"$HOME/.config/Code/User/settings.json" <<'EOL'
 // Place your settings in this file to overwrite the default settings
 {
@@ -413,6 +414,7 @@ cat <<EOL
 
   Change settings/details/default applications
   Change tweaks/fonts/ to Subpixel (for LCD screens)
+  Select network > wired > connect automatically
 
   For VS Code:
 
