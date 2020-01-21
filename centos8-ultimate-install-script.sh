@@ -5,7 +5,6 @@
 # FINAL tested 27/10/19
 # TODO if ban.spellright ln -s /usr/share/myspell ~/.config/Code/Dictionaries
 #      syncthing now in repo
-#      go back to built in firefox esr as much newer now
 #      if nodejs selected install 12 from modular
 #      consider installing specific vs code version due to recent regressions
 #      watch for shellcheck 0.7.1 - soon
@@ -29,7 +28,6 @@ fi
 #==============================================================================
 packages_to_remove=(
     gnome-boxes
-    firefox
     evolution
     rhythmbox
     totem
@@ -60,9 +58,6 @@ flathub_packages_to_install=(
     org.bunkus.mkvtoolnix-gui
     com.transmissionbt.Transmission
     org.zealdocs.Zeal)
-
-fedora_flatpak_packages_to_install=(
-    org.mozilla.Firefox)
 
 #==============================================================================
 # Ask for user input
@@ -132,7 +127,6 @@ echo "${BOLD}Adding repositories...${RESET}"
 dnf -y config-manager --enable PowerTools
 dnf -y install epel-release
 dnf -y install --nogpgcheck https://download1.rpmfusion.org/free/el/rpmfusion-free-release-8.noarch.rpm https://download1.rpmfusion.org/nonfree/el/rpmfusion-nonfree-release-8.noarch.rpm
-flatpak remote-add --if-not-exists fedora oci+https://registry.fedoraproject.org
 flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
 
 # note the spaces to make sure something like 'notnode' could not trigger 'nodejs' using [*]
@@ -161,7 +155,6 @@ dnf -y install "${packages_to_install[@]}"
 
 echo "${BOLD}Installing flatpak packages...${RESET}"
 flatpak install -y flathub "${flathub_packages_to_install[@]}"
-flatpak install -y fedora "${fedora_flatpak_packages_to_install[@]}"
 flatpak uninstall -y --unused
 
 echo "${BOLD}Downloading and installing binaries...${RESET}"
