@@ -106,7 +106,6 @@ ${BOLD}-------------------${RESET}
 
 DNF packages: ${GREEN}${packages_to_install[*]}${RESET}
 
-Fedora Flatpak packages: ${GREEN}${fedora_flatpak_packages_to_install[*]}${RESET}
 Flathub packages: ${GREEN}${flathub_packages_to_install[*]}${RESET}
 
 NodeJS global packages: ${GREEN}${node_global_packages_to_install[*]}${RESET}
