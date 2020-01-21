@@ -186,9 +186,11 @@ cat <<EOL
   =================================================================
   Congratulations, everything is installed!
 
-  To install nodejs 12 'sudo dnf module install nodejs:12/common'
+  - To install nodejs 12 'sudo dnf module install nodejs:12/common'
   or for latest https://github.com/nodejs/help/wiki/Installation
   (don't forget to install PNPM globally)
+
+  - Update abattis-cantarell-fonts
 
   Now use the setup script...
   =================================================================
