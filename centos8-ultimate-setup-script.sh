@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# FINAL tested 16/10/19
+# tested 21/01/20 on fresh install of CentOS-8.1.1911-x86_64
 
 GREEN=$(tput setaf 2)
 BOLD=$(tput bold)
