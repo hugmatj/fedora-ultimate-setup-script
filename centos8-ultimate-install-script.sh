@@ -68,7 +68,7 @@ echo
 
 if [[ $webdev =~ ^[Yy]$ ]]; then
     #==========================================================================
-    # packages for web development option
+    # packages for web development option * deno added if selected
     #==========================================================================
     developer_packages=(
         nodejs
