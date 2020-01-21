@@ -118,6 +118,9 @@ hash code 2>/dev/null &&
     #==========================================================================
     {
         ln -s /usr/share/myspell $HOME/.config/Code/Dictionaries
+        cat >>"$HOME/.bashrc" <<EOL
+alias code="GTK_IM_MODULE=ibus code"
+EOL
         cat >"$HOME/.config/Code/User/settings.json" <<'EOL'
 // Place your settings in this file to overwrite the default settings
 {
@@ -418,8 +421,6 @@ cat <<EOL
   go to Emoji tab, press the '...' next to Emoji choice to get 'select keyboard shortcut for switching' window
   use the delete button to delete the shortcut and leave nothing there, press OK
   Close
-
-  add alias code="GTK_IM_MODULE=ibus code" to .bashrc
 
   Please reboot (or things may not work as expected)
   =================================================================
