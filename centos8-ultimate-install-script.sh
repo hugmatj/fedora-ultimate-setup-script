@@ -4,6 +4,11 @@
 # when you create user tick 'make user administrator'
 # FINAL tested 27/10/19
 # TODO if ban.spellright ln -s /usr/share/myspell ~/.config/Code/Dictionaries
+#      syncthing now in repo
+#      go back to built in firefox esr as much newer now
+#      if nodejs selected install 12 from modular
+#      consider installing specific vs code version due to recent regressions
+#      watch for shellcheck 0.7.1 - soon
 
 #==============================================================================
 # script settings and checks
@@ -69,7 +74,7 @@ echo
 
 if [[ $REPLY =~ ^[Yy]$ ]]; then
     #==========================================================================
-    # packages for software development option
+    # packages for web development option
     #==========================================================================
     developer_packages=(
         nodejs
@@ -165,10 +170,10 @@ echo "84e06bee3c8b8c25f46906350fb32708f4b661636c04e55bd19cdd1071265112d849060553
     sha512sum --check
 tar -C /usr/local/bin/ -xf shellcheck-v0.7.0.linux.x86_64.tar.xz --no-anchored 'shellcheck' --strip=1
 
-curl -LOf https://github.com/jgm/pandoc/releases/download/2.7.3/pandoc-2.7.3-linux.tar.gz
-echo "e99eb0471dda59e64c1451b4d110738e3802ad430a406b2b28234f0328a29d59d9942cf53635e2575abe792bd4aedf854339fbd16f9cb8bb0e642bcc42c6ede7 ./pandoc-2.7.3-linux.tar.gz" |
+curl -LOf https://github.com/jgm/pandoc/releases/download/2.9.1.1/pandoc-2.9.1.1-linux-amd64.tar.gz
+echo "d58de03366e6f8cd66c1eb526efc51ea41456f7cf974ab77ce18cdf38b3159a5eb91632b38d3443a7893a361189930d789236da6d56e8a9e571578bd07ec0dd2  ./pandoc-2.9.1.1-linux-amd64.tar.gz" |
     sha512sum --check
-tar -C /usr/local/bin/ -xf pandoc-2.7.3-linux.tar.gz --no-anchored 'pandoc' --strip=2
+tar -C /usr/local/bin/ -xf pandoc-2.9.1.1-linux-amd64.tar.gz --no-anchored 'pandoc' --strip=2
 
 curl -LOf https://github.com/syncthing/syncthing/releases/download/v1.3.0/syncthing-linux-amd64-v1.3.0.tar.gz
 echo "f70981750dffe089420f7f20ccf9df2f21e90acb168d5f8d691e01b4b5a1f8e67c9711bf8d35ee175fd2ee17048f6f17a03e7aec99143c86a069faebfa8c6073  ./syncthing-linux-amd64-v1.3.0.tar.gz" |
