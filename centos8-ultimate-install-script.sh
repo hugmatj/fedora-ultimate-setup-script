@@ -183,15 +183,19 @@ case " ${packages_to_install[*]} " in
 esac
 
 cat <<EOL
-  =================================================================
-  Congratulations, everything is installed!
+=============================================================================
+Congratulations, everything is installed!
 
-  - To install nodejs 12 'sudo dnf module install nodejs:12/common'
-  or for latest https://github.com/nodejs/help/wiki/Installation
-  (don't forget to install PNPM globally)
+To add nodejs 12:
 
-  - Update abattis-cantarell-fonts
+  - 'sudo dnf module install nodejs:12/common' or
+  - curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.2/install.sh | bash
+    nvm install --lts (after opening new terminal)
 
-  Now use the setup script...
-  =================================================================
+...don't forget to install PNPM globally
+
+- Update abattis-cantarell-fonts
+
+Now use the setup script...
+=============================================================================
 EOL
