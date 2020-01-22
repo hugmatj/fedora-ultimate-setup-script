@@ -183,7 +183,7 @@ esac
 
 cat <<EOL
 =============================================================================
-Congratulations, everything is installed!
+Congratulations, everything is installed!!
 
 To add nodejs 12:
 
