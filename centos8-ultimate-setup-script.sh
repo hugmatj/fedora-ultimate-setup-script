@@ -205,6 +205,10 @@ EOL
         cat >"$HOME/.config/Code/User/keybindings.json" <<'EOL'
 // Place your key bindings in this file to overwrite the defaults
 [
+  // when in explorer view create new file there
+  { "key": "ctrl+n",
+    "command": "explorer.newFile",
+    "when": "explorerViewletFocus" },
   // capslock delete
   {
     "key": "capslock",
