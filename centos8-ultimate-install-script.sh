@@ -42,6 +42,7 @@ packages_to_install=(
     libva-intel-driver
     ffmpeg
     mediainfo
+    syncthing
     fuse-exfat)
 
 flathub_packages_to_install=(
@@ -159,11 +160,6 @@ curl -LOf https://github.com/jgm/pandoc/releases/download/2.9.1.1/pandoc-2.9.1.1
 echo "d58de03366e6f8cd66c1eb526efc51ea41456f7cf974ab77ce18cdf38b3159a5eb91632b38d3443a7893a361189930d789236da6d56e8a9e571578bd07ec0dd2  ./pandoc-2.9.1.1-linux-amd64.tar.gz" |
     sha512sum --check
 tar -C /usr/local/bin/ -xf pandoc-2.9.1.1-linux-amd64.tar.gz --no-anchored 'pandoc' --strip=2
-
-curl -LOf https://github.com/syncthing/syncthing/releases/download/v1.3.0/syncthing-linux-amd64-v1.3.0.tar.gz
-echo "f70981750dffe089420f7f20ccf9df2f21e90acb168d5f8d691e01b4b5a1f8e67c9711bf8d35ee175fd2ee17048f6f17a03e7aec99143c86a069faebfa8c6073  ./syncthing-linux-amd64-v1.3.0.tar.gz" |
-    sha512sum --check
-tar -C /usr/local/bin/ -xf syncthing-linux-amd64-v1.3.0.tar.gz --no-anchored 'syncthing' --strip=1 --exclude='etc/*'
 
 #==============================================================================
 # install extras conditionally
