@@ -43,6 +43,7 @@ packages_to_install=(
     ffmpeg
     mediainfo
     syncthing
+    ImageMagick
     fuse-exfat)
 
 flathub_packages_to_install=(
