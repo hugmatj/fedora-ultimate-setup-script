@@ -231,19 +231,60 @@ hash code 2>/dev/null &&
 EOL
 
         cat >"$HOME/.config/Code/User/keybindings.json" <<'EOL'
-// Place your key bindings in this file to overwrite the defaults
 [
-  // when in explorer view create new file there
-  { "key": "ctrl+n",
-    "command": "explorer.newFile",
-    "when": "explorerViewletFocus" },
-  // capslock delete
+  // move cursor
   {
-    "key": "capslock",
-    "command": "deleteLeft",
-    "when": "textInputFocus && !editorReadonly"
+    "key": "alt+k",
+    "command": "cursorUp",
+    "when": "textInputFocus"
   },
-  // expand/shrink selection vim style
+  {
+    "key": "alt+j",
+    "command": "cursorDown",
+    "when": "textInputFocus"
+  },
+  {
+    "key": "alt+l",
+    "command": "cursorRight",
+    "when": "textInputFocus"
+  },
+  {
+    "key": "alt+h",
+    "command": "cursorLeft",
+    "when": "textInputFocus"
+  },
+  {
+    "key": "ctrl+alt+l",
+    "command": "cursorWordEndRight",
+    "when": "textInputFocus"
+  },
+  {
+    "key": "ctrl+alt+h",
+    "command": "cursorWordStartLeft",
+    "when": "textInputFocus"
+  },
+  // navigate lists and explorer
+  {
+    "key": "alt+k",
+    "command": "list.focusUp",
+    "when": "listFocus && !inputFocus"
+  },
+  {
+    "key": "alt+j",
+    "command": "list.focusDown",
+    "when": "listFocus && !inputFocus"
+  },
+  {
+    "key": "alt+l",
+    "command": "list.expand",
+    "when": "listFocus && !inputFocus"
+  },
+  {
+    "key": "alt+h",
+    "command": "list.collapse",
+    "when": "listFocus && !inputFocus"
+  },
+  // smart select
   {
     "key": "shift+alt+l",
     "command": "editor.action.smartSelect.expand",
@@ -254,7 +295,48 @@ EOL
     "command": "editor.action.smartSelect.shrink",
     "when": "editorTextFocus"
   },
-  // navigate back forward position
+  // select suggestion
+  {
+    "key": "alt+k",
+    "command": "selectPrevSuggestion",
+    "when": "suggestWidgetMultipleSuggestions && suggestWidgetVisible && textInputFocus"
+  },
+  {
+    "key": "alt+j",
+    "command": "selectNextSuggestion",
+    "when": "suggestWidgetMultipleSuggestions && suggestWidgetVisible && textInputFocus"
+  },
+  // delete
+  {
+    "key": "capslock",
+    "command": "deleteLeft",
+    "when": "textInputFocus && !editorReadonly"
+  },
+  // delete line
+  {
+    "key": "shift+capslock",
+    "command": "editor.action.deleteLines",
+    "when": "textInputFocus && !editorReadonly"
+  },
+  // delete left
+  {
+    "key": "alt+capslock",
+    "command": "deleteWordLeft",
+    "when": "textInputFocus && !editorReadonly"
+  },
+  // delete right
+  {
+    "key": "alt+d",
+    "command": "deleteWordRight",
+    "when": "textInputFocus && !editorReadonly"
+  },
+  // when in explorer view create new file there
+  {
+    "key": "ctrl+n",
+    "command": "explorer.newFile",
+    "when": "explorerViewletFocus"
+  },
+  // navigate back forward in time position
   {
     "key": "alt+left",
     "command": "workbench.action.navigateBack"
@@ -263,82 +345,6 @@ EOL
     "key": "alt+right",
     "command": "workbench.action.navigateForward"
   },
-  // terminal style jump back and forward over words
-  {
-    "key": "alt+b",
-    "command": "cursorWordStartLeft",
-    "when": "textInputFocus"
-  },
-  {
-    "key": "alt+f",
-    "command": "cursorWordEndRight",
-    "when": "textInputFocus"
-  },
-  // terminal style delete back and forward over words
-  {
-    "key": "alt+capslock",
-    "command": "deleteWordLeft",
-    "when": "textInputFocus && !editorReadonly"
-  },
-  {
-    "key": "alt+d",
-    "command": "deleteWordRight",
-    "when": "textInputFocus && !editorReadonly"
-  },
-  // Lists with vim style shortcuts
-  {
-    "key": "alt+j",
-    "command": "list.focusDown",
-    "when": "listFocus"
-  },
-  {
-    "key": "alt+k",
-    "command": "list.focusUp",
-    "when": "listFocus"
-  },
-  // Autosuggest with vim style shortcuts
-  {
-    "key": "alt+j",
-    "command": "selectNextSuggestion",
-    "when": "editorTextFocus && suggestWidgetMultipleSuggestions && suggestWidgetVisible"
-  },
-  {
-    "key": "alt+k",
-    "command": "selectPrevSuggestion",
-    "when": "editorTextFocus && suggestWidgetMultipleSuggestions && suggestWidgetVisible"
-  },
-  // Quick open with vim style shortcuts
-  {
-    "key": "alt+j",
-    "command": "workbench.action.quickOpenSelectNext",
-    "when": "!editorFocus"
-  },
-  {
-    "key": "alt+k",
-    "command": "workbench.action.quickOpenSelectPrevious",
-    "when": "!editorFocus"
-  },
-  // Cursor movement with vim style shortcuts
-  {
-    "key": "alt+k",
-    "command": "cursorUp",
-    "when": "textInputFocus && !suggestWidgetVisible"
-  },
-  {
-    "key": "alt+j",
-    "command": "cursorDown",
-    "when": "textInputFocus && !suggestWidgetVisible"
-  },
-  {
-    "key": "alt+h",
-    "command": "cursorLeft",
-    "when": "textInputFocus && !suggestWidgetVisible"
-  },
-  {
-    "key": "alt+l",
-    "command": "cursorRight",
-    "when": "textInputFocus && !suggestWidgetVisible"
-  }
 ]
 EOL
     }
