@@ -16,6 +16,8 @@
 #
 # Use 'phpcbf --standard=WordPress file.php' to autofix and format Wordpress code
 # Use 'composer global show / outdated / update' to manage composer packages
+# git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
+# ~/.fzf/install
 #==============================================================================
 
 BOLD=$(tput bold)

@@ -1,6 +1,8 @@
 #!/bin/bash
 
 # tested 21/01/20 on fresh install of CentOS-8.1.1911-x86_64
+# git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
+# ~/.fzf/install
 
 GREEN=$(tput setaf 2)
 BOLD=$(tput bold)
