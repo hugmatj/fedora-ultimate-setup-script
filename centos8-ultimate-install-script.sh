@@ -157,10 +157,10 @@ echo "84e06bee3c8b8c25f46906350fb32708f4b661636c04e55bd19cdd1071265112d849060553
     sha512sum --check
 tar -C /usr/local/bin/ -xf shellcheck-v0.7.0.linux.x86_64.tar.xz --no-anchored 'shellcheck' --strip=1
 
-curl -LOf https://github.com/jgm/pandoc/releases/download/2.9.1.1/pandoc-2.9.1.1-linux-amd64.tar.gz
-echo "d58de03366e6f8cd66c1eb526efc51ea41456f7cf974ab77ce18cdf38b3159a5eb91632b38d3443a7893a361189930d789236da6d56e8a9e571578bd07ec0dd2  ./pandoc-2.9.1.1-linux-amd64.tar.gz" |
+curl -LOf https://github.com/jgm/pandoc/releases/download/2.9.2.1/pandoc-2.9.2.1-linux-amd64.tar.gz
+echo "37f791e766b4e91824814241709243436ba25447bf908626c1d588ba098161bb6c821a6aa4abd2096ae70a8a4207dc862d090abce2f0d64cf582421d6f0f96c6 ./pandoc-2.9.2.1-linux-amd64.tar.gz" |
     sha512sum --check
-tar -C /usr/local/bin/ -xf pandoc-2.9.1.1-linux-amd64.tar.gz --no-anchored 'pandoc' --strip=2
+tar -C /usr/local/bin/ -xf pandoc-2.9.2.1-linux-amd64.tar.gz --no-anchored 'pandoc' --strip=2
 
 #==============================================================================
 # install extras conditionally
