@@ -98,11 +98,14 @@ if [[ $webdev =~ ^[Yy]$ ]]; then
         podman)
 
     code_extensions=(
-        # bmewburn.vscode-intelephense-client
+        asvetliakov.vscode-neovim
         ban.spellright
         bierner.markdown-preview-github-styles
+        bierner.markdown-shiki
+        dbaeumer.vscode-eslint
         esbenp.prettier-vscode
         foxundermoon.shell-format
+        jebbs.plantuml
         msjsdiag.debugger-for-chrome
         nicoespeon.abracadabra
         ritwickdey.LiveServer

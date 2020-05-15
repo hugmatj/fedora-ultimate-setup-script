@@ -14,6 +14,7 @@
 #      VERSION: 5.0
 #
 #      TODO if ban.spellright ln -s /usr/share/myspell ~/.config/Code/Dictionaries
+#      WineHQ repo set for Fedora 32
 #==============================================================================
 
 #==============================================================================
@@ -113,11 +114,14 @@ if [[ $webdev =~ ^[Yy]$ ]]; then
         npm-check)
 
     code_extensions=(
-        # bmewburn.vscode-intelephense-client
+        asvetliakov.vscode-neovim
         ban.spellright
         bierner.markdown-preview-github-styles
+        bierner.markdown-shiki
+        dbaeumer.vscode-eslint
         esbenp.prettier-vscode
         foxundermoon.shell-format
+        jebbs.plantuml
         msjsdiag.debugger-for-chrome
         nicoespeon.abracadabra
         ritwickdey.LiveServer
@@ -170,7 +174,7 @@ case " ${packages_to_install[*]} " in
     sh -c 'echo -e "[code]\nname=Visual Studio Code\nbaseurl=https://packages.microsoft.com/yumrepos/vscode\nenabled=1\ngpgcheck=1\ngpgkey=https://packages.microsoft.com/keys/microsoft.asc" > /etc/yum.repos.d/vscode.repo'
     ;;&
 *' winehq-stable '*)
-    dnf config-manager --add-repo https://dl.winehq.org/wine-builds/fedora/30/winehq.repo
+    dnf config-manager --add-repo https://dl.winehq.org/wine-builds/fedora/32/winehq.repo
     ;;
 esac
 
