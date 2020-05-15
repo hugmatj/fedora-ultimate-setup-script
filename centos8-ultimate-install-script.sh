@@ -1,8 +1,21 @@
 #!/bin/bash
 
-# select SOFTWARE / Software Selection / Base Environment > Workstation
-# when you create user tick 'make user administrator'
-# tested 21/01/20 on fresh install of CentOS-8.1.1911-x86_64
+#==============================================================================
+#
+#         FILE: centos-ultimate-install-script.sh
+#        USAGE: sudo centos-ultimate-install-script.sh
+#
+#  DESCRIPTION: Post-installation install script for Centos 8.x Workstation
+#      WEBSITE: https://github.com/David-Else/fedora-ultimate-setup-script
+#
+# REQUIREMENTS: Fresh copy of Centos 8.x installed on your computer
+#       AUTHOR: David Else
+#      COMPANY: https://www.elsewebdevelopment.com/
+#      VERSION: 4.0
+#
+#      select SOFTWARE / Software Selection / Base Environment > Workstation
+#      TODO if ban.spellright ln -s /usr/share/myspell ~/.config/Code/Dictionaries
+#==============================================================================
 
 #==============================================================================
 # script settings and checks
@@ -18,42 +31,51 @@ if [ "$(id -u)" != 0 ]; then
     echo "You're not root! Run script with sudo" && exit 1
 fi
 
+if [[ $(rpm -E %centos) -lt 8 ]]; then
+    echo >&2 "You must install at least ${GREEN}Centos 8${RESET} to use this script" && exit 1
+fi
+
+# >>>>>> start of user settings <<<<<<
+
 #==============================================================================
 # common packages to install/remove *arrays can be left empty, but don't delete
 #==============================================================================
 packages_to_remove=(
-    gnome-boxes
-    evolution
     rhythmbox
     totem
+    cheese
+    firefox
+    gnome-boxes
+    evolution
     pidgin
-    cheese)
+)
 
 packages_to_install=(
-    # brave-browser
     borgbackup
-    ntfs-3g
-    gnome-tweaks
+    ffmpeg
     youtube-dl
     keepassxc
+    transmission-gtk
     lshw
+    fuse-exfat
     mpv
-    deadbeef
-    libva-intel-driver
-    ffmpeg
+    gnome-tweaks
     mediainfo
     syncthing
-    ImageMagick
-    fuse-exfat)
+    libva-intel-driver
+    deadbeef
+    chromium
+    ntfs-3g
+    ImageMagick)
 
 flathub_packages_to_install=(
     org.kde.krita
     org.kde.okular
+    fr.handbrake.ghb
+    org.mozilla.firefox
     org.gnome.Shotwell
     org.gnome.Boxes
-    fr.handbrake.ghb
     org.bunkus.mkvtoolnix-gui
-    com.transmissionbt.Transmission
     org.zealdocs.Zeal)
 
 #==============================================================================
@@ -69,8 +91,9 @@ if [[ $webdev =~ ^[Yy]$ ]]; then
     # packages for web development option * deno added if selected
     #==========================================================================
     developer_packages=(
+        code
         php
-        code)
+        podman)
 
     code_extensions=(
         # bmewburn.vscode-intelephense-client
@@ -89,6 +112,8 @@ if [[ $webdev =~ ^[Yy]$ ]]; then
 elif [[ ! $webdev =~ ^[Nn]$ ]]; then
     echo "Invalid selection" && exit 1
 fi
+
+# >>>>>> end of user settings <<<<<<
 
 #==============================================================================
 # display user settings
@@ -114,10 +139,10 @@ read -rp "Press enter to install, or ctrl+c to quit"
 # add default and conditional repositories
 #==============================================================================
 echo "${BOLD}Adding repositories...${RESET}"
+flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
 dnf -y config-manager --enable PowerTools
 dnf -y install epel-release
 dnf -y install --nogpgcheck https://download1.rpmfusion.org/free/el/rpmfusion-free-release-8.noarch.rpm https://download1.rpmfusion.org/nonfree/el/rpmfusion-nonfree-release-8.noarch.rpm
-flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
 
 # note the spaces to make sure something like 'notnode' could not trigger 'nodejs' using [*]
 case " ${packages_to_install[*]} " in
@@ -143,7 +168,7 @@ dnf -y --refresh upgrade
 echo "${BOLD}Installing packages...${RESET}"
 dnf -y install "${packages_to_install[@]}"
 
-echo "${BOLD}Installing flatpak packages...${RESET}"
+echo "${BOLD}Installing flathub packages...${RESET}"
 flatpak install -y flathub "${flathub_packages_to_install[@]}"
 flatpak uninstall -y --unused
 
@@ -180,7 +205,7 @@ esac
 
 cat <<EOL
 =============================================================================
-Congratulations, everything is installed!!
+Congratulations, everything is installed!
 
 To add nodejs 12 or 13:
 

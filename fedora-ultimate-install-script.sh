@@ -8,11 +8,10 @@
 #  DESCRIPTION: Post-installation install script for Fedora 29/30/31 Workstation
 #      WEBSITE: https://github.com/David-Else/fedora-ultimate-setup-script
 #
-# REQUIREMENTS: Fresh copy of Fedora 29/30/31 installed on your computer
-#               https://dl.fedoraproject.org/pub/fedora/linux/releases/31/Workstation/x86_64/iso/
+# REQUIREMENTS: Fresh copy of Fedora 29/30/31/32 installed on your computer
 #       AUTHOR: David Else
 #      COMPANY: https://www.elsewebdevelopment.com/
-#      VERSION: 3.0
+#      VERSION: 4.0
 #
 #      TODO if ban.spellright ln -s /usr/share/myspell ~/.config/Code/Dictionaries
 #==============================================================================
@@ -28,7 +27,7 @@ BOLD=$(tput bold)
 RESET=$(tput sgr0)
 
 if [ "$(id -u)" != 0 ]; then
-    echo "You're not root! Use sudo ./fedora-ultimate-install-script.sh" && exit 1
+    echo "You're not root! Run script with sudo" && exit 1
 fi
 
 if [[ $(rpm -E %fedora) -lt 29 ]]; then
@@ -38,47 +37,41 @@ fi
 # >>>>>> start of user settings <<<<<<
 
 #==============================================================================
-# packages to remove
+# common packages to install/remove *arrays can be left empty, but don't delete
 #==============================================================================
 packages_to_remove=(
-    gnome-photos
-    gnome-documents
     rhythmbox
     totem
-    cheese)
+    cheese
+    gnome-photos
+    gnome-documents
+)
 
-#==============================================================================
-# common packages to install *arrays can be left empty, but don't delete them
-#==============================================================================
-fedora=(
-    shotwell
-    java-1.8.0-openjdk
-    jack-audio-connection-kit
-    mediainfo
-    syncthing
+packages_to_install=(
     borgbackup
-    gnome-tweaks
-    mkvtoolnix-gui
-    tldr
-    dolphin-emu
-    mame
-    chromium
+    ffmpeg
     youtube-dl
     keepassxc
     transmission-gtk
     lshw
     fuse-exfat
     mpv
+    gnome-tweaks
+    mediainfo
+    syncthing
+    libva-intel-driver
+    deadbeef
+    chromium
+    chromium-libs-media-freeworld
+    shotwell
+    java-1.8.0-openjdk
+    jack-audio-connection-kit
+    mkvtoolnix-gui
+    tldr
+    dolphin-emu
+    mame
     gnome-shell-extension-pomodoro
     gnome-shell-extension-auto-move-windows.noarch
-)
-
-rpmfusion=(
-    libva-intel-driver
-    chromium-libs-media-freeworld
-    ffmpeg)
-
-WineHQ=(
     winehq-stable)
 
 flathub_packages_to_install=(
@@ -91,23 +84,23 @@ flathub_packages_to_install=(
 # Ask for user input
 #==============================================================================
 clear
-read -p "Are you going to use this machine for web development? (y/n) " -n 1
+read -p "Are you going to use this machine for web development? (y/n) " -n 1 webdev
 echo
 echo
 
-if [[ $REPLY =~ ^[Yy]$ ]]; then
+if [[ $webdev =~ ^[Yy]$ ]]; then
     #==========================================================================
-    # packages for software development option
-    # *LAMP: mariadb-server php-json phpmyadmin php-mysqlnd php-opcache sendmail
+    # packages for web development option * deno added if selected
     #==========================================================================
     modules_to_enable=(
         nodejs:12)
 
-    fedora_developer=(
+    developer_packages=(
+        code
+        php
         docker
         docker-compose
         nodejs
-        php
         composer
         ShellCheck
         zeal)
@@ -121,27 +114,21 @@ if [[ $REPLY =~ ^[Yy]$ ]]; then
         pnpm
         npm-check)
 
-    vscode=(
-        code)
-
     code_extensions=(
+        # bmewburn.vscode-intelephense-client
         ban.spellright
         bierner.markdown-preview-github-styles
-        bmewburn.vscode-intelephense-client
-        deerawan.vscode-dash
         esbenp.prettier-vscode
         foxundermoon.shell-format
         msjsdiag.debugger-for-chrome
+        nicoespeon.abracadabra
         ritwickdey.LiveServer
         timonwong.shellcheck
         WallabyJs.quokka-vscode)
 
-    dnf_packages_to_install+=("${fedora[@]}" "${rpmfusion[@]}" "${WineHQ[@]}" "${fedora_developer[@]}" "${vscode[@]}")
+    packages_to_install+=("${developer_packages[@]}")
 
-elif [[ $REPLY =~ ^[Nn]$ ]]; then
-    dnf_packages_to_install+=("${fedora[@]}" "${rpmfusion[@]}" "${WineHQ[@]}")
-
-else
+elif [[ ! $webdev =~ ^[Nn]$ ]]; then
     echo "Invalid selection" && exit 1
 fi
 
@@ -155,7 +142,7 @@ ${BOLD}Packages to install${RESET}
 ${BOLD}-------------------${RESET}
 DNF modules to enable: ${GREEN}${modules_to_enable[*]}${RESET}
 
-DNF packages: ${GREEN}${dnf_packages_to_install[*]}${RESET}
+DNF packages: ${GREEN}${packages_to_install[*]}${RESET}
 
 Flathub packages: ${GREEN}${flathub_packages_to_install[*]}${RESET}
 
@@ -173,14 +160,14 @@ EOL
 read -rp "Press enter to install, or ctrl+c to quit"
 
 #==============================================================================
-# add repositories
+# add default and conditional repositories
 #==============================================================================
 echo "${BOLD}Adding repositories...${RESET}"
-dnf -y install https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
 flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
+dnf -y install https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
 
 # note the spaces to make sure something like 'notnode' could not trigger 'nodejs' using [*]
-case " ${dnf_packages_to_install[*]} " in
+case " ${packages_to_install[*]} " in
 *' code '*)
     rpm --import https://packages.microsoft.com/keys/microsoft.asc
     sh -c 'echo -e "[code]\nname=Visual Studio Code\nbaseurl=https://packages.microsoft.com/yumrepos/vscode\nenabled=1\ngpgcheck=1\ngpgkey=https://packages.microsoft.com/keys/microsoft.asc" > /etc/yum.repos.d/vscode.repo'
@@ -204,12 +191,20 @@ if [[ ${modules_to_enable[@]} ]]; then
 fi
 
 echo "${BOLD}Installing packages...${RESET}"
-dnf -y install "${dnf_packages_to_install[@]}"
+dnf -y install "${packages_to_install[@]}"
 
 echo "${BOLD}Installing flathub packages...${RESET}"
 flatpak install -y flathub "${flathub_packages_to_install[@]}"
+flatpak uninstall -y --unused
 
-case " ${dnf_packages_to_install[*]} " in
+#==============================================================================
+# install extras conditionally
+#==============================================================================
+if [[ $webdev =~ ^[Yy]$ ]]; then
+    curl -fsSL https://deno.land/x/install/install.sh | sh
+fi
+
+case " ${packages_to_install[*]} " in
 *' composer '*)
     echo "${BOLD}Installing global composer packages...${RESET}"
     /usr/bin/su - "$SUDO_USER" -c "composer global require ${composer_packages_to_install[*]}"
@@ -229,9 +224,9 @@ case " ${dnf_packages_to_install[*]} " in
 esac
 
 cat <<EOL
-  =================================================================
-  Congratulations, everything is installed!
+=============================================================================
+Congratulations, everything is installed!
 
-  Now use the setup script...
-  =================================================================
+Now use the setup script...
+=============================================================================
 EOL
