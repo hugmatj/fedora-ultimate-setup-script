@@ -134,7 +134,7 @@ hash code 2>/dev/null &&
     # Visual Studio Code
     #==========================================================================
     {
-        ln -s /usr/share/myspell $HOME/.config/Code/Dictionaries
+        sudo ln -s /usr/share/myspell "$HOME/.config/Code/Dictionaries"
         cat >>"$HOME/.bashrc" <<EOL
 alias code="GTK_IM_MODULE=ibus code"
 EOL
@@ -375,6 +375,7 @@ if [[ "${night_light}" == "true" ]]; then
 fi
 
 if [[ "${autostart_apps}" == "true" ]]; then
+    mkdir "$HOME/.config/autostart"
     touch "$HOME/Documents/TODO.txt"
     cat >"$HOME/.config/autostart/org.gnome.gedit.desktop" <<'EOL'
 [Desktop Entry]
