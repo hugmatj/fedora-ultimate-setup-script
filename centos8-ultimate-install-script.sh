@@ -13,8 +13,10 @@
 #      COMPANY: https://www.elsewebdevelopment.com/
 #      VERSION: 5.0
 #
-#      select SOFTWARE / Software Selection / Base Environment > Workstation
-#      TODO if ban.spellright ln -s /usr/share/myspell ~/.config/Code/Dictionaries
+#      - select SOFTWARE / Software Selection / Base Environment > Workstation
+#      - make user admin
+#
+# TODO if ban.spellright ln -s /usr/share/myspell ~/.config/Code/Dictionaries
 #==============================================================================
 
 #==============================================================================

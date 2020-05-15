@@ -129,41 +129,49 @@ EOL
         cat >"$HOME/.config/Code/User/settings.json" <<'EOL'
 // Place your settings in this file to overwrite the default settings
 {
-  // VS Code 1.41.1
+  // VS Code 1.45.1
   // General settings
   "editor.fontSize": 15,
+  "markdown.preview.fontSize": 15,
+  "terminal.integrated.fontSize": 15,
   "editor.renderWhitespace": "boundary",
   "editor.dragAndDrop": false,
   "editor.formatOnSave": true,
   "editor.minimap.enabled": false,
   "editor.detectIndentation": false,
   "editor.tabSize": 2,
-  "problems.showCurrentInStatus": true,
   "workbench.activityBar.visible": false,
   "workbench.tree.renderIndentGuides": "none",
   "workbench.list.keyboardNavigation": "filter",
+  "workbench.editor.limit.enabled": true,
+  "workbench.editor.limit.value": 5,
   "window.menuBarVisibility": "hidden",
   "window.enableMenuBarMnemonics": false,
   "window.titleBarStyle": "custom",
-  "zenMode.restore": true,
-  "zenMode.centerLayout": false,
-  "zenMode.fullScreen": false,
+  "files.restoreUndoStack": false,
+  "files.defaultLanguage": "${activeEditorLanguage}",
   "git.autofetch": true,
   "git.enableSmartCommit": true,
   "git.decorations.enabled": false,
+  "problems.showCurrentInStatus": true,
+  "zenMode.restore": true,
   "terminal.integrated.env.linux": {
     "PS1": "$ "
   },
   "explorer.decorations.colors": false,
+  "explorer.openEditors.visible": 0,
+  "outline.problems.enabled": false,
   "search.followSymlinks": false,
   "breadcrumbs.enabled": false,
-  "markdown.preview.fontSize": 15,
-  "terminal.integrated.fontSize": 15,
+  "diffEditor.renderSideBySide": true,
+  "diffEditor.ignoreTrimWhitespace": false,
+  "eslint.packageManager": "pnpm",
+  "omnisharp.enableRoslynAnalyzers": true,
+  "omnisharp.enableEditorConfigSupport": true,
   // Privacy
   "telemetry.enableTelemetry": false,
   "extensions.showRecommendationsOnlyOnDemand": true,
   // Language settings
-  "javascript.preferences.quoteStyle": "single",
   "typescript.updateImportsOnFileMove.enabled": "always",
   "[javascript]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
@@ -183,6 +191,10 @@ EOL
   "[jsonc]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
+  "[markdown]": {
+    "editor.wordWrap": "wordWrapColumn",
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
   // Shell extensions
   "shellformat.flag": "-i 4",
   "shellcheck.enableQuickFix": true,
@@ -191,17 +203,23 @@ EOL
   "liveServer.settings.ChromeDebuggingAttachment": true,
   "liveServer.settings.AdvanceCustomBrowserCmdLine": "/usr/bin/chromium-browser --remote-debugging-port=9222",
   // Spellright extension
-  "spellright.language": [
-    "en_GB"
-  ],
+  "spellright.language": ["en_GB"],
   "spellright.notificationClass": "warning",
-  "spellright.documentTypes": [
-    "markdown",
-    "latex",
-    "plaintext"
-  ],
-  // Markdown Preview Enhanced extension
-  "markdown-preview-enhanced.usePandocParser": true,
+  "spellright.documentTypes": ["markdown", "plaintext"],
+  // To get color emoji on the terminal on Linux
+  "editor.fontFamily": "'Droid Sans Mono', 'monospace', monospace, 'Droid Sans Fallback', 'Noto Color Emoji'",
+  "markdown.preview.fontFamily": "-apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', 'Ubuntu', 'Droid Sans', sans-serif, 'Noto Color Emoji'",
+  // Neo Vim
+  "editor.scrollBeyondLastLine": false,
+  "vscode-neovim.useCtrlKeysForInsertMode": false,
+  "vscode-neovim.useCtrlKeysForNormalMode": true,
+  "vscode-neovim.neovimInitPath": "/home/david/.config/nvim/init.vim",
+  "vscode-neovim.neovimPath": "/home/david/bin/nvim",
+  // Prettier
+  "prettier.proseWrap": "never",
+  "prettier.packageManager": "pnpm",
+  // PlantUML
+  "plantuml.server": "http://localhost:8080/"
   // "typescript.referencesCodeLens.enabled": true,
   // "javascript.referencesCodeLens.enabled": true,
 }

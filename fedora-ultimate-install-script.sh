@@ -5,10 +5,10 @@
 #         FILE: fedora-ultimate-install-script.sh
 #        USAGE: sudo fedora-ultimate-install-script.sh
 #
-#  DESCRIPTION: Post-installation install script for Fedora 29/30/31 Workstation
+#  DESCRIPTION: Post-installation install script for Fedora 29/30/31/32 Workstation
 #      WEBSITE: https://github.com/David-Else/fedora-ultimate-setup-script
 #
-# REQUIREMENTS: Fresh copy of Fedora 29/30/31/32 installed on your computer
+# REQUIREMENTS: Fresh copy of Fedora 30/31/32 installed on your computer
 #       AUTHOR: David Else
 #      COMPANY: https://www.elsewebdevelopment.com/
 #      VERSION: 5.0
