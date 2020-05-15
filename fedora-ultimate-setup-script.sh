@@ -1,24 +1,9 @@
 #!/bin/bash
 
-#==============================================================================
-#
-#         FILE: fedora-ultimate-setup-script.sh
-#        USAGE: fedora-ultimate-setup-script.sh
-#
-#  DESCRIPTION: Post-installation setup script for Fedora 29/30/31 Workstation
-#      WEBSITE: https://github.com/David-Else/fedora-ultimate-setup-script
-#
-# REQUIREMENTS: Fresh copy of Fedora 29/30 installed on your computer
-#               https://dl.fedoraproject.org/pub/fedora/linux/releases/31/Workstation/x86_64/iso/
-#       AUTHOR: David Else
-#      COMPANY: https://www.elsewebdevelopment.com/
-#      VERSION: 3.0
-#
-# Use 'phpcbf --standard=WordPress file.php' to autofix and format Wordpress code
-# Use 'composer global show / outdated / update' to manage composer packages
+# Fedora Ultimate Install Script v5 05/2020
+
 # git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
 # ~/.fzf/install
-#==============================================================================
 
 BOLD=$(tput bold)
 GREEN=$(tput setaf 2)
@@ -466,7 +451,7 @@ EOL
 # misc
 #==============================================================================================
 echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf && sudo sysctl -p
-touch $HOME/Templates/empty-file # so you can create new documents from nautilus
+touch "$HOME/Templates/empty-file" # so you can create new documents from nautilus
 
 cat <<EOL
   =================================================================

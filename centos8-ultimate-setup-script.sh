@@ -1,6 +1,7 @@
 #!/bin/bash
 
-# tested 21/01/20 on fresh install of CentOS-8.1.1911-x86_64
+# Centos Ultimate Install Script v5 05/2020
+
 # git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
 # ~/.fzf/install
 
@@ -430,7 +431,7 @@ EOL
 # misc
 #==============================================================================================
 echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf && sudo sysctl -p
-touch $HOME/Templates/empty-file # so you can create new documents from nautilus
+touch "$HOME/Templates/empty-file" # so you can create new documents from nautilus
 
 cat <<EOL
   =================================================================
