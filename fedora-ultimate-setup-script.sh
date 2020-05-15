@@ -38,6 +38,7 @@ title_bar_buttons_on="true"
 clock_show_date="true"
 capslock_delete="true"
 night_light="true"
+autostart_apps="true"
 
 #==============================================================================
 # git settings
@@ -67,6 +68,7 @@ Add minimize, maximize and close buttons to windows: ${GREEN}$title_bar_buttons_
 Display the date on the desktop: ${GREEN}$clock_show_date${RESET}
 Change caps into a backspace for touch typing: ${GREEN}$capslock_delete${RESET}
 Turn on night light: ${GREEN}$night_light${RESET}
+Run certain apps on start: ${GREEN}$autostart_apps${RESET}
 
 ${BOLD}Git settings${RESET}
 ${BOLD}-------------------${RESET}
@@ -387,6 +389,23 @@ if [[ "${night_light}" == "true" ]]; then
         night-light-enabled true
 fi
 
+if [[ "${autostart_apps}" == "true" ]]; then
+    touch "$HOME/Documents/TODO.txt"
+    cat >"$HOME/.config/autostart/org.gnome.gedit.desktop" <<'EOL'
+[Desktop Entry]
+Name=Text Editor
+Exec=gedit Documents/TODO.txt
+Type=Application
+EOL
+
+    cat >"$HOME/.config/autostart/org.gnome.Terminal.desktop" <<'EOL'
+[Desktop Entry]
+Name=Terminal
+Exec=gnome-terminal
+Type=Application
+EOL
+fi
+
 #==============================================================================
 # setup pulse audio with the best sound quality possible
 #
@@ -438,7 +457,7 @@ fi
 #==============================================================================================
 # improve ls and tree commands output
 #==============================================================================================
-cat >>"$HOME/.bashrc" <<EOL
+cat >>"$HOME/.bashrc" <<'EOL'
 alias ls="ls -ltha --color --group-directories-first" # l=long listing format, t=sort by modification time (newest first), h=human readable sizes, a=print hidden files
 alias tree="tree -Catr --noreport --dirsfirst --filelimit 100" # -C=colorization on, a=print hidden files, t=sort by modification time, r=reversed sort by time (newest first)
 EOL
@@ -462,13 +481,6 @@ cat <<EOL
   Change settings/details/default applications
   Change tweaks/fonts/ to Subpixel (for LCD screens)
   Select network > wired > connect automatically
-
-  For VS Code:
-
-  go to terminal type 'ibus-setup'
-  go to Emoji tab, press the '...' next to Emoji choice to get 'select keyboard shortcut for switching' window
-  use the delete button to delete the shortcut and leave nothing there, press OK
-  Close
 
   Please reboot (or things may not work as expected)
   =================================================================
