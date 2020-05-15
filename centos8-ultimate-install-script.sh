@@ -11,7 +11,7 @@
 # REQUIREMENTS: Fresh copy of Centos 8.x installed on your computer
 #       AUTHOR: David Else
 #      COMPANY: https://www.elsewebdevelopment.com/
-#      VERSION: 4.0
+#      VERSION: 5.0
 #
 #      select SOFTWARE / Software Selection / Base Environment > Workstation
 #      TODO if ban.spellright ln -s /usr/share/myspell ~/.config/Code/Dictionaries

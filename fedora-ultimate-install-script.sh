@@ -11,7 +11,7 @@
 # REQUIREMENTS: Fresh copy of Fedora 29/30/31/32 installed on your computer
 #       AUTHOR: David Else
 #      COMPANY: https://www.elsewebdevelopment.com/
-#      VERSION: 4.0
+#      VERSION: 5.0
 #
 #      TODO if ban.spellright ln -s /usr/share/myspell ~/.config/Code/Dictionaries
 #==============================================================================
