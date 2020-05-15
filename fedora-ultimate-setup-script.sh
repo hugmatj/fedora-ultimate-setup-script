@@ -25,7 +25,7 @@ GREEN=$(tput setaf 2)
 RESET=$(tput sgr0)
 
 if [ "$(id -u)" = 0 ]; then
-    echo "You're root! Use ./fedora-ultimate-setup-script.sh" && exit 1
+    echo "You're root! Run script as user" && exit 1
 fi
 
 # >>>>>> start of user settings <<<<<<
@@ -43,10 +43,10 @@ night_light="true"
 # git settings
 #==============================================================================
 git_email='example@example.com'
-git_user_name='example-name'
+git_user_name='example_name'
 
 #==============================================================================
-# php.ini settings *namesco default setting
+# php.ini settings
 #==============================================================================
 upload_max_filesize=128M
 post_max_size=128M
@@ -147,10 +147,14 @@ hash code 2>/dev/null &&
     # Visual Studio Code
     #==========================================================================
     {
+        ln -s /usr/share/myspell $HOME/.config/Code/Dictionaries
+        cat >>"$HOME/.bashrc" <<EOL
+alias code="GTK_IM_MODULE=ibus code"
+EOL
         cat >"$HOME/.config/Code/User/settings.json" <<'EOL'
 // Place your settings in this file to overwrite the default settings
 {
-  // VS Code 1.39
+  // VS Code 1.41.1
   // General settings
   "editor.fontSize": 15,
   "editor.renderWhitespace": "boundary",
@@ -159,9 +163,7 @@ hash code 2>/dev/null &&
   "editor.minimap.enabled": false,
   "editor.detectIndentation": false,
   "editor.tabSize": 2,
-  "editor.codeActionsOnSave": {
-    "source.organizeImports": true
-  },
+  "problems.showCurrentInStatus": true,
   "workbench.activityBar.visible": false,
   "workbench.tree.renderIndentGuides": "none",
   "workbench.list.keyboardNavigation": "filter",
@@ -174,7 +176,9 @@ hash code 2>/dev/null &&
   "git.autofetch": true,
   "git.enableSmartCommit": true,
   "git.decorations.enabled": false,
-  "terminal.integrated.env.linux": {"PS1": "$ "},
+  "terminal.integrated.env.linux": {
+    "PS1": "$ "
+  },
   "explorer.decorations.colors": false,
   "search.followSymlinks": false,
   "breadcrumbs.enabled": false,
@@ -186,12 +190,6 @@ hash code 2>/dev/null &&
   // Language settings
   "javascript.preferences.quoteStyle": "single",
   "typescript.updateImportsOnFileMove.enabled": "always",
-  "files.exclude": {
-    "**/*.js": {
-      "when": "$(basename).ts"
-    },
-    "**/*.js.map": true
-  },
   "[javascript]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
@@ -210,16 +208,18 @@ hash code 2>/dev/null &&
   "[jsonc]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
-  // Shell Format extension
+  // Shell extensions
   "shellformat.flag": "-i 4",
+  "shellcheck.enableQuickFix": true,
   // Live Server extension
   "liveServer.settings.donotShowInfoMsg": true,
   "liveServer.settings.ChromeDebuggingAttachment": true,
   "liveServer.settings.AdvanceCustomBrowserCmdLine": "/usr/bin/chromium-browser --remote-debugging-port=9222",
   // Spellright extension
   "spellright.language": [
-    "English (British)"
+    "en_GB"
   ],
+  "spellright.notificationClass": "warning",
   "spellright.documentTypes": [
     "markdown",
     "latex",
@@ -417,6 +417,7 @@ EOL
 #==============================================================================
 # setup git user name and email if none exist
 #==============================================================================
+echo "${BOLD}Setting up Git...${RESET}"
 if [[ -z $(git config --get user.name) ]]; then
     git config --global user.name $git_user_name
     echo "No global git user name was set, I have set it to ${BOLD}$git_user_name${RESET}"
@@ -443,14 +444,32 @@ alias tree="tree -Catr --noreport --dirsfirst --filelimit 100" # -C=colorization
 EOL
 
 #==============================================================================================
-# increase the amount of inotify watchers
+# misc
 #==============================================================================================
 echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf && sudo sysctl -p
-
 touch $HOME/Templates/empty-file # so you can create new documents from nautilus
 
 cat <<EOL
-  ===================================================
+  =================================================================
+  Use Gnome Software to install 'Hide Top Bar'
+                                'Auto Move Windows'
+  Add:
+
+  https://addons.mozilla.org/en-GB/firefox/addon/https-everywhere/
+  https://addons.mozilla.org/en-GB/firefox/addon/privacy-badger17/
+  https://addons.mozilla.org/en-GB/firefox/addon/ublock-origin/
+
+  Change settings/details/default applications
+  Change tweaks/fonts/ to Subpixel (for LCD screens)
+  Select network > wired > connect automatically
+
+  For VS Code:
+
+  go to terminal type 'ibus-setup'
+  go to Emoji tab, press the '...' next to Emoji choice to get 'select keyboard shortcut for switching' window
+  use the delete button to delete the shortcut and leave nothing there, press OK
+  Close
+
   Please reboot (or things may not work as expected)
-  ===================================================
+  =================================================================
 EOL

@@ -393,19 +393,19 @@ if [[ -z $(git config --get user.email) ]]; then
 fi
 
 #==============================================================================================
+# turn on subpixel rendering for fonts without fontconfig support
+#==============================================================================================
+if ! grep -xq "Xft.lcdfilter: lcddefault" "$HOME/.Xresources"; then
+    echo "Xft.lcdfilter: lcddefault" >>"$HOME/.Xresources"
+fi
+
+#==============================================================================================
 # improve ls and tree commands output
 #==============================================================================================
 cat >>"$HOME/.bashrc" <<EOL
 alias ls="ls -ltha --color --group-directories-first" # l=long listing format, t=sort by modification time (newest first), h=human readable sizes, a=print hidden files
 alias tree="tree -Catr --noreport --dirsfirst --filelimit 100" # -C=colorization on, a=print hidden files, t=sort by modification time, r=reversed sort by time (newest first)
 EOL
-
-#==============================================================================================
-# turn on subpixel rendering for fonts without fontconfig support
-#==============================================================================================
-if ! grep -xq "Xft.lcdfilter: lcddefault" "$HOME/.Xresources"; then
-    echo "Xft.lcdfilter: lcddefault" >>"$HOME/.Xresources"
-fi
 
 #==============================================================================================
 # misc
