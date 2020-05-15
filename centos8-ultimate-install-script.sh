@@ -192,6 +192,7 @@ tar -C /usr/local/bin/ -xf pandoc-2.9.2.1-linux-amd64.tar.gz --no-anchored 'pand
 #==============================================================================
 if [[ $webdev =~ ^[Yy]$ ]]; then
     curl -fsSL https://deno.land/x/install/install.sh | sh
+    dnf -y module install nodejs:12/default
 fi
 
 case " ${packages_to_install[*]} " in
@@ -207,15 +208,9 @@ cat <<EOL
 =============================================================================
 Congratulations, everything is installed!
 
-To add nodejs 12 or 13:
+- Run 'sudo centos8-update-fonts.sh' to update abattis-cantarell-fonts
 
-  - 'sudo dnf module install nodejs:12/default' (replace 12 with 13)
-  - curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.2/install.sh | bash
-    nvm install --lts (after opening new terminal)
-
-...don't forget to install PNPM globally
-
-- Update abattis-cantarell-fonts
+JavaScript developers, don't forget to install PNPM globally
 
 Now use the setup script...
 =============================================================================

@@ -92,12 +92,10 @@ if [[ $webdev =~ ^[Yy]$ ]]; then
     #==========================================================================
     # packages for web development option * deno added if selected
     #==========================================================================
-    modules_to_enable=(
-        nodejs:12)
-
     developer_packages=(
         code
         php
+        nodejs
         docker
         docker-compose
         nodejs
@@ -140,7 +138,6 @@ fi
 cat <<EOL
 ${BOLD}Packages to install${RESET}
 ${BOLD}-------------------${RESET}
-DNF modules to enable: ${GREEN}${modules_to_enable[*]}${RESET}
 
 DNF packages: ${GREEN}${packages_to_install[*]}${RESET}
 
@@ -183,12 +180,8 @@ esac
 echo "${BOLD}Removing unwanted programs...${RESET}"
 dnf -y remove "${packages_to_remove[@]}"
 
-echo "${BOLD}Updating Fedora, enabling module streams...${RESET}"
+echo "${BOLD}Updating Fedora...${RESET}"
 dnf -y --refresh upgrade
-
-if [[ ${modules_to_enable[@]} ]]; then
-    dnf -y module enable "${modules_to_enable[@]}"
-fi
 
 echo "${BOLD}Installing packages...${RESET}"
 dnf -y install "${packages_to_install[@]}"
