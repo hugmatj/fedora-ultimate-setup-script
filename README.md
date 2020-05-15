@@ -1,4 +1,6 @@
-# Fedora Ultimate Setup Script
+# Fedora and Centos Ultimate Setup Scripts v5
+
+Tested on new installs of
 
 ## V4 UPDATED VERSION including Centos 8 Scripts
 

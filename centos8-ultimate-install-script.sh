@@ -91,7 +91,7 @@ if [[ $webdev =~ ^[Yy]$ ]]; then
     # packages for web development option * deno added if selected
     #==========================================================================
     developer_packages=(
-        code
+        code-1.45.1-1589445456.el7
         php
         podman)
 
