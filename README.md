@@ -1,4 +1,4 @@
-# Fedora and Centos Ultimate Setup Scripts | v5 May 2020
+# Fedora and Centos Ultimate Setup Scripts v5 (May 2020)
 
 **Welcome to your new ultimate desktop!** You can now choose between long term support with Centos and cutting edge features with Fedora. These scripts re-create the same set of applications and settings across both distributions. Enjoy:
 
@@ -64,7 +64,7 @@ fi
 
 ## Setup script
 
-If web development was chosen then a lot of extra things are setup here, including my entire config for Visual Studio Code. Most people will want to heavily edit this file for their own preferences. Highlight include:
+If web development was chosen then a lot of extra things are setup here, including my entire config for Visual Studio Code. Most people will want to heavily edit this file for their own preferences. Highlights include:
 
 - Better Gnome settings
 - Set your Github name and email
@@ -79,15 +79,15 @@ If web development was chosen then a lot of extra things are setup here, includi
 
 - Tested on Fedora 32 and Centos 8.1
 - Add new apps and remove old ones
-- Syncronise Fedora and Centos application versions as much as possible taking advantage of newly available EPEL-8 and Flatpak packages. Always prefer official repository versions where possible.
+- Synchronise Fedora and Centos application versions as much as possible taking advantage of newly available EPEL-8 and Flatpak packages. Always prefer official repository versions where possible.
 
 ![Fedora and centos app differences](images/differences_centos_fedora_packages.png)
 
-- Add option to auto start programs on boot using `.config/autostart` with a default `TODO.txt` list and terminal instance.
-- Add updated compatible abattis cantarell fonts for Centos 8.1, it ships with old ones
+- Add option to auto start programs on boot using `.config/autostart` with a default `TODO.txt` list and terminal instance
+- Add updated compatible `abattis cantarell fonts` for Centos 8.1, it ships with old ones
 - Refactor, update and improve all scripts
 
-## Fedora Installation and running
+## Fedora Installation and running scripts
 
 Download this repository using git, CD into the directory, and run:
 
@@ -98,7 +98,7 @@ sudo ./fedora-ultimate-install-script.sh
 ./fedora-ultimate-setup-script.sh
 ```
 
-## Centos 8 Installation and running
+## Centos 8 Installation and running scripts
 
 Download this repository using git, CD into the directory, and run:
 
@@ -111,7 +111,7 @@ sudo ./centos8-ultimate-install-script.sh
 
 ### FAQ
 
-**Q**: Does this script disable the caps lock key? I've noticed that it works during login but after that it stops working all together.
+**Q**: Does this script disable the caps lock key? I've noticed that it works during login but after that it stops working altogether.
 
 **A**: It makes the caps lock into a delete for touch typing purposes, to change it modify this line before running:
 
