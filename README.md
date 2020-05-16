@@ -49,10 +49,10 @@ Add and remove the applications you want from repositories
 # Repositories are intelligently added for your choices if needed:
 case " ${packages_to_install[*]} " in
 *' code '*)
-    # Action if 'code' is included
+    # Action if 'code' is included in packages
     ;;&
 *' brave-browser '*)
-    # Action if 'brave-browser' is included
+    # Action if 'brave-browser' is included in packages
     ;;
 esac
 
