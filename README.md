@@ -26,7 +26,7 @@
 - Syncthing
 - BorgBackup
 
-### Development tools
+### (Optional) Development tools
 
 - Visual Studio Code with extensions
 - PHP / Node.js / Deno
