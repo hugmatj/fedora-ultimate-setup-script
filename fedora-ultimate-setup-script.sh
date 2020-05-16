@@ -45,6 +45,8 @@ max_execution_time=60
 #==============================================================================
 clear
 cat <<EOL
+Don't run this script more than once or you may get duplication in settings files
+
 ${BOLD}Gnome settings${RESET}
 ${BOLD}-------------------${RESET}
 
