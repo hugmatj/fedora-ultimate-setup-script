@@ -50,7 +50,6 @@ packages_to_remove=(
 )
 
 packages_to_install=(
-    borgbackup
     ffmpeg
     youtube-dl
     keepassxc
@@ -212,6 +211,7 @@ Congratulations, everything is installed!
 sudo dnf install abattis-cantarell-fonts-0.111-2.fc30.noarch.rpm to upgrade 0.0.25
 
 JavaScript developers, don't forget to install PNPM globally
+Try installing borgbackup...
 
 Now use the setup script...
 =============================================================================
