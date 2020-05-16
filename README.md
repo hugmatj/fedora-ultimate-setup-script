@@ -1,6 +1,6 @@
 # Fedora and Centos Ultimate Setup Scripts v5 (May 2020)
 
-**Welcome to your new ultimate desktop!** You can now choose between long term support with Centos and cutting edge features with Fedora. These scripts re-create the same set of applications and settings across both distributions. Enjoy:
+**Welcome to your new ultimate desktop!** You can now choose between long term support with Centos and cutting edge features with Fedora. Run these scripts after a fresh install of your favorite OS. You can re-create the same set of applications and settings across both distributions. Enjoy:
 
 ### Browsers
 
@@ -79,7 +79,7 @@ If web development was chosen then a lot of extra things are setup here, includi
 
 - Tested on Fedora 32 and Centos 8.1
 - Add new apps and remove old ones
-- Synchronise Fedora and Centos application versions as much as possible taking advantage of newly available EPEL-8 and Flatpak packages. Always prefer official repository versions where possible.
+- Synchronize Fedora and Centos application versions as much as possible taking advantage of newly available EPEL-8 and Flatpak packages. Always prefer official repository versions where possible.
 
 ![Fedora and centos app differences](images/differences_centos_fedora_packages.png)
 
