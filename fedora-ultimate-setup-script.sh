@@ -433,19 +433,21 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf && sudo s
 touch "$HOME/Templates/empty-file" # so you can create new documents from nautilus
 
 cat <<EOL
-  =================================================================
-  Use Gnome Software to install 'Hide Top Bar'
-                                'Auto Move Windows'
-  Add:
+=================================================================
+Use Gnome Software to install 'Hide Top Bar' 'Auto Move Windows'
+Add the following Firefox extensions with:
 
-  https://addons.mozilla.org/en-GB/firefox/addon/https-everywhere/
-  https://addons.mozilla.org/en-GB/firefox/addon/privacy-badger17/
-  https://addons.mozilla.org/en-GB/firefox/addon/ublock-origin/
+firefox https://addons.mozilla.org/en-GB/firefox/addon/https-everywhere/ \
+https://addons.mozilla.org/en-GB/firefox/addon/privacy-badger17/ \
+https://addons.mozilla.org/en-GB/firefox/addon/ublock-origin/ \
+https://addons.mozilla.org/en-US/firefox/addon/df-youtube/ \
+https://addons.mozilla.org/en-US/firefox/addon/tabliss/
 
-  Change settings/details/default applications
-  Change tweaks/fonts/ to Subpixel (for LCD screens)
-  Select network > wired > connect automatically
+Change settings/details/default applications
+Change tweaks/fonts/ to Subpixel (for LCD screens)
+Select network > wired > connect automatically
 
-  Please reboot (or things may not work as expected)
-  =================================================================
+
+Please reboot (or things may not work as expected)
+=================================================================
 EOL

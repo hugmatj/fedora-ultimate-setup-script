@@ -55,7 +55,6 @@ packages_to_install=(
     youtube-dl
     keepassxc
     transmission-gtk
-    lshw
     fuse-exfat
     mpv
     gnome-tweaks
@@ -90,7 +89,7 @@ if [[ $webdev =~ ^[Yy]$ ]]; then
     # packages for web development option * deno added if selected
     #==========================================================================
     developer_packages=(
-        code-1.45.1-1589445456.el7
+        code
         php
         podman)
 
@@ -210,7 +209,7 @@ cat <<EOL
 =============================================================================
 Congratulations, everything is installed!
 
-- Run 'sudo centos8-update-fonts.sh' to update abattis-cantarell-fonts
+sudo dnf install abattis-cantarell-fonts-0.111-2.fc30.noarch.rpm to upgrade 0.0.25
 
 JavaScript developers, don't forget to install PNPM globally
 
