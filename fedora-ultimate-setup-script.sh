@@ -5,8 +5,8 @@
 # git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
 # ~/.fzf/install
 
-BOLD=$(tput bold)
 GREEN=$(tput setaf 2)
+BOLD=$(tput bold)
 RESET=$(tput sgr0)
 
 if [ "$(id -u)" = 0 ]; then
@@ -239,37 +239,36 @@ EOL
 
         cat >"$HOME/.config/Code/User/keybindings.json" <<'EOL'
 [
-  // move cursor
+  // jk for vscode-neovim escape in insert mode
   {
-    "key": "alt+k",
-    "command": "cursorUp",
-    "when": "textInputFocus"
+    "command": "vscode-neovim.compositeEscape1",
+    "key": "j",
+    "when": "neovim.mode == insert",
+    "args": "j"
   },
   {
-    "key": "alt+j",
-    "command": "cursorDown",
-    "when": "textInputFocus"
+    "command": "vscode-neovim.compositeEscape2",
+    "key": "k",
+    "when": "neovim.mode == insert",
+    "args": "k"
+  },
+  // delete
+  {
+    "key": "capslock",
+    "command": "deleteLeft",
+    "when": "textInputFocus && !editorReadonly"
+  },
+  // navigate position back/forward in time
+  {
+    "key": "alt+left",
+    "command": "workbench.action.navigateBack"
   },
   {
-    "key": "alt+l",
-    "command": "cursorRight",
-    "when": "textInputFocus"
+    "key": "alt+right",
+    "command": "workbench.action.navigateForward"
   },
-  {
-    "key": "alt+h",
-    "command": "cursorLeft",
-    "when": "textInputFocus"
-  },
-  {
-    "key": "ctrl+alt+l",
-    "command": "cursorWordEndRight",
-    "when": "textInputFocus"
-  },
-  {
-    "key": "ctrl+alt+h",
-    "command": "cursorWordStartLeft",
-    "when": "textInputFocus"
-  },
+  // use alt h/j/k/l keys where possible
+  //
   // navigate lists and explorer
   {
     "key": "alt+k",
@@ -312,46 +311,7 @@ EOL
     "key": "alt+j",
     "command": "selectNextSuggestion",
     "when": "suggestWidgetMultipleSuggestions && suggestWidgetVisible && textInputFocus"
-  },
-  // delete
-  {
-    "key": "capslock",
-    "command": "deleteLeft",
-    "when": "textInputFocus && !editorReadonly"
-  },
-  // delete line
-  {
-    "key": "shift+capslock",
-    "command": "editor.action.deleteLines",
-    "when": "textInputFocus && !editorReadonly"
-  },
-  // delete left
-  {
-    "key": "alt+capslock",
-    "command": "deleteWordLeft",
-    "when": "textInputFocus && !editorReadonly"
-  },
-  // delete right
-  {
-    "key": "alt+d",
-    "command": "deleteWordRight",
-    "when": "textInputFocus && !editorReadonly"
-  },
-  // when in explorer view create new file there
-  {
-    "key": "ctrl+n",
-    "command": "explorer.newFile",
-    "when": "explorerViewletFocus"
-  },
-  // navigate back forward in time position
-  {
-    "key": "alt+left",
-    "command": "workbench.action.navigateBack"
-  },
-  {
-    "key": "alt+right",
-    "command": "workbench.action.navigateForward"
-  },
+  }
 ]
 EOL
     }

@@ -8,13 +8,10 @@
 #  DESCRIPTION: Post-installation install script for Centos 8.x Workstation
 #      WEBSITE: https://github.com/David-Else/fedora-ultimate-setup-script
 #
-# REQUIREMENTS: Fresh copy of Centos 8.x installed on your computer
+# REQUIREMENTS: Centos 8.x install using 'Workstation' option with user as admin
 #       AUTHOR: David Else
 #      COMPANY: https://www.elsewebdevelopment.com/
 #      VERSION: 5.0
-#
-#      - select SOFTWARE / Software Selection / Base Environment > Workstation
-#      - make user admin
 #
 # TODO if ban.spellright ln -s /usr/share/myspell ~/.config/Code/Dictionaries
 #==============================================================================
