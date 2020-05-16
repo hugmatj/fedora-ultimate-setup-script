@@ -49,12 +49,10 @@ packages_to_remove=(
 )
 
 packages_to_install=(
-    borgbackup
     ffmpeg
     youtube-dl
     keepassxc
     transmission-gtk
-    lshw
     fuse-exfat
     mpv
     gnome-tweaks
@@ -64,6 +62,8 @@ packages_to_install=(
     deadbeef
     chromium
     chromium-libs-media-freeworld
+    borgbackup
+    lshw
     shotwell
     java-1.8.0-openjdk
     jack-audio-connection-kit
