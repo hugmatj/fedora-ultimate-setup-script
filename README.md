@@ -113,7 +113,7 @@ sudo ./centos8-ultimate-install-script.sh
 
 **Q**: Does this script disable the caps lock key? I've noticed that it works during login but after that it stops working altogether.
 
-**A**: It makes the caps lock into a delete for touch typing purposes, to change it modify this line before running:
+**A**: It makes the caps lock into a delete for touch typing purposes, to change it modify this line in the setup script before running:
 
 ```shell
  capslock_delete="false"
