@@ -58,7 +58,7 @@ esac
 
 # If web development is chosen additional actions can be performed other than adding more packages
 if [[ $webdev =~ ^[Yy]$ ]]; then
-    # Additional
+    # Additional actions
 fi
 ```
 
