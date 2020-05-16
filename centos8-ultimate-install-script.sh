@@ -193,10 +193,11 @@ tar -C /usr/local/bin/ -xf pandoc-2.9.2.1-linux-amd64.tar.gz --no-anchored 'pand
 # install extras conditionally
 #==============================================================================
 if [[ $webdev =~ ^[Yy]$ ]]; then
-    # curl -fsSL https://deno.land/x/install/install.sh | sh
+    echo "${BOLD}Installing Deno...${RESET}"
+    echo 'Please add Deno to the PATH as instructed below:'
     /usr/bin/su - "$SUDO_USER" -c "curl -fsSL https://deno.land/x/install/install.sh | sh"
-    echo 'add export DENO_INSTALL="$HOME/.deno" export PATH="$DENO_INSTALL/bin:$PATH" to .bashrc'
 
+    echo "${BOLD}Installing Node.js...${RESET}"
     dnf -y module install nodejs:12/default
 fi
 
