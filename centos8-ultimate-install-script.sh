@@ -8,7 +8,9 @@
 #  DESCRIPTION: Post-installation install script for Centos 8.x Workstation
 #      WEBSITE: https://github.com/David-Else/fedora-ultimate-setup-script
 #
-# REQUIREMENTS: Centos 8.x install using 'Workstation' option with user as admin
+# REQUIREMENTS: During installation:
+#               - Select 'Workstation'
+#               - Tick 'make this user administrator' when creating user
 #       AUTHOR: David Else
 #      COMPANY: https://www.elsewebdevelopment.com/
 #      VERSION: 5.0
