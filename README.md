@@ -23,14 +23,6 @@
 - Mediainfo
 - MKVToolNix
 
-### P2P
-
-- Transmission-gtk
-
-### Virtual machines
-
-- Boxes
-
 ### Security and backup
 
 - Keepassxc
@@ -42,6 +34,7 @@
 - Visual Studio Code with extensions
 - php / node.js / deno
 - Podman / Docker
+- Boxes
 - Zeal
 
 There are two scripts for each distribution, `install` and `setup`. Install requires running with `sudo`, this was done to prevent it timing out when left unattended.
