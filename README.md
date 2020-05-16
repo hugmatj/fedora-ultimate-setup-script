@@ -17,25 +17,21 @@
 
 - Deadbeef
 - MPV
-- FFmpeg
-- youtube-dl
 - Handbrake
-- Mediainfo
 - MKVToolNix
 
 ### Security and backup
 
-- Keepassxc
+- KeepassXC
 - Syncthing
 - BorgBackup
 
 ### Development tools
 
 - Visual Studio Code with extensions
-- php / node.js / deno
-- Podman / Docker
+- PHP / Node.js / Deno
+- Podman (Centos) / Docker (Fedora)
 - Boxes
-- Zeal
 
 There are two scripts for each distribution, `install` and `setup`. Install requires running with `sudo`, this was done to prevent it timing out when left unattended.
 
