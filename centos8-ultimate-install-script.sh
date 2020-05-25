@@ -220,7 +220,7 @@ cat <<EOL
 =============================================================================
 Congratulations, everything is installed!
 
-sudo dnf install abattis-cantarell-fonts-0.111-2.fc30.noarch.rpm to upgrade 0.0.25
+sudo dnf install ./abattis-cantarell-fonts-0.111-2.fc30.noarch.rpm to upgrade 0.0.25
 
 JavaScript developers, don't forget to install PNPM globally
 

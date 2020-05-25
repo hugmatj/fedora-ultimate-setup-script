@@ -407,7 +407,7 @@ cat <<EOL
 Use Gnome Software to install 'Hide Top Bar' 'Auto Move Windows'
 Add the following Firefox extensions with:
 
-firefox https://addons.mozilla.org/en-GB/firefox/addon/https-everywhere/ \
+flatpak run org.mozilla.firefox https://addons.mozilla.org/en-GB/firefox/addon/https-everywhere/ \
 https://addons.mozilla.org/en-GB/firefox/addon/privacy-badger17/ \
 https://addons.mozilla.org/en-GB/firefox/addon/ublock-origin/ \
 https://addons.mozilla.org/en-US/firefox/addon/df-youtube/ \
