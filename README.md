@@ -1,6 +1,10 @@
 # Fedora and Centos Ultimate Setup Scripts v5 (May 2020)
 
-**Welcome to your new ultimate desktop!** You can now choose between long term support with Centos and cutting edge features with Fedora. Run these scripts after a fresh install of your favorite OS. You can re-create the same set of applications and settings across both distributions. Enjoy:
+**Welcome to your new ultimate desktop!** You can now choose between long term support with Centos and cutting edge features with Fedora. Run these scripts after a fresh install of your favorite OS. You can re-create the same set of applications and settings across both distributions.
+
+I have written a blog article [CentOS 8 Setup for Developers](https://www.elsewebdevelopment.com/centos-8-setup-for-developers/) that explains how the script works to help with customization.
+
+Enjoy:
 
 ### Browsers
 
