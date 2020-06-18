@@ -424,6 +424,10 @@ go to Emoji tab, press the '...' next to Emoji choice to get 'select keyboard sh
 use the delete button to delete the shortcut and leave nothing there, press OK
 Close
 
+If you install rust, to use 'rustup doc' in flatpak Firefox:
+- about:config > security.fileuri.strict_origin_policy = false
+- flatpak override --user --filesystem=~/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/share/doc:ro org.mozilla.firefox
+
 Please reboot (or things may not work as expected)
 =================================================================
 EOL

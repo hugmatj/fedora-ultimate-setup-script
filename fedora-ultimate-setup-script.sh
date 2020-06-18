@@ -449,6 +449,9 @@ Change settings/details/default applications
 Change tweaks/fonts/ to Subpixel (for LCD screens)
 Select network > wired > connect automatically
 
+If you install rust, to use 'rustup doc' in flatpak Firefox:
+- about:config > security.fileuri.strict_origin_policy = false
+- flatpak override --user --filesystem=~/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/share/doc:ro org.mozilla.firefox
 
 Please reboot (or things may not work as expected)
 =================================================================
