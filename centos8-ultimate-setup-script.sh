@@ -237,6 +237,10 @@ https://addons.mozilla.org/en-GB/firefox/addon/ublock-origin/ \
 https://addons.mozilla.org/en-US/firefox/addon/df-youtube/ \
 https://addons.mozilla.org/en-US/firefox/addon/tabliss/
 
+Change Preferences > Network Settings > Enable DNS over HTTPS
+       about:config network.security.esni.enabled
+       https://www.cloudflare.com/ssl/encrypted-sni/
+
 Change settings/details/default applications
 Change tweaks/fonts/ to Subpixel (for LCD screens)
 Select network > wired > connect automatically
