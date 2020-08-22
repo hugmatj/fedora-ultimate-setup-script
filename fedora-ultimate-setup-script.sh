@@ -265,7 +265,8 @@ firefox https://addons.mozilla.org/en-GB/firefox/addon/https-everywhere/ \
 https://addons.mozilla.org/en-GB/firefox/addon/privacy-badger17/ \
 https://addons.mozilla.org/en-GB/firefox/addon/ublock-origin/ \
 https://addons.mozilla.org/en-US/firefox/addon/df-youtube/ \
-https://addons.mozilla.org/en-US/firefox/addon/tabliss/
+https://addons.mozilla.org/en-US/firefox/addon/tabliss/ \
+https://addons.mozilla.org/en-US/firefox/addon/vimium-ff/
 
 Change Preferences > Network Settings > Enable DNS over HTTPS
        about:config network.security.esni.enabled
