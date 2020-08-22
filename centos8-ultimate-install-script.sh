@@ -52,6 +52,7 @@ packages_to_remove=(
 )
 
 packages_to_install=(
+    xclip
     inotify-tools
     ffmpeg
     youtube-dl
