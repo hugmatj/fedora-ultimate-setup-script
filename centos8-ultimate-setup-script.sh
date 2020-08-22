@@ -213,11 +213,12 @@ if ! grep -xq "Xft.lcdfilter: lcddefault" "$HOME/.Xresources"; then
 fi
 
 #==============================================================================================
-# improve ls and tree commands output
+# improve ls and tree commands output, add f recursive find function
 #==============================================================================================
 cat >>"$HOME/.bashrc" <<'EOL'
 alias ls="ls -ltha --color --group-directories-first" # l=long listing format, t=sort by modification time (newest first), h=human readable sizes, a=print hidden files
 alias tree="tree -Catr --noreport --dirsfirst --filelimit 100" # -C=colorization on, a=print hidden files, t=sort by modification time, r=reversed sort by time (newest first)
+f() { find . -name "*$1*"; }
 EOL
 
 #==============================================================================================
