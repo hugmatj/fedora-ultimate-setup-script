@@ -224,6 +224,8 @@ cat <<EOL
 =============================================================================
 Congratulations, everything is installed!
 
+pip3 install --user ranger-fm
+
 Now use the setup script...
 =============================================================================
 EOL
