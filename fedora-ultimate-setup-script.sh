@@ -136,6 +136,7 @@ hash code 2>/dev/null &&
     # Visual Studio Code
     #==========================================================================
     {
+        # Allow ban.spellright to access built in hunspell directories
         sudo ln -s /usr/share/myspell "$HOME/.config/Code/Dictionaries"
     }
 

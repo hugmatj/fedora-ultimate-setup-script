@@ -112,7 +112,9 @@ hash code 2>/dev/null &&
     # Visual Studio Code
     #==========================================================================
     {
+        # Allow ban.spellright to access built in hunspell directories
         sudo ln -s /usr/share/myspell "$HOME/.config/Code/Dictionaries"
+        # https://github.com/Microsoft/vscode/issues/48480
         cat >>"$HOME/.bashrc" <<EOL
 alias code="GTK_IM_MODULE=ibus code"
 EOL
