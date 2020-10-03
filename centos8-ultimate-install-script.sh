@@ -94,7 +94,8 @@ if [[ $webdev =~ ^[Yy]$ ]]; then
     developer_packages=(
         code
         php
-        podman)
+        podman
+        podman-docker)
 
     code_extensions=(
         asvetliakov.vscode-neovim
