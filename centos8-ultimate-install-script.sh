@@ -52,6 +52,7 @@ packages_to_remove=(
 )
 
 packages_to_install=(
+    borgbackup
     xclip
     inotify-tools
     ffmpeg
@@ -94,6 +95,7 @@ if [[ $webdev =~ ^[Yy]$ ]]; then
     developer_packages=(
         code
         php
+        gcc-c++
         podman
         podman-docker)
 
@@ -191,12 +193,6 @@ curl -LOf https://github.com/jgm/pandoc/releases/download/2.9.2.1/pandoc-2.9.2.1
 echo "37f791e766b4e91824814241709243436ba25447bf908626c1d588ba098161bb6c821a6aa4abd2096ae70a8a4207dc862d090abce2f0d64cf582421d6f0f96c6 ./pandoc-2.9.2.1-linux-amd64.tar.gz" |
     sha512sum --check
 tar -C /usr/local/bin/ -xf pandoc-2.9.2.1-linux-amd64.tar.gz --no-anchored 'pandoc' --strip=2
-
-curl -LOf https://github.com/borgbackup/borg/releases/download/1.1.11/borg-linux64
-echo "077073672ea3b8db8937317814dbbe823e5e430a7bd8980c7d57c79d37a7a37f24b188896cd7dc209a48b275cb4599de9d36d979296531c468e00727f31efceb ./borg-linux64" |
-    sha512sum --check
-mv borg-linux64 /usr/local/bin/borg
-chmod +x /usr/local/bin/borg
 
 #==============================================================================
 # install extras conditionally
