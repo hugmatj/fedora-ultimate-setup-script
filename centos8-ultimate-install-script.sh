@@ -56,7 +56,6 @@ packages_to_install=(
     xclip
     inotify-tools
     ffmpeg
-    youtube-dl
     keepassxc
     transmission-gtk
     fuse-exfat
@@ -225,6 +224,7 @@ Congratulations, everything is installed!
 
 sudo dnf install ./abattis-cantarell-fonts-0.111-2.fc30.noarch.rpm to upgrade 0.0.25
 pip3 install --user ranger-fm
+pip3 install --user youtube-dl
 
 JavaScript developers, don't forget to install PNPM globally
 
