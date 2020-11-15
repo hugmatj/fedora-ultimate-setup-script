@@ -197,6 +197,10 @@ echo "37f791e766b4e91824814241709243436ba25447bf908626c1d588ba098161bb6c821a6aa4
     sha512sum --check
 tar -C /usr/local/bin/ -xf pandoc-2.9.2.1-linux-amd64.tar.gz --no-anchored 'pandoc' --strip=2
 
+# curl -LOf https://github.com/mvdan/sh/releases/download/v3.2.0/shfmt_v3.2.0_linux_amd64
+# chmod +x shfmt_v3.2.0_linux_amd64
+# mv shfmt_v3.2.0_linux_amd64 /usr/local/bin/shfmt
+
 #==============================================================================
 # install extras conditionally
 #==============================================================================
