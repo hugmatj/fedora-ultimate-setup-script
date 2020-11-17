@@ -231,7 +231,11 @@ touch "$HOME/Templates/empty-file" # so you can create new documents from nautil
 
 cat <<EOL
 =================================================================
-Use Gnome Software to install 'Hide Top Bar' 'Auto Move Windows'
+Gnome:    settings  > details > choose default applications
+          tweaks    > fonts   > change to Subpixel (for LCD screens)
+          network   > wired   > connect automatically
+
+          gnome software > install 'Hide Top Bar' 'Auto Move Windows'
 
 flatpak run org.mozilla.firefox https://addons.mozilla.org/en-GB/firefox/addon/privacy-badger17/ \
 https://addons.mozilla.org/en-GB/firefox/addon/ublock-origin/ \
@@ -244,9 +248,8 @@ Firefox:  Preferences > Network Settings > Enable DNS over HTTPS
 
           Privacy & Security > HTTPS-Only Mode > Enable HTTPS-Only Mode in all windows
 
-Gnome:    settings  > details > choose default applications
-          tweaks    > fonts   > change to Subpixel (for LCD screens)
-          network   > wired   > connect automatically
+          Vimium:   New tab URL           : pages/blank.html
+          Default search engine : https://duckduckgo.com/?q=
 
 For VS Code in Centos 8/8.1:
 

@@ -259,13 +259,16 @@ touch "$HOME/Templates/empty-file" # so you can create new documents from nautil
 
 cat <<EOL
 =================================================================
-Use Gnome Software to install 'Hide Top Bar' 'Auto Move Windows'
+Gnome:    settings  > details > choose default applications
+          tweaks    > fonts   > change to Subpixel (for LCD screens)
+          network   > wired   > connect automatically
+
+          gnome software > install 'Hide Top Bar' 'Auto Move Windows'
 
 firefox https://addons.mozilla.org/en-GB/firefox/addon/privacy-badger17/ \
 https://addons.mozilla.org/en-GB/firefox/addon/ublock-origin/ \
 https://addons.mozilla.org/en-US/firefox/addon/df-youtube/ \
 https://addons.mozilla.org/en-US/firefox/addon/vimium-ff/
-
 
 Firefox:  Preferences > Network Settings > Enable DNS over HTTPS
           about:config network.security.esni.enabled
@@ -273,9 +276,8 @@ Firefox:  Preferences > Network Settings > Enable DNS over HTTPS
 
           Privacy & Security > HTTPS-Only Mode > Enable HTTPS-Only Mode in all windows
 
-Gnome:    settings  > details > choose default applications
-          tweaks    > fonts   > change to Subpixel (for LCD screens)
-          network   > wired   > connect automatically
+          Vimium:   New tab URL           : pages/blank.html
+                    Default search engine : https://duckduckgo.com/?q=
 
 If you install rust, to use 'rustup doc' in flatpak Firefox:
 - about:config > security.fileuri.strict_origin_policy = false
