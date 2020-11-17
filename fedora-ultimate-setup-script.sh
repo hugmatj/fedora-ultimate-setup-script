@@ -260,22 +260,22 @@ touch "$HOME/Templates/empty-file" # so you can create new documents from nautil
 cat <<EOL
 =================================================================
 Use Gnome Software to install 'Hide Top Bar' 'Auto Move Windows'
-Add the following Firefox extensions with:
 
-firefox https://addons.mozilla.org/en-GB/firefox/addon/https-everywhere/ \
-https://addons.mozilla.org/en-GB/firefox/addon/privacy-badger17/ \
+firefox https://addons.mozilla.org/en-GB/firefox/addon/privacy-badger17/ \
 https://addons.mozilla.org/en-GB/firefox/addon/ublock-origin/ \
 https://addons.mozilla.org/en-US/firefox/addon/df-youtube/ \
-https://addons.mozilla.org/en-US/firefox/addon/tabliss/ \
 https://addons.mozilla.org/en-US/firefox/addon/vimium-ff/
 
-Change Preferences > Network Settings > Enable DNS over HTTPS
-       about:config network.security.esni.enabled
-       https://www.cloudflare.com/ssl/encrypted-sni/
 
-Change settings/details/default applications
-Change tweaks/fonts/ to Subpixel (for LCD screens)
-Select network > wired > connect automatically
+Firefox:  Preferences > Network Settings > Enable DNS over HTTPS
+          about:config network.security.esni.enabled
+          (test with https://www.cloudflare.com/ssl/encrypted-sni/)
+
+          Privacy & Security > HTTPS-Only Mode > Enable HTTPS-Only Mode in all windows
+
+Gnome:    settings  > details > choose default applications
+          tweaks    > fonts   > change to Subpixel (for LCD screens)
+          network   > wired   > connect automatically
 
 If you install rust, to use 'rustup doc' in flatpak Firefox:
 - about:config > security.fileuri.strict_origin_policy = false
