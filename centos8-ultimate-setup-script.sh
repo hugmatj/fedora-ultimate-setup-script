@@ -249,7 +249,7 @@ Firefox:  Preferences > Network Settings > Enable DNS over HTTPS
           Privacy & Security > HTTPS-Only Mode > Enable HTTPS-Only Mode in all windows
 
           Vimium:   New tab URL           : pages/blank.html
-          Default search engine : https://duckduckgo.com/?q=
+                    Default search engine : https://duckduckgo.com/?q=
 
 For VS Code in Centos 8/8.1:
 
