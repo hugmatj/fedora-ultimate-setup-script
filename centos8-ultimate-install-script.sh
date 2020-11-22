@@ -227,8 +227,7 @@ cat <<EOL
 Congratulations, everything is installed!
 
 sudo dnf install ./abattis-cantarell-fonts-0.111-2.fc30.noarch.rpm to upgrade 0.0.25
-pip3 install --user ranger-fm
-pip3 install --user youtube-dl
+pip3 install --user ranger-fm youtube-dl trash-cli
 
 JavaScript developers, don't forget to install PNPM globally
 
