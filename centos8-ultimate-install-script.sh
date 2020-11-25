@@ -93,6 +93,7 @@ if [[ $webdev =~ ^[Yy]$ ]]; then
     #==========================================================================
     developer_packages=(
         gh
+        optipng
         code
         php
         gcc-c++
