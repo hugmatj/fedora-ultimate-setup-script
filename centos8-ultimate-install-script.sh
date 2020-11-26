@@ -193,10 +193,10 @@ echo "beca3d7819a6bdcfbd044576df4fc284053b48f468b2f03428fe66f4ceb2c05d9b5411357f
     sha512sum --check
 tar -C /usr/local/bin/ -xf shellcheck-v0.7.1.linux.x86_64.tar.xz --no-anchored 'shellcheck' --strip=1
 
-curl -LOf https://github.com/jgm/pandoc/releases/download/2.9.2.1/pandoc-2.9.2.1-linux-amd64.tar.gz
-echo "37f791e766b4e91824814241709243436ba25447bf908626c1d588ba098161bb6c821a6aa4abd2096ae70a8a4207dc862d090abce2f0d64cf582421d6f0f96c6 ./pandoc-2.9.2.1-linux-amd64.tar.gz" |
+curl -LOf https://github.com/jgm/pandoc/releases/download/2.11.2/pandoc-2.11.2-linux-amd64.tar.gz
+echo "9d265941f224d376514e18fc45d5292e9c2481b04693c96917a0d55ed817b190cf2ea2666097388bfdf30023db2628567ea04ff6b9cc3316130a8190da72c605  ./pandoc-2.11.2-linux-amd64.tar.gz" |
     sha512sum --check
-tar -C /usr/local/bin/ -xf pandoc-2.9.2.1-linux-amd64.tar.gz --no-anchored 'pandoc' --strip=2
+tar -C /usr/local/bin/ -xf pandoc-2.11.2-linux-amd64.tar.gz --no-anchored 'pandoc' --strip=2
 
 # curl -LOf https://github.com/mvdan/sh/releases/download/v3.2.0/shfmt_v3.2.0_linux_amd64
 # chmod +x shfmt_v3.2.0_linux_amd64
