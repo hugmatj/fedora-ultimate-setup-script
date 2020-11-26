@@ -194,7 +194,7 @@ echo "beca3d7819a6bdcfbd044576df4fc284053b48f468b2f03428fe66f4ceb2c05d9b5411357f
 tar -C /usr/local/bin/ -xf shellcheck-v0.7.1.linux.x86_64.tar.xz --no-anchored 'shellcheck' --strip=1
 
 curl -LOf https://github.com/jgm/pandoc/releases/download/2.11.2/pandoc-2.11.2-linux-amd64.tar.gz
-echo "9d265941f224d376514e18fc45d5292e9c2481b04693c96917a0d55ed817b190cf2ea2666097388bfdf30023db2628567ea04ff6b9cc3316130a8190da72c605  ./pandoc-2.11.2-linux-amd64.tar.gz" |
+echo "9d265941f224d376514e18fc45d5292e9c2481b04693c96917a0d55ed817b190cf2ea2666097388bfdf30023db2628567ea04ff6b9cc3316130a8190da72c605 ./pandoc-2.11.2-linux-amd64.tar.gz" |
     sha512sum --check
 tar -C /usr/local/bin/ -xf pandoc-2.11.2-linux-amd64.tar.gz --no-anchored 'pandoc' --strip=2
 
