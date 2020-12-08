@@ -5,7 +5,7 @@
 #         FILE: centos-ultimate-install-script.sh
 #        USAGE: sudo centos-ultimate-install-script.sh
 #
-#  DESCRIPTION: Post-installation install script for Centos 8.x Workstation
+#  DESCRIPTION: Post-installation install script for Centos 8.3 Workstation
 #      WEBSITE: https://github.com/David-Else/fedora-ultimate-setup-script
 #
 # REQUIREMENTS: During installation:
@@ -76,8 +76,7 @@ flathub_packages_to_install=(
     org.mozilla.firefox
     org.gnome.Shotwell
     org.gnome.Boxes
-    org.bunkus.mkvtoolnix-gui
-    org.zealdocs.Zeal)
+    org.bunkus.mkvtoolnix-gui)
 
 #==============================================================================
 # Ask for user input
@@ -100,21 +99,6 @@ if [[ $webdev =~ ^[Yy]$ ]]; then
         podman
         podman-docker)
 
-    code_extensions=(
-        asvetliakov.vscode-neovim
-        ban.spellright
-        bierner.markdown-preview-github-styles
-        bierner.markdown-shiki
-        dbaeumer.vscode-eslint
-        esbenp.prettier-vscode
-        foxundermoon.shell-format
-        jebbs.plantuml
-        msjsdiag.debugger-for-chrome
-        nicoespeon.abracadabra
-        ritwickdey.LiveServer
-        timonwong.shellcheck
-        WallabyJs.quokka-vscode)
-
     packages_to_install+=("${developer_packages[@]}")
 
 elif [[ ! $webdev =~ ^[Nn]$ ]]; then
@@ -133,8 +117,6 @@ ${BOLD}-------------------${RESET}
 DNF packages: ${GREEN}${packages_to_install[*]}${RESET}
 
 Flathub packages: ${GREEN}${flathub_packages_to_install[*]}${RESET}
-
-Visual Studio Code extensions: ${GREEN}${code_extensions[*]}${RESET}
 
 ${BOLD}Packages to remove${RESET}
 ${BOLD}------------------${RESET}
@@ -210,18 +192,10 @@ if [[ $webdev =~ ^[Yy]$ ]]; then
     echo 'Please add Deno to the PATH as instructed below:'
     /usr/bin/su - "$SUDO_USER" -c "curl -fsSL https://deno.land/x/install/install.sh | sh"
 
-    echo "${BOLD}Installing Node.js...${RESET}"
-    dnf -y module install nodejs:12/default
+    echo "${BOLD}Installing Node.js 14 LTS...${RESET}"
+    dnf module enable nodejs:14
+    dnf install nodejs
 fi
-
-case " ${packages_to_install[*]} " in
-*' code '*)
-    echo "${BOLD}Installing Visual Studio Code extensions...${RESET}"
-    for extension in "${code_extensions[@]}"; do
-        /usr/bin/su - "$SUDO_USER" -c "code --install-extension $extension"
-    done
-    ;;
-esac
 
 cat <<EOL
 =============================================================================
