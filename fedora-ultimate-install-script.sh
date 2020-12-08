@@ -50,7 +50,6 @@ packages_to_remove=(
 
 packages_to_install=(
     ffmpeg
-    youtube-dl
     keepassxc
     transmission-gtk
     fuse-exfat
@@ -114,21 +113,6 @@ if [[ $webdev =~ ^[Yy]$ ]]; then
         pnpm
         npm-check)
 
-    code_extensions=(
-        asvetliakov.vscode-neovim
-        ban.spellright
-        bierner.markdown-preview-github-styles
-        bierner.markdown-shiki
-        dbaeumer.vscode-eslint
-        esbenp.prettier-vscode
-        foxundermoon.shell-format
-        jebbs.plantuml
-        msjsdiag.debugger-for-chrome
-        nicoespeon.abracadabra
-        ritwickdey.LiveServer
-        timonwong.shellcheck
-        WallabyJs.quokka-vscode)
-
     packages_to_install+=("${developer_packages[@]}")
 
 elif [[ ! $webdev =~ ^[Nn]$ ]]; then
@@ -151,8 +135,6 @@ Flathub packages: ${GREEN}${flathub_packages_to_install[*]}${RESET}
 Composer packages: ${GREEN}${composer_packages_to_install[*]}${RESET}
 
 Node packages: ${GREEN}${node_global_packages_to_install[*]}${RESET}
-
-Visual Studio Code extensions: ${GREEN}${code_extensions[*]}${RESET}
 
 ${BOLD}Packages to remove${RESET}
 ${BOLD}------------------${RESET}
@@ -214,13 +196,6 @@ case " ${packages_to_install[*]} " in
 *' nodejs '*)
     echo "${BOLD}Installing global NodeJS packages...${RESET}"
     npm install -g "${node_global_packages_to_install[@]}"
-    ;;&
-
-*' code '*)
-    echo "${BOLD}Installing Visual Studio Code extensions...${RESET}"
-    for extension in "${code_extensions[@]}"; do
-        /usr/bin/su - "$SUDO_USER" -c "code --install-extension $extension"
-    done
     ;;
 esac
 
@@ -228,7 +203,7 @@ cat <<EOL
 =============================================================================
 Congratulations, everything is installed!
 
-pip3 install --user ranger-fm
+pip3 install --user ranger-fm youtube-dl trash-cli tldr
 
 Now use the setup script...
 =============================================================================
