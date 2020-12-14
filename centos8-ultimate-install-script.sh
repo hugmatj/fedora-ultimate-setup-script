@@ -130,7 +130,7 @@ read -rp "Press enter to install, or ctrl+c to quit"
 #==============================================================================
 echo "${BOLD}Adding repositories...${RESET}"
 flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
-dnf -y config-manager --enable PowerTools
+dnf -y config-manager --enable powertools
 dnf -y install epel-release
 dnf -y install --nogpgcheck https://download1.rpmfusion.org/free/el/rpmfusion-free-release-8.noarch.rpm https://download1.rpmfusion.org/nonfree/el/rpmfusion-nonfree-release-8.noarch.rpm
 
