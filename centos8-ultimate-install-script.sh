@@ -91,6 +91,7 @@ if [[ $webdev =~ ^[Yy]$ ]]; then
     # packages for web development option * deno added if selected
     #==========================================================================
     developer_packages=(
+        python36-devel
         gh
         optipng
         code
