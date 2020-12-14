@@ -193,8 +193,8 @@ if [[ $webdev =~ ^[Yy]$ ]]; then
     /usr/bin/su - "$SUDO_USER" -c "curl -fsSL https://deno.land/x/install/install.sh | sh"
 
     echo "${BOLD}Installing Node.js 14 LTS...${RESET}"
-    dnf module enable nodejs:14
-    dnf install nodejs
+    dnf module enable -y nodejs:14
+    dnf install -y nodejs
 fi
 
 cat <<EOL
