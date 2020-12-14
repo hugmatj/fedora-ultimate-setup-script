@@ -18,7 +18,7 @@ fi
 #==============================================================================
 # gnome desktop settings
 #==============================================================================
-idle_delay=1200
+idle_delay=2400
 title_bar_buttons_on="true"
 clock_show_date="true"
 capslock_delete="true"
