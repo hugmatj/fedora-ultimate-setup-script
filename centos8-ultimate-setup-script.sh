@@ -215,7 +215,7 @@ if ! grep -xq "Xft.lcdfilter: lcddefault" "$HOME/.Xresources"; then
 fi
 
 #==============================================================================================
-# improve ls and tree commands output, add f recursive find function
+# add to .bashrc
 #==============================================================================================
 cat >>"$HOME/.bashrc" <<'EOL'
 alias ls="ls -ltha --color --group-directories-first"          # l=long listing format, t=sort by modification time (newest first), h=human readable sizes, a=print hidden files
@@ -226,6 +226,13 @@ f() { find . -iname "*$1*"; } 2>/dev/null
 clip() { xclip -sel clip -rmlastnl; }
 # disable terminal flow control to allow ctrl-s in vim
 stty -ixon
+EOL
+
+#==============================================================================================
+# add to .bash_profile, add nvim so ranger fm uses it by default
+#==============================================================================================
+cat >>"$HOME/.bash_profile" <<'EOL'
+export EDITOR="nvim"
 EOL
 
 #==============================================================================================
