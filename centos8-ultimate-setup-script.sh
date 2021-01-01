@@ -218,9 +218,14 @@ fi
 # improve ls and tree commands output, add f recursive find function
 #==============================================================================================
 cat >>"$HOME/.bashrc" <<'EOL'
-alias ls="ls -ltha --color --group-directories-first" # l=long listing format, t=sort by modification time (newest first), h=human readable sizes, a=print hidden files
-alias tree="tree -Catr --noreport --dirsfirst --filelimit 100" # -C=colorization on, a=print hidden files, t=sort by modification time, r=reversed sort by time (newest first)
-f() { find . -name "*$1*"; }
+alias ls="ls -ltha --color --group-directories-first"          # l=long listing format, t=sort by modification time (newest first), h=human readable sizes, a=print hidden files
+alias tree="tree -Catr --noreport --dirsfirst --filelimit 100" # C=colorization on, a=print hidden files, t=sort by modification time, r=reversed sort by time (newest first)
+# search current directory and subdirectories for a file containing a part of the word searched for and ignore errors like permission denied
+f() { find . -iname "*$1*"; } 2>/dev/null
+# copy to clipboard
+clip() { xclip -sel clip -rmlastnl; }
+# disable terminal flow control to allow ctrl-s in vim
+stty -ixon
 EOL
 
 #==============================================================================================
@@ -251,7 +256,7 @@ Firefox:  Preferences > Network Settings > Enable DNS over HTTPS
           Vimium:   New tab URL           : pages/blank.html
                     Default search engine : https://duckduckgo.com/?q=
 
-For VS Code in Centos 8/8.1:
+For VS Code in Centos 8/8.3:
 
 go to terminal type 'ibus-setup'
 go to Emoji tab, press the '...' next to Emoji choice to get 'select keyboard shortcut for switching' window
