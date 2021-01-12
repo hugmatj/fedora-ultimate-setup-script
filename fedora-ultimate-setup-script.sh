@@ -243,12 +243,15 @@ if ! grep -xq "Xft.lcdfilter: lcddefault" "$HOME/.Xresources"; then
 fi
 
 #==============================================================================================
-# improve ls and tree commands output, add f recursive find function
+# add to .bashrc
 #==============================================================================================
 cat >>"$HOME/.bashrc" <<'EOL'
-alias ls="ls -ltha --color --group-directories-first" # l=long listing format, t=sort by modification time (newest first), h=human readable sizes, a=print hidden files
-alias tree="tree -Catr --noreport --dirsfirst --filelimit 100" # -C=colorization on, a=print hidden files, t=sort by modification time, r=reversed sort by time (newest first)
-f() { find . -name "*$1*"; }
+alias ls="ls -ltha --color --group-directories-first"          # l=long listing format, t=sort by modification time (newest first), h=human readable sizes, a=print hidden files
+alias tree="tree -Catr --noreport --dirsfirst --filelimit 100" # C=colorization on, a=print hidden files, t=sort by modification time, r=reversed sort by time (newest first)
+# search current directory and subdirectories for a file containing a part of the word searched for and ignore errors like Permission denied. Reverse sort by modification time.
+f() { find . -iname "*$1*" -exec ls -1rt "{}" +; } 2>/dev/null
+# disable terminal flow control to allow ctrl-s in vim
+stty -ixon
 EOL
 
 #==============================================================================================
