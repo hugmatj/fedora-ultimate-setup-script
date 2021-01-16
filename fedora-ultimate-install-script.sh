@@ -11,10 +11,10 @@
 # REQUIREMENTS: Fresh copy of Fedora 30/31/32 installed on your computer
 #       AUTHOR: David Else
 #      COMPANY: https://www.elsewebdevelopment.com/
-#      VERSION: 5.0
+#      VERSION: 5.1
 #
 #      TODO if ban.spellright ln -s /usr/share/myspell ~/.config/Code/Dictionaries
-#      WineHQ repo set for Fedora 32
+#      WineHQ repo set for Fedora 33
 #==============================================================================
 
 #==============================================================================
@@ -49,6 +49,7 @@ packages_to_remove=(
 )
 
 packages_to_install=(
+    borgbackup
     ffmpeg
     keepassxc
     transmission-gtk
@@ -61,7 +62,6 @@ packages_to_install=(
     deadbeef
     chromium
     chromium-libs-media-freeworld
-    borgbackup
     lshw
     shotwell
     java-1.8.0-openjdk
@@ -110,8 +110,7 @@ if [[ $webdev =~ ^[Yy]$ ]]; then
         wp-cli/wp-cli-bundle)
 
     node_global_packages_to_install=(
-        pnpm
-        npm-check)
+        pnpm)
 
     packages_to_install+=("${developer_packages[@]}")
 
@@ -160,7 +159,7 @@ case " ${packages_to_install[*]} " in
     dnf -y config-manager --add-repo https://cli.github.com/packages/rpm/gh-cli.repo
     ;;&
 *' winehq-stable '*)
-    dnf config-manager --add-repo https://dl.winehq.org/wine-builds/fedora/32/winehq.repo
+    dnf config-manager --add-repo https://dl.winehq.org/wine-builds/fedora/33/winehq.repo
     ;;
 esac
 

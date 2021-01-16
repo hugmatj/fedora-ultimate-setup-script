@@ -8,12 +8,12 @@
 #  DESCRIPTION: Post-installation install script for Centos 8.3 Workstation
 #      WEBSITE: https://github.com/David-Else/fedora-ultimate-setup-script
 #
-# REQUIREMENTS: During installation:
+# REQUIREMENTS: Fresh copy of Centos 8.3 installed on your computer
 #               - Select 'Workstation'
 #               - Tick 'make this user administrator' when creating user
 #       AUTHOR: David Else
 #      COMPANY: https://www.elsewebdevelopment.com/
-#      VERSION: 5.0
+#      VERSION: 5.1
 #
 # TODO if ban.spellright ln -s /usr/share/myspell ~/.config/Code/Dictionaries
 #==============================================================================
@@ -52,9 +52,9 @@ packages_to_remove=(
 )
 
 packages_to_install=(
-    borgbackup
     xclip
     inotify-tools
+    borgbackup
     ffmpeg
     keepassxc
     transmission-gtk
@@ -91,11 +91,11 @@ if [[ $webdev =~ ^[Yy]$ ]]; then
     # packages for web development option * deno added if selected
     #==========================================================================
     developer_packages=(
-        python36-devel
         gh
-        optipng
         code
         php
+        optipng
+        python36-devel
         gcc-c++
         podman
         podman-docker)
