@@ -49,9 +49,6 @@ packages_to_remove=(
 )
 
 packages_to_install=(
-    zathura
-    zathura-pdf-mupdf
-    zathura-bash-completion
     borgbackup
     ffmpeg
     keepassxc
@@ -63,8 +60,12 @@ packages_to_install=(
     syncthing
     libva-intel-driver
     deadbeef
+    xclip
     chromium
     chromium-libs-media-freeworld
+    zathura
+    zathura-pdf-mupdf
+    zathura-bash-completion
     lshw
     shotwell
     java-1.8.0-openjdk
@@ -101,7 +102,6 @@ if [[ $webdev =~ ^[Yy]$ ]]; then
         nodejs
         docker
         docker-compose
-        nodejs
         composer
         ShellCheck
         zeal)
