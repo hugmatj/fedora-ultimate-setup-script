@@ -49,6 +49,9 @@ packages_to_remove=(
 )
 
 packages_to_install=(
+    zathura
+    zathura-pdf-mupdf
+    zathura-bash-completion
     borgbackup
     ffmpeg
     keepassxc
@@ -76,7 +79,6 @@ packages_to_install=(
 
 flathub_packages_to_install=(
     org.kde.krita
-    org.kde.okular
     fr.handbrake.ghb
     net.sf.fuse_emulator)
 
