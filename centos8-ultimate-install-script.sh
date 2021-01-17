@@ -52,8 +52,6 @@ packages_to_remove=(
 )
 
 packages_to_install=(
-    xclip
-    inotify-tools
     borgbackup
     ffmpeg
     keepassxc
@@ -65,13 +63,14 @@ packages_to_install=(
     syncthing
     libva-intel-driver
     deadbeef
+    xclip
     chromium
     ntfs-3g
-    ImageMagick)
+    ImageMagick
+    inotify-tools)
 
 flathub_packages_to_install=(
     org.kde.krita
-    org.kde.okular
     fr.handbrake.ghb
     org.mozilla.firefox
     org.gnome.Shotwell
@@ -156,7 +155,7 @@ esac
 echo "${BOLD}Removing unwanted programs...${RESET}"
 dnf -y remove "${packages_to_remove[@]}"
 
-echo "${BOLD}Updating Centos8...${RESET}"
+echo "${BOLD}Updating Centos 8...${RESET}"
 dnf -y --refresh upgrade
 
 echo "${BOLD}Installing packages...${RESET}"
