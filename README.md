@@ -79,6 +79,11 @@ If web development was chosen then a lot of extra things are setup here, includi
 - Subpixel rendering for Xorg
 - Various fixes and enhancements
 
+# New in version 5.1:
+
+- Tested on Fedora 33 and Centos 8.3
+- Added and removed some apps
+
 # New in version 5:
 
 - Tested on Fedora 32 and Centos 8.1
