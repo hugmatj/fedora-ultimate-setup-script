@@ -15,7 +15,6 @@
 #      COMPANY: https://www.elsewebdevelopment.com/
 #      VERSION: 5.1
 #
-# TODO if ban.spellright ln -s /usr/share/myspell ~/.config/Code/Dictionaries
 #==============================================================================
 
 #==============================================================================

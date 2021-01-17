@@ -8,13 +8,11 @@
 #  DESCRIPTION: Post-installation install script for Fedora 29/30/31/32 Workstation
 #      WEBSITE: https://github.com/David-Else/fedora-ultimate-setup-script
 #
-# REQUIREMENTS: Fresh copy of Fedora 30/31/32 installed on your computer
+# REQUIREMENTS: Fresh copy of Fedora 30/31/32/33 installed on your computer
 #       AUTHOR: David Else
 #      COMPANY: https://www.elsewebdevelopment.com/
 #      VERSION: 5.1
 #
-#      TODO if ban.spellright ln -s /usr/share/myspell ~/.config/Code/Dictionaries
-#      WineHQ repo set for Fedora 33
 #==============================================================================
 
 #==============================================================================

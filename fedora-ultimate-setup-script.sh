@@ -1,10 +1,5 @@
 #!/bin/bash
 
-# Fedora Ultimate Install Script v5 05/2020
-
-# git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
-# ~/.fzf/install
-
 GREEN=$(tput setaf 2)
 BOLD=$(tput bold)
 RESET=$(tput sgr0)
