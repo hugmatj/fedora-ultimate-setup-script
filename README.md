@@ -1,4 +1,4 @@
-# Fedora and Centos Ultimate Setup Scripts v5 (May 2020)
+# Fedora and Centos Ultimate Setup Scripts v5.1 (Jan 2021)
 
 **Welcome to your new ultimate desktop!** You can now choose between long term support with Centos and cutting edge features with Fedora. Run these scripts after a fresh install of your favorite OS. You can re-create the same set of applications and settings across both distributions.
 
@@ -32,10 +32,10 @@ Enjoy:
 
 ### (Optional) Development tools
 
-- Visual Studio Code with extensions
+- Visual Studio Code
 - PHP / Node.js / Deno
 - Podman (Centos) / Docker (Fedora)
-- Boxes
+- Gnome Boxes
 
 There are two scripts for each distribution, `install` and `setup`. Install requires running with `sudo`, this was done to prevent it timing out when left unattended.
 
