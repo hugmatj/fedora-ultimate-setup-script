@@ -112,8 +112,6 @@ hash code 2>/dev/null &&
     # Visual Studio Code
     #==========================================================================
     {
-        # Allow ban.spellright to access built in hunspell directories
-        sudo ln -s /usr/share/myspell "$HOME/.config/Code/Dictionaries"
         # https://github.com/Microsoft/vscode/issues/48480
         cat >>"$HOME/.bashrc" <<EOL
 alias code="GTK_IM_MODULE=ibus code"
@@ -262,6 +260,9 @@ Firefox:  Preferences > Network Settings > Enable DNS over HTTPS
 
           Vimium:   New tab URL           : pages/blank.html
                     Default search engine : https://duckduckgo.com/?q=
+
+After running Visual Studio Code, allow ban.spellright to access built in hunspell directories
+- sudo ln -s /usr/share/myspell "$HOME/.config/Code/Dictionaries"
 
 For VS Code in Centos 8/8.3:
 
