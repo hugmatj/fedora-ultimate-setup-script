@@ -129,20 +129,10 @@ hash composer 2>/dev/null &&
 PATH=$PATH:/home/$USERNAME/.config/composer/vendor/bin
 EOL
         fi
+        "$HOME/.config/composer/vendor/bin/phpcs" --config-set installed_paths ~/.config/composer/vendor/wp-coding-standards/wpcs
+        "$HOME/.config/composer/vendor/bin/phpcs" --config-set default_standard PSR12
+        "$HOME/.config/composer/vendor/bin/phpcs" --config-show
     }
-
-hash code 2>/dev/null &&
-    #==========================================================================
-    # Visual Studio Code
-    #==========================================================================
-    {
-        # Allow ban.spellright to access built in hunspell directories
-        sudo ln -s /usr/share/myspell "$HOME/.config/Code/Dictionaries"
-    }
-
-"$HOME/.config/composer/vendor/bin/phpcs" --config-set installed_paths ~/.config/composer/vendor/wp-coding-standards/wpcs
-"$HOME/.config/composer/vendor/bin/phpcs" --config-set default_standard PSR12
-"$HOME/.config/composer/vendor/bin/phpcs" --config-show
 
 #==============================================================================
 # setup gnome desktop gsettings
@@ -264,9 +254,8 @@ cat <<EOL
 =================================================================
 Gnome:    settings  > details > choose default applications
           tweaks    > fonts   > change to Subpixel (for LCD screens)
-          network   > wired   > connect automatically
 
-          gnome software > install 'Hide Top Bar' 'Auto Move Windows'
+          gnome software > install 'Hide Top Bar'
 
 firefox https://addons.mozilla.org/en-GB/firefox/addon/privacy-badger17/ \
 https://addons.mozilla.org/en-GB/firefox/addon/ublock-origin/ \
@@ -281,6 +270,9 @@ Firefox:  Preferences > Network Settings > Enable DNS over HTTPS
 
           Vimium:   New tab URL           : pages/blank.html
                     Default search engine : https://duckduckgo.com/?q=
+
+After running Visual Studio Code, allow ban.spellright to access built in hunspell directories
+- sudo ln -s /usr/share/myspell "$HOME/.config/Code/Dictionaries"
 
 If you install rust, to use 'rustup doc' in flatpak Firefox:
 - about:config > security.fileuri.strict_origin_policy = false
