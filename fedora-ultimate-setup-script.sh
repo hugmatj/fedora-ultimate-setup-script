@@ -221,11 +221,12 @@ if [[ -z $(git config --get user.email) ]]; then
 fi
 
 #==============================================================================================
-# turn on subpixel rendering for fonts without fontconfig support
+# turn on subpixel rendering for fonts without fontconfig support, turn off for 4k
 #==============================================================================================
 if ! grep -xq "Xft.lcdfilter: lcddefault" "$HOME/.Xresources"; then
     echo "Xft.lcdfilter: lcddefault" >>"$HOME/.Xresources"
 fi
+dconf write /org/gnome/settings-daemon/plugins/xsettings/antialiasing "'rgba'"
 
 #==============================================================================================
 # add to .bashrc
@@ -248,7 +249,6 @@ touch "$HOME/Templates/empty-file" # so you can create new documents from nautil
 cat <<EOL
 =================================================================
 Gnome:    settings  > details > choose default applications
-          tweaks    > fonts   > change to Subpixel (for LCD screens)
 
           gnome software > install 'Hide Top Bar'
 
