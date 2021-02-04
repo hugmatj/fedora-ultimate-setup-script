@@ -179,9 +179,11 @@ echo "9d265941f224d376514e18fc45d5292e9c2481b04693c96917a0d55ed817b190cf2ea26660
     sha512sum --check
 tar -C /usr/local/bin/ -xf pandoc-2.11.2-linux-amd64.tar.gz --no-anchored 'pandoc' --strip=2
 
-# curl -LOf https://github.com/mvdan/sh/releases/download/v3.2.0/shfmt_v3.2.0_linux_amd64
-# chmod +x shfmt_v3.2.0_linux_amd64
-# mv shfmt_v3.2.0_linux_amd64 /usr/local/bin/shfmt
+curl -LOf https://github.com/mvdan/sh/releases/download/v3.2.2/shfmt_v3.2.2_linux_amd64
+echo "d4e699575899f7c44dbce54f6414fb63c0527e7d743ea724cb0091417e07a353c1d156d4184580a260ca855cdf5e01cdf46b353f04cf5093eba3ffc02223f1c6 ./shfmt_v3.2.2_linux_amd64" |
+    sha512sum --check
+chmod +x shfmt_v3.2.2_linux_amd64
+mv shfmt_v3.2.2_linux_amd64 /usr/local/bin/shfmt
 
 #==============================================================================
 # install extras conditionally
