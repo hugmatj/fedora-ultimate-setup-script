@@ -212,15 +212,16 @@ dconf write /org/gnome/settings-daemon/plugins/xsettings/antialiasing "'rgba'"
 # add to .bashrc
 #==============================================================================================
 cat >>"$HOME/.bashrc" <<'EOL'
-alias ls="ls -ltha --color --group-directories-first"          # l=long listing format, t=sort by modification time (newest first), h=human readable sizes, a=print hidden files
-alias tree="tree -Catr --noreport --dirsfirst --filelimit 100" # C=colorization on, a=print hidden files, t=sort by modification time, r=reversed sort by time (newest first)
-alias diff="diff -u --color=always"                            # add '| less -r' for full color output using less
-# search current directory and subdirectories for a file containing a part of the word searched for and ignore errors like Permission denied. Reverse sort by modification time.
+alias ls="ls -ltha --color --group-directories-first"
+alias tree="tree -Catr --noreport --dirsfirst --filelimit 100"
+alias diff="diff -u --color=always" # add '| less -r' for full color output using less
+
+stty -ixon # disable terminal flow control to free ctrl-s for shortcut
+
+# search recursively for a file containing a part of the search term and ignore errors, reverse sort by modification time
 f() { find . -iname "*$1*" -exec ls -1rt "{}" +; } 2>/dev/null
 # copy to clipboard
 clip() { xclip -sel clip -rmlastnl; }
-# disable terminal flow control to allow ctrl-s in vim
-stty -ixon
 EOL
 
 #==============================================================================================
@@ -228,6 +229,8 @@ EOL
 #==============================================================================================
 cat >>"$HOME/.bash_profile" <<'EOL'
 export EDITOR="nvim"
+set -o vi
+bind -m vi-insert '"jk": vi-movement-mode'
 EOL
 
 #==============================================================================================
