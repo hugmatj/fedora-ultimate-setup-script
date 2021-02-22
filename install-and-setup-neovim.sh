@@ -1,8 +1,9 @@
 #!/bin/bash
 
-# Install Neovim Nightly on Linux and setup in as minimal way as possible to be like Visual Studio Code with TypeScript/Bash LSP support
+# Install Neovim 0.5 and setup in as minimal way as possible to be like Visual Studio Code with TypeScript/Bash/Rust LSP support
 # On first run it will give an error as the plugins are not installed yet, type :PlugInstall and then restart
-# Typescript LSP needs a tsconfig.json in the project root directory to run, so use tsc --init
+# Deno LSP needs "package.json", "tsconfig.json" or ".git" in the project root directory to run
+# Deno can be used for frontend by adding /// <reference lib="dom" /> to every file that needs it
 
 # Install Neovim 0.5 nightly (or stable if released)
 
@@ -26,7 +27,7 @@ setlocal formatexpr=
 EOL
 
 # Create init.vim
-# npm install -g bash-language-server prettier typescript typescript-language-server
+# npm install -g prettier vscode-json-languageserver bash-language-server typescript typescript-language-server
 # curl -L https://github.com/rust-analyzer/rust-analyzer/releases/latest/download/rust-analyzer-linux -o ~/.local/bin/rust-analyzer
 # chmod +x ~/.local/bin/rust-analyzer
 
