@@ -68,7 +68,7 @@ fi
 
 ## Setup script
 
-If web development was chosen then a lot of extra things are setup here, including my entire config for Visual Studio Code. Most people will want to heavily edit this file for their own preferences. Highlights include:
+If web development was chosen then a lot of extra things are setup here. Most people will want to heavily edit this file for their own preferences. Highlights include:
 
 - Better Gnome settings
 - Set your Github name and email
@@ -79,7 +79,33 @@ If web development was chosen then a lot of extra things are setup here, includi
 - Subpixel rendering for Xorg
 - Various fixes and enhancements
 
-# New in version 5.1:
+# Feb 2021: Added Neovim setup script
+
+I have included a bonus script to install and setup Neovim 0.5 from scratch using the latest nightly build. I have tried to create a VS Code style setup in as minimalist way as possible using the new built in LSP and the https://github.com/hrsh7th/nvim-compe autocompletion plugin.
+
+Enjoy these shortcuts:
+
+```
+"======================================="
+"         Custom Key Mappings           "
+"                                       "
+"  <leader>f  = format                  "
+"  <leader>c  = edit init.vim config    "
+"  <leader>cc = toggle colorcolumn      "
+"  <leader>n  = toggle line numbers     "
+"  <leader>s  = toggle spell check      "
+"  <leader>w  = toggle whitespaces      "
+"  <leader>t  = new terminal            "
+"                                       "
+"          jk = escape                  "
+"         TAB = cycle buffers           "
+"      ctrl-s = save                    "
+"      ctrl-e = toggle file explorer    "
+"         ESC = search highlighting off "
+"======================================="
+```
+
+New in version 5.1:
 
 - Tested on Fedora 33 and Centos 8.3
 - Added and removed some apps
