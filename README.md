@@ -105,7 +105,7 @@ Enjoy these shortcuts:
 "======================================="
 ```
 
-New in version 5.1:
+# New in version 5.1:
 
 - Tested on Fedora 33 and Centos 8.3
 - Added and removed some apps
