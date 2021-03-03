@@ -134,20 +134,8 @@ set noswapfile
 " scroll when x chars from top/bottom
 set scrolloff=4
 
-" converts tabs to spaces
-set expandtab
-
-" insert 2 spaces for a tab
-set tabstop=2
-
-" number of space characters inserted for indentation
-set shiftwidth=2
-
 " wrap at word boundaries rather than right at the terminal edge
 set linebreak
-
-" change terminal title to name of file
-set title
 
 " set spell checking language
 set nospell spelllang=en_us
@@ -172,6 +160,32 @@ augroup highlight_yank
   autocmd!
   autocmd TextYankPost * silent! lua require'vim.highlight'.on_yank()
 augroup END
+
+"=================="
+"  Tabs / spaces   "
+"=================="
+
+" converts tabs to spaces
+set expandtab
+
+" insert 2 spaces for a tab
+set tabstop=2
+
+" number of space characters inserted for indentation
+set shiftwidth=2
+
+"=================="
+"  Host terminal   "
+"=================="
+
+" set to true color
+set termguicolors
+
+" set cursor to blink
+set guicursor+=n-v-c:blinkon1
+
+" change terminal title to name of file
+set title
 
 "=================="
 "     Markdown     "
@@ -235,7 +249,7 @@ nnoremap <silent><leader>f mxgggqG'x<CR>
 " open init.vim file
 nnoremap <silent><leader>c :e $MYVIMRC<CR>
 
-" toggle colorcolum
+" toggle colorcolumn
 nnoremap <silent><leader>cc :execute "set colorcolumn=" . (&colorcolumn == "" ? "81" : "")<CR>
 
 " toggle line numbers
