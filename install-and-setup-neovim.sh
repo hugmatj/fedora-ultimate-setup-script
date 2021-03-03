@@ -42,6 +42,7 @@ call plug#begin('~/.config/nvim/plugged')
   Plug 'neovim/nvim-lspconfig'
   Plug 'hrsh7th/nvim-compe'
   Plug 'kosayoda/nvim-lightbulb'
+  Plug 'davidgranstrom/nvim-markdown-preview'
 call plug#end()
 
 "======================================="
