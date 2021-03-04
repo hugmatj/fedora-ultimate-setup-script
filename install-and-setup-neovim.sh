@@ -43,6 +43,8 @@ call plug#begin('~/.config/nvim/plugged')
   Plug 'hrsh7th/nvim-compe'
   Plug 'kosayoda/nvim-lightbulb'
   Plug 'davidgranstrom/nvim-markdown-preview'
+  Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+  Plug 'junegunn/fzf.vim'
 call plug#end()
 
 "======================================="
@@ -220,23 +222,30 @@ augroup formatting
 "  autocmd FileType typescript setlocal formatprg=prettier\ --parser\ typescript
 augroup END
 
-"======================================="
-"         Custom Key Mappings           "
-"                                       "
-"  <leader>f  = format                  "
-"  <leader>c  = edit init.vim config    "
-"  <leader>cc = toggle colorcolumn      "
-"  <leader>n  = toggle line numbers     "
-"  <leader>s  = toggle spell check      "
-"  <leader>w  = toggle whitespaces      "
-"  <leader>t  = new terminal            "
-"                                       "
-"          jk = escape                  "
-"         TAB = cycle buffers           "
-"      ctrl-s = save                    "
-"      ctrl-e = toggle file explorer    "
-"         ESC = search highlighting off "
-"======================================="
+"==========================================="
+"         Custom Key Mappings               "
+"                                           "
+"  <leader>f  = format                      "
+"  <leader>d  = delete to black hole        "
+"  <leader>c  = edit init.vim config        "
+"  <leader>cc = toggle colorcolumn          "
+"  <leader>n  = toggle line numbers         "
+"  <leader>s  = toggle spell check          "
+"  <leader>w  = toggle whitespaces          "
+"  <leader>t  = new terminal                "
+"                                           "
+"  <leader>b   = Open buffers               "
+"  <leader>gl  = Git files (git ls-files)   "
+"  <leader>gs  = Git files (git status)     "
+"  <leader>gc  = Git commits current buffer "
+"  <leader>rg  = ripgrep search results     "
+"                                           "
+"          jk = escape                      "
+"         TAB = cycle buffers               "
+"      ctrl-s = save                        "
+"      ctrl-e = toggle file explorer        "
+"         ESC = search highlighting off     "
+"==========================================="
 
 " set leader key
 let mapleader = "\<Space>"
@@ -281,6 +290,17 @@ vnoremap <silent><c-s> <c-c>:update<cr>gv
 
 " esc to turn off search highlighting
 nnoremap <silent><esc> :noh<cr>
+
+"=================="
+"       fzf        "
+"=================="
+
+nnoremap <silent><c-p> :Files!<CR>
+nnoremap <silent><leader>b :Buffers!<CR>
+nnoremap <silent><leader>gl :GFiles!<CR>
+nnoremap <silent><leader>gs :GFiles?<CR>
+nnoremap <silent><leader>gc :BCommits!<CR>
+nnoremap <silent><leader>rg :Rg!<CR>
 
 "=================="
 "   Disable keys   "
