@@ -17,7 +17,7 @@ sh -c 'curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.
 
 # Make directories
 
-mkdir -p "$HOME/.config/nvim/after/indent"
+mkdir -p ~/.config/nvim/{after/indent,colors,plugged}
 
 # Install TypeScript formatprg fix - https://github.com/HerringtonDarkholme/yats.vim/issues/209
 
@@ -31,14 +31,16 @@ EOL
 # curl -L https://github.com/rust-analyzer/rust-analyzer/releases/latest/download/rust-analyzer-linux -o ~/.local/bin/rust-analyzer
 # chmod +x ~/.local/bin/rust-analyzer
 
-mkdir -p "$HOME/.config/nvim/plugged"
+# Download color scheme
+curl https://raw.githubusercontent.com/ChristianChiarulli/nvcode-color-schemes.vim/master/colors/nvcode.vim -o "$HOME/.config/nvim/colors/nvcode.vim"
+
 cat >"$HOME/.config/nvim/init.vim" <<'EOL'
 "======================================="
 "            Load plugins               "
 "======================================="
 
 call plug#begin('~/.config/nvim/plugged')
-  Plug 'tomasiser/vim-code-dark'
+  Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
   Plug 'neovim/nvim-lspconfig'
   Plug 'hrsh7th/nvim-compe'
   Plug 'kosayoda/nvim-lightbulb'
@@ -51,7 +53,16 @@ call plug#end()
 "         Load colour scheme            "
 "======================================="
 
-colorscheme codedark
+colorscheme nvcode
+
+lua <<EOF
+require'nvim-treesitter.configs'.setup {
+  ensure_installed = { "bash", "css", "html", "javascript", "json", "jsonc", "lua", "rust", "typescript" },
+  highlight = {
+    enable = true,
+  },
+}
+EOF
 
 "======================================="
 "              Setup LSP                "
