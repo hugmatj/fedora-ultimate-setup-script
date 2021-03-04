@@ -243,7 +243,8 @@ augroup END
 "          jk = escape                      "
 "         TAB = cycle buffers               "
 "      ctrl-s = save                        "
-"      ctrl-e = toggle file explorer        "
+"      ctrl-e = toggle netrw file explorer  "
+"      ctrl-p = open fzf file explorer      "
 "         ESC = search highlighting off     "
 "==========================================="
 
