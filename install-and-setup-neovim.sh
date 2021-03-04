@@ -55,6 +55,10 @@ call plug#end()
 
 colorscheme nvcode
 
+"======================================="
+"          Enable treesitter            "
+"======================================="
+
 lua <<EOF
 require'nvim-treesitter.configs'.setup {
   ensure_installed = { "bash", "css", "html", "javascript", "json", "jsonc", "lua", "rust", "typescript" },
@@ -138,9 +142,6 @@ set signcolumn=yes
 
 " use system clipboard by default
 set clipboard=unnamedplus
-
-" search recursively with :find [*]part-of-filename [tab]
-set path+=**
 
 " no swap files
 set noswapfile
