@@ -236,8 +236,6 @@ alias ls="ls -ltha --color --group-directories-first"
 alias tree="tree -Catr --noreport --dirsfirst --filelimit 100"
 alias diff="diff -u --color=always" # add '| less -r' for full color output using less
 
-stty -ixon # disable terminal flow control to free ctrl-s for shortcut
-
 # search recursively for a file containing a part of the search term and ignore errors, reverse sort by modification time
 f() { find . -iname "*$1*" -exec ls -1rt "{}" +; } 2>/dev/null
 EOL
