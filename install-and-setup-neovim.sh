@@ -1,39 +1,48 @@
 #!/bin/bash
 
-# Install Neovim 0.5 and setup in as minimal way as possible to be like Visual Studio Code with TypeScript/Bash/Rust LSP support
+# Install Neovim 0.5 and set it up in as minimal way as possible to be more like Visual Studio Code
 # On first run it will give an error as the plugins are not installed yet, type :PlugInstall and then restart
 # Deno LSP needs "package.json", "tsconfig.json" or ".git" in the project root directory to run
 # Deno can be used for frontend by adding /// <reference lib="dom" /> to every file that needs it
 
-# Install Neovim 0.5 nightly (or stable if released)
+# (p)npm install -g prettier vscode-json-languageserver bash-language-server typescript typescript-language-server
+# curl -L https://github.com/rust-analyzer/rust-analyzer/releases/latest/download/rust-analyzer-linux -o ~/.local/bin/rust-analyzer
+# chmod +x ~/.local/bin/rust-analyzer
 
+# Install Neovim 0.5 nightly
 curl -LOf https://github.com/neovim/neovim/releases/download/nightly/nvim.appimage
 chmod u+x ./nvim.appimage
 sudo mv nvim.appimage /usr/local/bin/nvim
 
-# Install vimplug
+# Add nvim to .bash_profile so ranger fm uses it by default
+cat >>"$HOME/.bash_profile" <<'EOL'
+export EDITOR="nvim"
+EOL
 
+# Add to .bashrc
+cat >>"$HOME/.bashrc" <<'EOL'
+stty -ixon # disable terminal flow control to free ctrl-s for neovim shortcut
+
+set -o vi
+bind -m vi-insert '"jk": vi-movement-mode'
+EOL
+
+# Install vimplug
 sh -c 'curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
 
 # Make directories
-
 mkdir -p ~/.config/nvim/{after/indent,colors,plugged}
 
 # Install TypeScript formatprg fix - https://github.com/HerringtonDarkholme/yats.vim/issues/209
-
 touch "$HOME/.config/nvim/after/indent/typescript.vim"
 cat >"$HOME/.config/nvim/after/indent/typescript.vim" <<'EOL'
 setlocal formatexpr=
 EOL
 
-# Create init.vim
-# npm install -g prettier vscode-json-languageserver bash-language-server typescript typescript-language-server
-# curl -L https://github.com/rust-analyzer/rust-analyzer/releases/latest/download/rust-analyzer-linux -o ~/.local/bin/rust-analyzer
-# chmod +x ~/.local/bin/rust-analyzer
-
-# Download color scheme
+# Download nvcode color scheme for treesitter
 curl https://raw.githubusercontent.com/ChristianChiarulli/nvcode-color-schemes.vim/master/colors/nvcode.vim -o "$HOME/.config/nvim/colors/nvcode.vim"
 
+# Create init.vim
 cat >"$HOME/.config/nvim/init.vim" <<'EOL'
 "======================================="
 "            Load plugins               "
@@ -238,7 +247,6 @@ augroup END
 "         Custom Key Mappings               "
 "                                           "
 "  <leader>f  = format                      "
-"  <leader>d  = delete to black hole        "
 "  <leader>c  = edit init.vim config        "
 "  <leader>cc = toggle colorcolumn          "
 "  <leader>n  = toggle line numbers         "
@@ -246,10 +254,11 @@ augroup END
 "  <leader>w  = toggle whitespaces          "
 "  <leader>t  = new terminal                "
 "                                           "
-"  <leader>b   = Open buffers               "
-"  <leader>gl  = Git files (git ls-files)   "
-"  <leader>gs  = Git files (git status)     "
-"  <leader>gc  = Git commits current buffer "
+"  <leader>b   = open buffers               "
+"  <leader>h   = open file history          "
+"  <leader>gl  = git files (git ls-files)   "
+"  <leader>gs  = git files (git status)     "
+"  <leader>gc  = git commits current buffer "
 "  <leader>rg  = ripgrep search results     "
 "                                           "
 "          jk = escape                      "
@@ -310,6 +319,7 @@ nnoremap <silent><esc> :noh<cr>
 
 nnoremap <silent><c-p> :Files!<CR>
 nnoremap <silent><leader>b :Buffers!<CR>
+nnoremap <silent><leader>h :History!<CR>
 nnoremap <silent><leader>gl :GFiles!<CR>
 nnoremap <silent><leader>gs :GFiles?<CR>
 nnoremap <silent><leader>gc :BCommits!<CR>
@@ -319,7 +329,7 @@ nnoremap <silent><leader>rg :Rg!<CR>
 "   Disable keys   "
 "=================="
 
-" disable accidentally pressing ctrl-z and suspending 
+" disable accidentally pressing ctrl-z and suspending
 nnoremap <c-z> <Nop>
 
 " disable recording
