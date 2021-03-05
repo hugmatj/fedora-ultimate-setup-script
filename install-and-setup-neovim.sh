@@ -253,6 +253,7 @@ augroup END
 "  <leader>s  = toggle spell check          "
 "  <leader>w  = toggle whitespaces          "
 "  <leader>t  = new terminal                "
+"  <leader>cd = working dir to current file "
 "                                           "
 "  <leader>b   = open buffers               "
 "  <leader>h   = open file history          "
@@ -271,6 +272,9 @@ augroup END
 
 " set leader key
 let mapleader = "\<Space>"
+
+" change working directory to the location of the current file
+nnoremap <leader>cd :cd %:p:h<CR>:pwd<CR>
 
 " toggle file explorer
 nnoremap <silent><C-E> :call ToggleVExplorer()<CR>
