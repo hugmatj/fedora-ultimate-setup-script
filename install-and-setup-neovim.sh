@@ -1,5 +1,6 @@
 #!/bin/bash
 
+# Undo merge
 # Install Neovim 0.5 and set it up in as minimal way as possible to be more like Visual Studio Code
 # On first run it will give an error as the plugins are not installed yet, type :PlugInstall and then restart
 # Deno LSP needs "package.json", "tsconfig.json" or ".git" in the project root directory to run
