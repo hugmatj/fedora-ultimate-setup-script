@@ -49,7 +49,6 @@ Add minimize, maximize and close buttons to windows: ${GREEN}$title_bar_buttons_
 Display the date on the desktop: ${GREEN}$clock_show_date${RESET}
 Change caps into a backspace for touch typing: ${GREEN}$capslock_delete${RESET}
 Turn on night light: ${GREEN}$night_light${RESET}
-Run certain apps on start: ${GREEN}$autostart_apps${RESET}
 
 ${BOLD}Git settings${RESET}
 ${BOLD}-------------------${RESET}
