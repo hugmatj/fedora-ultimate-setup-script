@@ -1,6 +1,6 @@
 # Fedora and Centos Ultimate Setup Scripts v5.1 (Jan 2021)
 
-WARNING! Last merge was an error, don't use this repo until further notice, still testing it
+# WARNING! Last merge was an error, don't use this repo until further notice, still testing it
 
 **Welcome to your new ultimate desktop!** You can now choose between long term support with Centos and cutting edge features with Fedora. Run these scripts after a fresh install of your favorite OS. You can re-create the same set of applications and settings across both distributions.
 
