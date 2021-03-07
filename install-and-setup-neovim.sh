@@ -24,9 +24,8 @@ EOL
 sh -c 'curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
 
 # Make directories
-mkdir -p ~/.config/nvim/{coloes,plugged}
+mkdir -p "$HOME"/.config/nvim/colors
+mkdir -p "$HOME"/.config/nvim/plugged
 
 # Download nvcode color scheme for treesitter
 curl https://raw.githubusercontent.com/ChristianChiarulli/nvcode-color-schemes.vim/master/colors/nvcode.vim -o "$HOME/.config/nvim/colors/nvcode.vim"
-
-echo "Don't forget to cd ~/dotfiles && stow neovim before running"
