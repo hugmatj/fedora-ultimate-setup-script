@@ -205,8 +205,6 @@ Congratulations, everything is installed!
 
 pip3 install --user youtube-dl trash-cli tldr
 
-echo "Don't forget to cd ~/dotfiles && stow * to install all dotfiles, or stow [package name] to install package dotfiles"
-
 Now use the setup script...
 =============================================================================
 EOL

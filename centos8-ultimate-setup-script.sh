@@ -68,6 +68,19 @@ EOL
 read -rp "Press enter to setup, or ctrl+c to quit"
 
 #==============================================================================
+# move dotfiles to the home directory, backup existing files and run stow
+#==============================================================================
+
+mv ./dotfiles ~/dotfiles
+
+mv "$HOME/.bash_profile" "$HOME/.bash_profile_backup"
+mv "$HOME/.bashrc" "$HOME/.bashrc_backup"
+
+cd "$HOME/dotfiles" || exit
+stow *
+cd - || exit
+
+#==============================================================================
 # set host name
 #==============================================================================
 read -rp "What is this computer's name? [$HOSTNAME] " hostname
