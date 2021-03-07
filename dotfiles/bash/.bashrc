@@ -2,7 +2,7 @@
 
 # Source global definitions
 if [ -f /etc/bashrc ]; then
-	. /etc/bashrc
+    . /etc/bashrc
 fi
 
 # User specific environment
@@ -25,6 +25,3 @@ clip() { xclip -sel clip -rmlastnl; }
 
 set -o vi
 bind -m vi-insert '"jk": vi-movement-mode'
-
-source "$HOME/.cargo/env"
-export NNN_PLUG="p:addtoplaylist"
