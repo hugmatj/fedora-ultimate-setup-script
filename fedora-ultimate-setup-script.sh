@@ -18,7 +18,6 @@ title_bar_buttons_on="true"
 clock_show_date="true"
 capslock_delete="true"
 night_light="true"
-autostart_apps="true"
 
 #==============================================================================
 # git settings
@@ -79,19 +78,6 @@ fi
 #==============================================================================
 # setup software (if it is installed)
 #==============================================================================
-hash mpv 2>/dev/null &&
-    #==========================================================================
-    # MPV
-    #==========================================================================
-    {
-        mkdir -p "$HOME/.config/mpv"
-        cat >"$HOME/.config/mpv/mpv.conf" <<EOL
-profile=gpu-hq
-hwdec=auto
-fullscreen=yes
-EOL
-    }
-
 hash pnpm 2>/dev/null &&
     #==========================================================================
     # pnpm
@@ -161,24 +147,6 @@ if [[ "${night_light}" == "true" ]]; then
         night-light-enabled true
 fi
 
-if [[ "${autostart_apps}" == "true" ]]; then
-    mkdir "$HOME/.config/autostart"
-    touch "$HOME/Documents/TODO.txt"
-    cat >"$HOME/.config/autostart/org.gnome.gedit.desktop" <<'EOL'
-[Desktop Entry]
-Name=Text Editor
-Exec=gedit Documents/TODO.txt
-Type=Application
-EOL
-
-    cat >"$HOME/.config/autostart/org.gnome.Terminal.desktop" <<'EOL'
-[Desktop Entry]
-Name=Terminal
-Exec=gnome-terminal
-Type=Application
-EOL
-fi
-
 #==============================================================================
 # setup pulse audio with the best sound quality possible
 #
@@ -227,18 +195,6 @@ if ! grep -xq "Xft.lcdfilter: lcddefault" "$HOME/.Xresources"; then
     echo "Xft.lcdfilter: lcddefault" >>"$HOME/.Xresources"
 fi
 dconf write /org/gnome/settings-daemon/plugins/xsettings/antialiasing "'rgba'"
-
-#==============================================================================================
-# add to .bashrc
-#==============================================================================================
-cat >>"$HOME/.bashrc" <<'EOL'
-alias ls="ls -ltha --color --group-directories-first"
-alias tree="tree -Catr --noreport --dirsfirst --filelimit 100"
-alias diff="diff -u --color=always" # add '| less -r' for full color output using less
-
-# search recursively for a file containing a part of the search term and ignore errors, reverse sort by modification time
-f() { find . -iname "*$1*" -exec ls -1rt "{}" +; } 2>/dev/null
-EOL
 
 #==============================================================================================
 # misc

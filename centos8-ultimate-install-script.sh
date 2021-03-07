@@ -51,6 +51,7 @@ packages_to_remove=(
 )
 
 packages_to_install=(
+    stow
     borgbackup
     ffmpeg
     keepassxc
@@ -203,9 +204,11 @@ cat <<EOL
 Congratulations, everything is installed!
 
 sudo dnf install ./abattis-cantarell-fonts-0.111-2.fc30.noarch.rpm to upgrade 0.0.25
-pip3 install --user ranger-fm youtube-dl trash-cli tldr
+pip3 install --user youtube-dl trash-cli tldr
 
 JavaScript developers, don't forget to install PNPM globally
+
+echo "Don't forget to cd ~/dotfiles && stow * to install all dotfiles, or stow [package name] to install package dotfiles"
 
 Now use the setup script...
 =============================================================================
