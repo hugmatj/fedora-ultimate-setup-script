@@ -6,12 +6,15 @@ if [ -f /etc/bashrc ]; then
 fi
 
 # User specific environment
-PATH="$HOME/.local/bin:$HOME/bin:$HOME/bin/ums:$HOME/.deno/bin:$HOME/Documents/scripts:$HOME/.npm-global/bin:$PATH"
+if ! [[ "$PATH" =~ "$HOME/.local/bin:$HOME/bin:" ]]; then
+    PATH="$HOME/.local/bin:$HOME/bin:$HOME/bin/ums:$HOME/.deno/bin:$HOME/Documents/scripts:$HOME/.npm-global/bin:$PATH"
+fi
 export PATH
 
 # Uncomment the following line if you don't like systemctl's auto-paging feature:
 # export SYSTEMD_PAGER=
 
+# User specific aliases and functions
 alias ls="ls -ltha --color --group-directories-first"
 alias tree="tree -Catr --noreport --dirsfirst --filelimit 100"
 alias diff="diff -u --color=always" # add '| less -r' for full color output using less
@@ -22,6 +25,6 @@ stty -ixon # disable terminal flow control to free ctrl-s for shortcut
 f() { find . -iname "*$1*" -exec ls -1rt "{}" +; } 2>/dev/null
 # copy to clipboard
 clip() { xclip -sel clip -rmlastnl; }
-
+# set vim keys in terminal
 set -o vi
 bind -m vi-insert '"jk": vi-movement-mode'
