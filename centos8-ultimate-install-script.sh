@@ -47,6 +47,7 @@ packages_to_remove=(
     firefox
     evolution
     pidgin
+    gedit
 )
 
 packages_to_install=(

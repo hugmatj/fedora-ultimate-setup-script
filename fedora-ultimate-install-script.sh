@@ -44,6 +44,7 @@ packages_to_remove=(
     cheese
     gnome-photos
     gnome-documents
+    gedit
 )
 
 packages_to_install=(
