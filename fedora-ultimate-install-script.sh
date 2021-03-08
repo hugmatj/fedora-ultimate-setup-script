@@ -11,7 +11,7 @@
 # REQUIREMENTS: Fresh copy of Fedora 30/31/32/33 installed on your computer
 #       AUTHOR: David Else
 #      COMPANY: https://www.elsewebdevelopment.com/
-#      VERSION: 5.1
+#      VERSION: 6.0
 #
 #==============================================================================
 
@@ -184,7 +184,11 @@ flatpak uninstall -y --unused
 # install extras conditionally
 #==============================================================================
 if [[ $webdev =~ ^[Yy]$ ]]; then
+    echo "${BOLD}Installing Deno...${RESET}"
     curl -fsSL https://deno.land/x/install/install.sh | sh
+
+    echo "${BOLD}Installing Rust...${RESET}"
+    curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 fi
 
 case " ${packages_to_install[*]} " in

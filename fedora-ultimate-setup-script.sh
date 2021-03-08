@@ -69,7 +69,6 @@ read -rp "Press enter to setup, or ctrl+c to quit"
 #==============================================================================
 # move dotfiles to the home directory, backup existing files and run stow
 #==============================================================================
-
 mv ./dotfiles ~/dotfiles
 
 mv "$HOME/.bash_profile" "$HOME/.bash_profile_backup"
@@ -222,7 +221,6 @@ Gnome:    settings  > details > choose default applications
 
 firefox https://addons.mozilla.org/en-GB/firefox/addon/privacy-badger17/ \
 https://addons.mozilla.org/en-GB/firefox/addon/ublock-origin/ \
-https://addons.mozilla.org/en-US/firefox/addon/df-youtube/ \
 https://addons.mozilla.org/en-US/firefox/addon/vimium-ff/
 
 Firefox:  Preferences > Network Settings > Enable DNS over HTTPS

@@ -8,12 +8,12 @@
 #  DESCRIPTION: Post-installation install script for Centos 8.3 Workstation
 #      WEBSITE: https://github.com/David-Else/fedora-ultimate-setup-script
 #
-# REQUIREMENTS: Fresh copy of Centos 8.3 installed on your computer
+# REQUIREMENTS: Fresh copy of Centos 8.x installed with the following options:
 #               - Select 'Workstation'
 #               - Tick 'make this user administrator' when creating user
 #       AUTHOR: David Else
 #      COMPANY: https://www.elsewebdevelopment.com/
-#      VERSION: 5.1
+#      VERSION: 6.0
 #
 #==============================================================================
 
@@ -92,7 +92,6 @@ if [[ $webdev =~ ^[Yy]$ ]]; then
         code
         php
         optipng
-        python36-devel
         gcc-c++
         podman
         podman-docker)
@@ -189,12 +188,14 @@ mv shfmt_v3.2.2_linux_amd64 /usr/local/bin/shfmt
 #==============================================================================
 if [[ $webdev =~ ^[Yy]$ ]]; then
     echo "${BOLD}Installing Deno...${RESET}"
-    echo 'Please add Deno to the PATH as instructed below:'
     /usr/bin/su - "$SUDO_USER" -c "curl -fsSL https://deno.land/x/install/install.sh | sh"
 
     echo "${BOLD}Installing Node.js 14 LTS...${RESET}"
     dnf module enable -y nodejs:14
     dnf install -y nodejs
+
+    echo "${BOLD}Installing Rust...${RESET}"
+    curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 fi
 
 cat <<EOL

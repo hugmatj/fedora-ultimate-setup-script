@@ -184,7 +184,6 @@ Gnome:    settings  > details > choose default applications
 
 flatpak run org.mozilla.firefox https://addons.mozilla.org/en-GB/firefox/addon/privacy-badger17/ \
 https://addons.mozilla.org/en-GB/firefox/addon/ublock-origin/ \
-https://addons.mozilla.org/en-US/firefox/addon/df-youtube/ \
 https://addons.mozilla.org/en-US/firefox/addon/vimium-ff/
 
 Firefox:  Preferences > Network Settings > Enable DNS over HTTPS
@@ -197,7 +196,7 @@ Firefox:  Preferences > Network Settings > Enable DNS over HTTPS
                     Default search engine : https://duckduckgo.com/?q=
 
 
-For VS Code in Centos 8/8.3:
+For VS Code in Centos 8.x:
 
 go to terminal type 'ibus-setup'
 go to Emoji tab, press the '...' next to Emoji choice to get 'select keyboard shortcut for switching' window
