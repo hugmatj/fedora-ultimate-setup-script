@@ -194,9 +194,6 @@ if [[ $webdev =~ ^[Yy]$ ]]; then
     echo "${BOLD}Installing Node.js 14 LTS...${RESET}"
     dnf module enable -y nodejs:14
     dnf install -y nodejs
-
-    echo "${BOLD}Installing Rust...${RESET}"
-    /usr/bin/su - "$SUDO_USER" -c "curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh"
 fi
 
 cat <<EOL
