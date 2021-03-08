@@ -45,7 +45,6 @@ packages_to_remove=(
     totem
     cheese
     firefox
-    gnome-boxes
     evolution
     pidgin
 )
@@ -74,7 +73,6 @@ flathub_packages_to_install=(
     fr.handbrake.ghb
     org.mozilla.firefox
     org.gnome.Shotwell
-    org.gnome.Boxes
     org.bunkus.mkvtoolnix-gui)
 
 #==============================================================================

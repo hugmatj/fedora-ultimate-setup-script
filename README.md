@@ -1,7 +1,5 @@
 # Fedora and Centos Ultimate Setup Scripts v5.1 (Jan 2021)
 
-# WARNING! New test feature using stow and dotfiles, report any problems!
-
 **Welcome to your new ultimate desktop!** You can now choose between long term support with Centos and cutting edge features with Fedora. Run these scripts after a fresh install of your favorite OS. You can re-create the same set of applications and settings across both distributions.
 
 I have written a blog article [CentOS 8 Setup for Developers](https://www.elsewebdevelopment.com/centos-8-setup-for-developers/) that explains how the script works to help with customization.
@@ -81,31 +79,50 @@ If web development was chosen then a lot of extra things are setup here. Most pe
 - Subpixel rendering for Xorg
 - Various fixes and enhancements
 
-# Feb 2021: Added Neovim setup script
+# New in version 6
+
+- Use [stow](https://www.gnu.org/software/stow/) to install dotfiles
+
+Now all the relevant dotfiles for the software installed live in `~/dotfiles` and are magically symlinked to the correct location in the home directory using `stow`. You can read about how this works in [Managing Dotfiles with GNU Stow](https://www.stevenrbaker.com/tech/managing-dotfiles-with-gnu-stow.html)
+
+- Added [Neovim](https://neovim.io/) setup script
 
 I have included a bonus script to install and setup Neovim 0.5 from scratch using the latest nightly build. I have tried to create a VS Code style setup in as minimalist way as possible using the new built in LSP and the https://github.com/hrsh7th/nvim-compe autocompletion plugin.
+
+With the new built in LSP Neovim is the best editor, but VS Code has so many useful extensions you may still need it for some things.
 
 Enjoy these shortcuts:
 
 ```
-"======================================="
-"         Custom Key Mappings           "
-"                                       "
-"  <leader>f  = format                  "
-"  <leader>c  = edit init.vim config    "
-"  <leader>cc = toggle colorcolumn      "
-"  <leader>n  = toggle line numbers     "
-"  <leader>s  = toggle spell check      "
-"  <leader>w  = toggle whitespaces      "
-"  <leader>t  = new terminal            "
-"                                       "
-"          jk = escape                  "
-"         TAB = cycle buffers           "
-"      ctrl-s = save                    "
-"      ctrl-e = toggle file explorer    "
-"         ESC = search highlighting off "
-"======================================="
+"==========================================="
+"         Custom Key Mappings               "
+"                                           "
+"  <leader>f  = format                      "
+"  <leader>c  = edit init.vim config        "
+"  <leader>cc = toggle colorcolumn          "
+"  <leader>n  = toggle line numbers         "
+"  <leader>s  = toggle spell check          "
+"  <leader>w  = toggle whitespaces          "
+"  <leader>t  = new terminal                "
+"  <leader>cd = working dir to current file "
+"                                           "
+"  <leader>b   = open buffers               "
+"  <leader>h   = open file history          "
+"  <leader>gl  = git files (git ls-files)   "
+"  <leader>gs  = git files (git status)     "
+"  <leader>gc  = git commits current buffer "
+"  <leader>rg  = ripgrep search results     "
+"                                           "
+"          jk = escape                      "
+"         TAB = cycle buffers               "
+"      ctrl-s = save                        "
+"      ctrl-e = toggle netrw file explorer  "
+"      ctrl-p = open fzf file explorer      "
+"         ESC = search highlighting off     "
+"==========================================="
 ```
+
+- Added [nnn](https://github.com/jarun/nnn) setup script. This is the ultimate file browser, never use Gnome files unless it is an emergency!
 
 # New in version 5.1:
 

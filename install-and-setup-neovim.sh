@@ -15,11 +15,6 @@ curl -LOf https://github.com/neovim/neovim/releases/download/nightly/nvim.appima
 chmod u+x ./nvim.appimage
 sudo mv nvim.appimage /usr/local/bin/nvim
 
-# Add nvim to .bash_profile so ranger/nnn uses it by default
-cat >>"$HOME/.bash_profile" <<'EOL'
-export EDITOR="nvim"
-EOL
-
 # Install vimplug
 sh -c 'curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
 

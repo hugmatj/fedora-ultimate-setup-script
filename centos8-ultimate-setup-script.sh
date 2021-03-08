@@ -69,7 +69,6 @@ read -rp "Press enter to setup, or ctrl+c to quit"
 #==============================================================================
 # move dotfiles to the home directory, backup existing files and run stow
 #==============================================================================
-
 mv ./dotfiles ~/dotfiles
 
 mv "$HOME/.bash_profile" "$HOME/.bash_profile_backup"
@@ -114,8 +113,6 @@ EOL
 #==============================================================================
 # setup gnome desktop gsettings
 #==============================================================================
-echo "${BOLD}Setting up Gnome desktop gsettings...${RESET}"
-
 gsettings set org.gnome.desktop.session \
     idle-delay $idle_delay
 
@@ -147,7 +144,6 @@ fi
 #
 # *MAKE SURE your interface can handle s32le 32bit rather than the default 16bit
 #==============================================================================
-echo "${BOLD}Setting up Pulse Audio...${RESET}"
 sudo sed -i "s/; default-sample-format = s16le/default-sample-format = s32le/g" /etc/pulse/daemon.conf
 sudo sed -i "s/; resample-method = speex-float-1/resample-method = speex-float-10/g" /etc/pulse/daemon.conf
 sudo sed -i "s/; avoid-resampling = false/avoid-resampling = true/g" /etc/pulse/daemon.conf
@@ -155,7 +151,6 @@ sudo sed -i "s/; avoid-resampling = false/avoid-resampling = true/g" /etc/pulse/
 #==============================================================================
 # setup git user name and email if none exist
 #==============================================================================
-echo "${BOLD}Setting up Git...${RESET}"
 if [[ -z $(git config --get user.name) ]]; then
     git config --global user.name $git_user_name
     echo "No global git user name was set, I have set it to ${BOLD}$git_user_name${RESET}"
@@ -201,8 +196,6 @@ Firefox:  Preferences > Network Settings > Enable DNS over HTTPS
           Vimium:   New tab URL           : pages/blank.html
                     Default search engine : https://duckduckgo.com/?q=
 
-After running Visual Studio Code, allow ban.spellright to access built in hunspell directories
-- sudo ln -s /usr/share/myspell "$HOME/.config/Code/Dictionaries"
 
 For VS Code in Centos 8/8.3:
 
