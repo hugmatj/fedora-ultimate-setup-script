@@ -22,7 +22,7 @@ EOL
 chmod +x "$HOME/.config/nnn/plugins/addtoplaylist"
 cat >>"$HOME/.bashrc" <<'EOL'
 export NNN_PLUG="p:addtoplaylist"
-export NNN_BMS='d:~/Documents;D:~/Downloads/;p:~/Pictures;v:~/Videos;m:~/Music;h:~/'
+export NNN_BMS='d:~/Documents;D:~/Downloads;p:~/Pictures;v:~/Videos;m:~/Music;h:~/'
 export NNN_TRASH=1
 
 alias nnn="nnn -e"
