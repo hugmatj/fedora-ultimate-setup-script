@@ -60,7 +60,6 @@ packages_to_install=(
     mpv
     gnome-tweaks
     mediainfo
-    syncthing
     libva-intel-driver
     deadbeef
     xclip
