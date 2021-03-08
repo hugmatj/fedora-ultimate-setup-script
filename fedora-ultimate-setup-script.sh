@@ -240,6 +240,9 @@ If you install rust, to use 'rustup doc' in flatpak Firefox:
 - flatpak override --user --filesystem=~/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/share/doc:ro org.mozilla.firefox
 - flatpak override --user --show org.mozilla.firefox
 
+mkdir "$HOME/.npm-global"
+npm config set prefix "$HOME/.npm-global"
+
 Please reboot (or things may not work as expected)
 =================================================================
 EOL

@@ -196,7 +196,7 @@ if [[ $webdev =~ ^[Yy]$ ]]; then
     dnf install -y nodejs
 
     echo "${BOLD}Installing Rust...${RESET}"
-    curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+    /usr/bin/su - "$SUDO_USER" -c "curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh"
 fi
 
 cat <<EOL

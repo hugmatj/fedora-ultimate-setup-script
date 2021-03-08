@@ -185,10 +185,10 @@ flatpak uninstall -y --unused
 #==============================================================================
 if [[ $webdev =~ ^[Yy]$ ]]; then
     echo "${BOLD}Installing Deno...${RESET}"
-    curl -fsSL https://deno.land/x/install/install.sh | sh
+    /usr/bin/su - "$SUDO_USER" -c "curl -fsSL https://deno.land/x/install/install.sh | sh"
 
     echo "${BOLD}Installing Rust...${RESET}"
-    curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+    /usr/bin/su - "$SUDO_USER" -c "curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh"
 fi
 
 case " ${packages_to_install[*]} " in
