@@ -196,20 +196,29 @@ Firefox:  Preferences > Network Settings > Enable DNS over HTTPS
                     Default search engine : https://duckduckgo.com/?q=
 
 
-For VS Code in Centos 8.x:
-
+Fix Visual Studio Code keyboard input
+-------------------------------------
 go to terminal type 'ibus-setup'
 go to Emoji tab, press the '...' next to Emoji choice to get 'select keyboard shortcut for switching' window
 use the delete button to delete the shortcut and leave nothing there, press OK
 Close
 
-If you install rust, to use 'rustup doc' in flatpak Firefox:
-- about:config > security.fileuri.strict_origin_policy = false
-- flatpak override --user --filesystem=~/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/share/doc:ro org.mozilla.firefox
-- flatpak override --user --show org.mozilla.firefox
+Use local rust docs with flatpak firefox
+----------------------------------------
+about:config > security.fileuri.strict_origin_policy = false
+flatpak override --user --filesystem=~/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/share/doc:ro org.mozilla.firefox
+flatpak override --user --show org.mozilla.firefox
 
+Force NPM to use your home directory for global packages
+--------------------------------------------------------
 mkdir "$HOME/.npm-global"
 npm config set prefix "$HOME/.npm-global"
+
+A POSIX script that helps you find Youtube videos (without API) and opens/downloads them using mpv/youtube-dl
+-------------------------------------------------------------------------------------------------------------
+git clone https://github.com/pystardust/ytfzf
+cd ytfzf
+sudo make install
 
 Please reboot (or things may not work as expected)
 =================================================================
