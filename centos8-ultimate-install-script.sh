@@ -61,7 +61,6 @@ packages_to_install=(
     gnome-tweaks
     mediainfo
     libva-intel-driver
-    deadbeef
     xclip
     chromium
     ntfs-3g
