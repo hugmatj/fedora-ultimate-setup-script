@@ -22,6 +22,11 @@ cat <<EOL
 =================================================================
 On first run Neovim will give an error as the plugins are not installed yet, type :PlugInstall and then restart
 
+After the fzf plugin is installed you can symlink the binary for general use:
+
+mkdir -p "$HOME"/bin
+ln -s "$HOME"/.config/nvim/plugged/fzf/bin/fzf "$HOME"/bin
+
 Install LSPs
 ------------
 - (p)npm install -g prettier vscode-json-languageserver bash-language-server typescript typescript-language-server
