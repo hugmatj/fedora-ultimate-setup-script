@@ -59,7 +59,6 @@ packages_to_install=(
     mediainfo
     syncthing
     libva-intel-driver
-    deadbeef
     xclip
     chromium
     chromium-libs-media-freeworld
