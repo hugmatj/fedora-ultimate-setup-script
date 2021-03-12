@@ -43,4 +43,4 @@ EOL
 
 # Setup gnome desktop integration
 xdg-desktop-menu install --novendor nvim.desktop
-xdg-icon-resource install --novendor --mode user --size 64 nvim-icon.png
+xdg-icon-resource install --novendor --mode user --size 64 nvim.png
