@@ -200,14 +200,23 @@ augroup END
 "==========================================="
 "         Custom Key Mappings               "
 "                                           "
-"  <leader>f  = format                      "
-"  <leader>c  = edit init.vim config        "
+"          jk = escape                      "
+"         TAB = cycle buffers               "
+"      ctrl-s = save                        "
+"      ctrl-p = open fzf file explorer      "
+"         ESC = search highlighting off     "
+"
+"  <leader>f  = format buffer (formatprg)   "
+"  <leader>l  = lint using shellcheck       "
+"                                           "
 "  <leader>cc = toggle colorcolumn          "
 "  <leader>n  = toggle line numbers         "
 "  <leader>s  = toggle spell check          "
 "  <leader>w  = toggle whitespaces          "
+"                                           "
 "  <leader>t  = new terminal                "
 "  <leader>cd = working dir to current file "
+"  <leader>c  = edit init.vim config        "
 "                                           "
 "  <leader>b   = open buffers               "
 "  <leader>h   = open file history          "
@@ -216,22 +225,16 @@ augroup END
 "  <leader>gc  = git commits current buffer "
 "  <leader>rg  = ripgrep search results     "
 "                                           "
-"          jk = escape                      "
-"         TAB = cycle buffers               "
-"      ctrl-s = save                        "
-"      ctrl-e = toggle netrw file explorer  "
-"      ctrl-p = open fzf file explorer      "
-"         ESC = search highlighting off     "
 "==========================================="
 
 " set leader key
 let mapleader = "\<Space>"
 
+" lint current buffer using shellcheck
+nnoremap <leader>l :vsplit term://shellcheck %<CR>
+
 " change working directory to the location of the current file
 nnoremap <leader>cd :cd %:p:h<CR>:pwd<CR>
-
-" toggle file explorer
-nnoremap <silent><C-E> :call ToggleVExplorer()<CR>
 
 " format entire buffer and keep cursor position with mark
 nnoremap <silent><leader>f mxgggqG'x<CR>
@@ -315,31 +318,6 @@ xnoremap b :<c-u>silent normal ggVG<CR>
 "             Functions                 "
 "======================================="
 
-"=================="
-"   Toggle netrw   "
-"=================="
-
-" netrw bug fix
-augroup AutoDeleteNetrwHiddenBuffers
-  au!
-  au FileType netrw setlocal bufhidden=wipe
-augroup end
-
-" remove banner
-let g:netrw_banner = 0
-" use the tree list view
-let g:netrw_liststyle = 3
-" open in previous window
-let g:netrw_browse_split = 4
-
-function! ToggleVExplorer()
-  Lexplore
-  vertical resize 30
-endfunction
-
-"======================================="
-"            Status Line                "
-"======================================="
 function! GitBranch()
   return system("git rev-parse --abbrev-ref HEAD 2>/dev/null | tr -d '\n'")
 endfunction
@@ -348,6 +326,10 @@ function! StatuslineGit()
   let l:branchname = GitBranch()
   return strlen(l:branchname) > 0?'  '.l:branchname.' ':''
 endfunction
+
+"======================================="
+"            Status Line                "
+"======================================="
 
 set statusline=
 set statusline+=%#PmenuSel#
