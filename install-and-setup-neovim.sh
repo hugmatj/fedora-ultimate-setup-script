@@ -16,7 +16,8 @@ mkdir -p "$HOME"/.config/nvim/colors
 mkdir -p "$HOME"/.config/nvim/plugged
 
 # Download nvcode color scheme for treesitter
-curl https://raw.githubusercontent.com/ChristianChiarulli/nvcode-color-schemes.vim/master/colors/nvcode.vim -o "$HOME/.config/nvim/colors/nvcode.vim"
+# curl https://raw.githubusercontent.com/ChristianChiarulli/nvcode-color-schemes.vim/master/colors/nvcode.vim -o "$HOME/.config/nvim/colors/nvcode.vim"
+# use https://raw.githubusercontent.com/Mofiqul/vim-code-dark/master/colors/codedark.vim until it is merged upstream
 
 cat <<EOL
 =================================================================
