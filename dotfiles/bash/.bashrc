@@ -28,3 +28,5 @@ clip() { xclip -sel clip -rmlastnl; }
 # set vim keys in terminal
 set -o vi
 bind -m vi-insert '"jk": vi-movement-mode'
+# include hidden files and ignore contents of .git folder
+export FZF_DEFAULT_COMMAND='find . -path './.git' -prune -o -print'

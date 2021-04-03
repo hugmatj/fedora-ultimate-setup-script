@@ -8,7 +8,8 @@ mkdir -p "$HOME/.config/nnn/plugins"
 
 cat >"$HOME/.config/nnn/plugins/addtoplaylist" <<'EOL'
 #!/usr/bin/env sh
-# Open selected files in MPV playlist using https://github.com/mpv-player/mpv/raw/master/TOOLS/umpv
+# Open selected files in MPV playlist
+curl https://raw.githubusercontent.com/mpv-player/mpv/master/TOOLS/umpv -o "$HOME/Documents/scripts/umpv"
 
 player="umpv"
 selection=${NNN_SEL:-${XDG_CONFIG_HOME:-$HOME/.config}/nnn/.selection}
