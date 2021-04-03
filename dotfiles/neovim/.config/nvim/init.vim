@@ -3,13 +3,18 @@
 "======================================="
 
 call plug#begin('~/.config/nvim/plugged')
+  " use built-in LSP and treesitter features
   Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
   Plug 'neovim/nvim-lspconfig'
+  " auto completion and LSP codeAction alert
   Plug 'hrsh7th/nvim-compe'
   Plug 'kosayoda/nvim-lightbulb'
+  " preview markdown in web browser using pandoc
   Plug 'davidgranstrom/nvim-markdown-preview'
+  " fuzzy find
   Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
   Plug 'junegunn/fzf.vim'
+  " git wrapper
   Plug 'tpope/vim-fugitive'
 call plug#end()
 
@@ -20,7 +25,7 @@ call plug#end()
 colorscheme codedark
 
 "======================================="
-"          Enable treesitter            "
+"          Setup treesitter             "
 "======================================="
 
 lua <<EOF
@@ -36,7 +41,21 @@ EOF
 "              Setup LSP                "
 "======================================="
 
+" load general LSP config from external file
 lua require("lsp")
+
+" gutter space for lsp info on left
+set signcolumn=yes
+
+" increased for lsp code actions
+set updatetime=100
+
+" needed for nvim-compe
+set completeopt=menu,menuone,noselect
+
+"=================="
+"  nvim-lightbulb  "
+"=================="
 
 augroup lightbulb
   autocmd CursorHold,CursorHoldI * lua require'nvim-lightbulb'.update_lightbulb()
@@ -86,7 +105,7 @@ inoremap <silent><expr> <TAB> pumvisible() ? "\<C-n>" : "\<TAB>"
 inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
 
 "======================================="
-"              Settings                 "
+"         General Settings              "
 "======================================="
 
 " ignore file types
@@ -94,15 +113,6 @@ set wildignore+=*.png,*.jpg,*.gif,*.ico,*.svg
 set wildignore+=*.wav,*.mp4,*.mp3,*.flac
 set wildignore+=*.odt,*.ods,*.ott,*.doc,*.docx,*.pdf
 set wildignore+=*.zip,*.tar.gz,*.tar.bz2,*.rar,*.tar.xz
-
-" increased for lsp code actions
-set updatetime=100
-
-" needed for nvim-compe
-set completeopt=menu,menuone,noselect
-
-" gutter space for lsp info on left
-set signcolumn=yes
 
 " use system clipboard by default
 set clipboard=unnamedplus
@@ -119,7 +129,7 @@ set linebreak
 " set spell checking language
 set nospell spelllang=en_us
 
-" automatically enter insert mode on new terminals
+" automatically enter insert mode on new neovim terminals
 augroup terminal
   au TermOpen * startinsert
 augroup END
@@ -200,13 +210,13 @@ augroup END
 
 "==========================================="
 "         Custom Key Mappings               "
+"       (also see LSP mappings)             "
 "                                           "
 "          jk = escape                      "
-"         TAB = cycle buffers               "
 "      ctrl-s = save                        "
 "      ctrl-p = open fzf file explorer      "
 "         ESC = search highlighting off     "
-"
+"                                           "
 "  <leader>f  = format buffer (formatprg)   "
 "  <leader>l  = lint using shellcheck       "
 "                                           "
@@ -219,14 +229,13 @@ augroup END
 "  <leader>cd = working dir to current file "
 "  <leader>c  = edit init.vim config        "
 "                                           "
-"  <leader>b   = open buffers               "
-"  <leader>h   = open file history          "
-"  <leader>rg  = ripgrep search results     "
+"  <leader>b  = open buffers                "
+"  <leader>h  = open file history           "
+"  <leader>rg = ripgrep search results      "
 "                                           "
-"  <leader>gl  = git files (git ls-files)   "
-"  <leader>gs  = git files (git status)     "
-"  <leader>gc  = git commits current buffer "
-"  <leader>G   = git fugitive status        "
+"  <leader>gs = git fugitive status         "
+"  <leader>gc = git commits history         "
+"  <leader>gl = git files (git ls-files)    "
 "                                           "
 "==========================================="
 
@@ -237,7 +246,7 @@ let mapleader = "\<Space>"
 nnoremap <leader>l :vsplit term://shellcheck %<CR>
 
 " git fugitive status
-nnoremap <leader>G :G<CR>
+nnoremap <leader>gs :G<CR>
 
 " change working directory to the location of the current file
 nnoremap <leader>cd :cd %:p:h<CR>:pwd<CR>
@@ -268,10 +277,6 @@ nnoremap <silent><leader>t :terminal<CR>
 inoremap jk <Esc>
 tnoremap jk <C-\><C-n>
 
-" tab to cycle buffers
-nnoremap <silent><Tab> :bnext<CR> 
-nnoremap <silent><S-Tab> :bprevious<CR>
-
 " ctrl-s to save (add stty -ixon to ~/.bashrc required)
 nnoremap <silent><c-s> :<c-u>update<cr>
 inoremap <silent><c-s> <c-o>:update<cr>
@@ -288,7 +293,6 @@ nnoremap <silent><c-p> :Files!<CR>
 nnoremap <silent><leader>b :Buffers!<CR>
 nnoremap <silent><leader>h :History!<CR>
 nnoremap <silent><leader>gl :GFiles!<CR>
-nnoremap <silent><leader>gs :GFiles?<CR>
 nnoremap <silent><leader>gc :BCommits!<CR>
 nnoremap <silent><leader>rg :Rg!<CR>
 
@@ -319,10 +323,6 @@ inoremap <Right> <Nop>
 " entire buffer
 onoremap b :silent normal ggVG<CR>
 xnoremap b :<c-u>silent normal ggVG<CR>
-
-"======================================="
-"             Functions                 "
-"======================================="
 
 "======================================="
 "            Status Line                "
