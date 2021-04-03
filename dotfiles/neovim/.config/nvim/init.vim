@@ -10,13 +10,14 @@ call plug#begin('~/.config/nvim/plugged')
   Plug 'davidgranstrom/nvim-markdown-preview'
   Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
   Plug 'junegunn/fzf.vim'
+  Plug 'tpope/vim-fugitive'
 call plug#end()
 
 "======================================="
 "         Load colour scheme            "
 "======================================="
 
-colorscheme nvcode
+colorscheme codedark
 
 "======================================="
 "          Enable treesitter            "
@@ -220,10 +221,12 @@ augroup END
 "                                           "
 "  <leader>b   = open buffers               "
 "  <leader>h   = open file history          "
+"  <leader>rg  = ripgrep search results     "
+"                                           "
 "  <leader>gl  = git files (git ls-files)   "
 "  <leader>gs  = git files (git status)     "
 "  <leader>gc  = git commits current buffer "
-"  <leader>rg  = ripgrep search results     "
+"  <leader>G   = git fugitive status        "
 "                                           "
 "==========================================="
 
@@ -232,6 +235,9 @@ let mapleader = "\<Space>"
 
 " lint current buffer using shellcheck
 nnoremap <leader>l :vsplit term://shellcheck %<CR>
+
+" git fugitive status
+nnoremap <leader>G :G<CR>
 
 " change working directory to the location of the current file
 nnoremap <leader>cd :cd %:p:h<CR>:pwd<CR>
@@ -318,22 +324,13 @@ xnoremap b :<c-u>silent normal ggVG<CR>
 "             Functions                 "
 "======================================="
 
-function! GitBranch()
-  return system("git rev-parse --abbrev-ref HEAD 2>/dev/null | tr -d '\n'")
-endfunction
-
-function! StatuslineGit()
-  let l:branchname = GitBranch()
-  return strlen(l:branchname) > 0?'  '.l:branchname.' ':''
-endfunction
-
 "======================================="
 "            Status Line                "
 "======================================="
 
 set statusline=
 set statusline+=%#PmenuSel#
-set statusline+=%{StatuslineGit()}
+set statusline+=%{FugitiveStatusline()}
 set statusline+=%#LineNr#
 set statusline+=\ %f
 set statusline+=%m\
