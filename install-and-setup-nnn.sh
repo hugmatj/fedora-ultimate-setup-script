@@ -5,11 +5,12 @@ chmod +x ./nnn-4.0-1.el8.0.centos.x86_64.rpm
 sudo dnf install ./nnn-4.0-1.el8.0.centos.x86_64.rpm
 curl -Ls https://raw.githubusercontent.com/jarun/nnn/master/plugins/getplugs | sh
 
-# https://raw.githubusercontent.com/mpv-player/mpv/master/TOOLS/umpv -o "$HOME/Documents/scripts/umpv"
+# Download the following script to anywhere in your PATH
+# curl https://raw.githubusercontent.com/mpv-player/mpv/master/TOOLS/umpv -o "$HOME/Documents/scripts/umpv"
 
 cat >"$HOME/.config/nnn/plugins/addtoplaylist" <<'EOL'
 #!/usr/bin/env sh
-# Open selected files in MPV playlist curl
+# Open selected files in MPV playlist
 
 player="umpv"
 selection=${NNN_SEL:-${XDG_CONFIG_HOME:-$HOME/.config}/nnn/.selection}
