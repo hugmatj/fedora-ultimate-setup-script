@@ -201,8 +201,7 @@ Congratulations, everything is installed!
 
 sudo dnf install ./abattis-cantarell-fonts-0.111-2.fc30.noarch.rpm to upgrade 0.0.25
 pip3 install --user youtube-dl trash-cli tldr
-
-JavaScript developers, don't forget to install PNPM globally
+grab bat-v0.18.1-x86_64-unknown-linux-gnu.tar.gz and put it in your PATH
 
 Now use the setup script...
 =============================================================================
