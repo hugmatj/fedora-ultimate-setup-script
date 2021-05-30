@@ -259,9 +259,6 @@ nnoremap <silent><leader>s :set invspell<cr>
 set lcs+=space:.
 nnoremap <silent><leader>w :set list!<cr>
 
-" toggle terminal
-" nnoremap <silent><leader>t :ToggleTerm<CR>
-
 " map jk to escape
 inoremap jk <Esc>
 tnoremap jk <C-\><C-n>
