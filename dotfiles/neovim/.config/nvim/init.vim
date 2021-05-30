@@ -5,6 +5,7 @@
 call plug#begin('~/.config/nvim/plugged')
   " use built-in LSP and treesitter features
   Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+  Plug 'nvim-treesitter/nvim-treesitter-textobjects'
   Plug 'neovim/nvim-lspconfig'
   " auto completion and LSP codeAction alert
   Plug 'hrsh7th/nvim-compe'
@@ -14,8 +15,10 @@ call plug#begin('~/.config/nvim/plugged')
   " fuzzy find
   Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
   Plug 'junegunn/fzf.vim'
-  " git wrapper
-  Plug 'tpope/vim-fugitive'
+  " zen mode
+  Plug 'folke/zen-mode.nvim'
+  " toggle the terminal
+  Plug 'akinsho/nvim-toggleterm.lua'
 call plug#end()
 
 "======================================="
@@ -23,6 +26,18 @@ call plug#end()
 "======================================="
 
 colorscheme codedark
+
+"======================================="
+"           Setup zen-mode              "
+"======================================="
+
+lua << EOF
+  require("zen-mode").setup {
+  window = {
+    width = 80, -- width of the Zen window
+    },
+  }
+EOF
 
 "======================================="
 "          Setup treesitter             "
@@ -65,42 +80,15 @@ augroup END
 "    nvim-compe    "
 "=================="
 
-" https://github.com/hrsh7th/nvim-compe#vim-script-config
 let g:compe = {}
 let g:compe.enabled = v:true
-let g:compe.autocomplete = v:true
-let g:compe.debug = v:false
-let g:compe.min_length = 1
-let g:compe.preselect = 'enable'
-let g:compe.throttle_time = 80
-let g:compe.source_timeout = 200
-let g:compe.incomplete_delay = 400
-let g:compe.max_abbr_width = 100
-let g:compe.max_kind_width = 100
-let g:compe.max_menu_width = 100
-let g:compe.documentation = v:true
+let g:compe.source = {'path': v:true, 'buffer': v:true, 'nvim_lsp': v:true, 'spell': v:true }
 
-let g:compe.source = {}
-let g:compe.source.path = v:true
-let g:compe.source.buffer = v:true
-let g:compe.source.calc = v:true
-let g:compe.source.vsnip = v:true
-let g:compe.source.nvim_lsp = v:true
-let g:compe.source.nvim_lua = v:true
-let g:compe.source.spell = v:true
-let g:compe.source.tags = v:true
-let g:compe.source.snippets_nvim = v:true
-let g:compe.source.treesitter = v:true
-let g:compe.source.omni = v:true
-
-" https://github.com/hrsh7th/nvim-compe#mappings
 inoremap <silent><expr> <C-Space> compe#complete()
 inoremap <silent><expr> <CR>      compe#confirm('<CR>')
 inoremap <silent><expr> <C-e>     compe#close('<C-e>')
 inoremap <silent><expr> <C-f>     compe#scroll({ 'delta': +4 })
 inoremap <silent><expr> <C-d>     compe#scroll({ 'delta': -4 })
-
-" add TAB autocomplete
 inoremap <silent><expr> <TAB> pumvisible() ? "\<C-n>" : "\<TAB>"
 inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
 
@@ -130,9 +118,9 @@ set linebreak
 set nospell spelllang=en_us
 
 " automatically enter insert mode on new neovim terminals
-augroup terminal
-  au TermOpen * startinsert
-augroup END
+" augroup terminal
+"   au TermOpen * startinsert
+" augroup END
 
 " improve default splitting, ctrl + w = normalize split sizes
 set splitright
@@ -181,7 +169,7 @@ set title
 "=================="
 
 " set markdown language fencing
-let g:markdown_fenced_languages = ['bash=sh', 'javascript', 'js=javascript', 'json=javascript', 'typescript', 'ts=typescript', 'php', 'html', 'css', 'rust']
+let g:markdown_fenced_languages = ['bash=sh', 'javascript', 'js=javascript', 'json=javascript', 'typescript', 'ts=typescript', 'php', 'html', 'css', 'rust', 'sql']
 
 " enable markdown folding, toggle headings with za, zR & zM toggle all
 let g:markdown_folding = 1
@@ -224,8 +212,9 @@ augroup END
 "  <leader>n  = toggle line numbers         "
 "  <leader>s  = toggle spell check          "
 "  <leader>w  = toggle whitespaces          "
+"  <leader>z  = toggle zen mode             "
 "                                           "
-"  <leader>t  = new terminal                "
+"  <leader>t  = toggle terminal             "
 "  <leader>cd = working dir to current file "
 "  <leader>c  = edit init.vim config        "
 "                                           "
@@ -242,11 +231,11 @@ augroup END
 " set leader key
 let mapleader = "\<Space>"
 
+" toggle zen mode
+ nnoremap <silent><leader>z :ZenMode<CR>
+
 " lint current buffer using shellcheck
 nnoremap <leader>l :vsplit term://shellcheck %<CR>
-
-" git fugitive status
-nnoremap <leader>gs :G<CR>
 
 " change working directory to the location of the current file
 nnoremap <leader>cd :cd %:p:h<CR>:pwd<CR>
@@ -270,8 +259,8 @@ nnoremap <silent><leader>s :set invspell<cr>
 set lcs+=space:.
 nnoremap <silent><leader>w :set list!<cr>
 
-" open terminal
-nnoremap <silent><leader>t :terminal<CR>
+" toggle terminal
+" nnoremap <silent><leader>t :ToggleTerm<CR>
 
 " map jk to escape
 inoremap jk <Esc>
@@ -293,6 +282,7 @@ nnoremap <silent><c-p> :Files!<CR>
 nnoremap <silent><leader>b :Buffers!<CR>
 nnoremap <silent><leader>h :History!<CR>
 nnoremap <silent><leader>gl :GFiles!<CR>
+nnoremap <silent><leader>gs :GFiles?<CR>
 nnoremap <silent><leader>gc :BCommits!<CR>
 nnoremap <silent><leader>rg :Rg!<CR>
 
@@ -324,13 +314,63 @@ inoremap <Right> <Nop>
 onoremap b :silent normal ggVG<CR>
 xnoremap b :<c-u>silent normal ggVG<CR>
 
+lua <<EOF
+require'nvim-treesitter.configs'.setup {
+  textobjects = {
+    select = {
+      enable = true,
+      keymaps = {
+        -- You can use the capture groups defined in textobjects.scm
+        ["af"] = "@function.outer",
+        ["if"] = "@function.inner",
+        ["ac"] = "@class.outer",
+        ["ic"] = "@class.inner",
+      },
+    },
+       move = {
+            enable = true,
+            set_jumps = true, -- whether to set jumps in the jumplist
+            goto_next_start = {
+              ["]m"] = "@function.outer",
+              ["]]"] = "@class.outer",
+            },
+            goto_next_end = {
+              ["]M"] = "@function.outer",
+              ["]["] = "@class.outer",
+            },
+            goto_previous_start = {
+              ["[m"] = "@function.outer",
+              ["[["] = "@class.outer",
+            },
+            goto_previous_end = {
+              ["[M"] = "@function.outer",
+              ["[]"] = "@class.outer",
+            },
+          },
+  },
+}
+EOF
+
+"======================================="
+"             Functions                 "
+"======================================="
+
+function! GitBranch()
+  return system("git rev-parse --abbrev-ref HEAD 2>/dev/null | tr -d '\n'")
+endfunction
+
+function! StatuslineGit()
+  let l:branchname = GitBranch()
+  return strlen(l:branchname) > 0?'  '.l:branchname.' ':''
+endfunction
+
 "======================================="
 "            Status Line                "
 "======================================="
 
 set statusline=
 set statusline+=%#PmenuSel#
-set statusline+=%{FugitiveStatusline()}
+set statusline+=%{StatuslineGit()}
 set statusline+=%#LineNr#
 set statusline+=\ %f
 set statusline+=%m\
@@ -342,3 +382,19 @@ set statusline+=\[%{&fileformat}\]
 set statusline+=\ %p%%
 set statusline+=\ %l:%c
 set statusline+=\ 
+
+"======================================="
+"          Setup toggleterm             "
+"======================================="
+
+lua <<EOF
+require("toggleterm").setup{ size = 80, direction = 'vertical', open_mapping = [[<leader>t]], insert_mappings = false }
+local Terminal  = require('toggleterm.terminal').Terminal
+local lazygit = Terminal:new({ cmd = "lazygit", hidden = true, direction = "float" })
+
+function _lazygit_toggle()
+  lazygit:toggle()
+end
+
+vim.api.nvim_set_keymap("n", "<leader>g", "<cmd>lua _lazygit_toggle()<CR>", {noremap = true, silent = true})
+EOF
