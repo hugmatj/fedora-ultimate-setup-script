@@ -66,10 +66,12 @@ packages_to_install=(
     ntfs-3g
     ImageMagick
     gnome-shell-extension-auto-move-windows
+    thunderbird
     inotify-tools)
 
 flathub_packages_to_install=(
     org.kde.krita
+    org.signal.Signal
     fr.handbrake.ghb
     org.mozilla.firefox
     org.gnome.Shotwell
@@ -202,7 +204,9 @@ Congratulations, everything is installed!
 
 sudo dnf install ./abattis-cantarell-fonts-0.111-2.fc30.noarch.rpm to upgrade 0.0.25
 pip3 install --user youtube-dl trash-cli tldr
-grab bat-v0.18.1-x86_64-unknown-linux-gnu.tar.gz and put it in your PATH
+
+You can set software to open in a certain workspace with:
+gsettings set org.gnome.shell.extensions.auto-move-windows application-list "['thunderbird.desktop:2','org.signal.Signal.desktop:2']"
 
 Now use the setup script...
 =============================================================================
