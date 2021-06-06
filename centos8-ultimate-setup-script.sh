@@ -180,7 +180,7 @@ cat <<EOL
 Gnome:    settings  > details > choose default applications
           network   > wired   > connect automatically
 
-          gnome software > install 'Hide Top Bar' 'Auto Move Windows'
+          gnome software > install 'Hide Top Bar'
 
 flatpak run org.mozilla.firefox https://addons.mozilla.org/en-GB/firefox/addon/privacy-badger17/ \
 https://addons.mozilla.org/en-GB/firefox/addon/ublock-origin/ \
