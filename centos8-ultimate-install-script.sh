@@ -65,6 +65,7 @@ packages_to_install=(
     chromium
     ntfs-3g
     ImageMagick
+    gnome-shell-extension-auto-move-windows
     inotify-tools)
 
 flathub_packages_to_install=(
