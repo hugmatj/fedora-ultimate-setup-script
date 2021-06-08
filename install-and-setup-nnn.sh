@@ -1,8 +1,14 @@
 #!/usr/bin/env sh
 
-curl -LOf https://github.com/jarun/nnn/releases/download/v4.0/nnn-4.0-1.el8.0.centos.x86_64.rpm
-chmod +x ./nnn-4.0-1.el8.0.centos.x86_64.rpm 
-sudo dnf install ./nnn-4.0-1.el8.0.centos.x86_64.rpm
+#==============================================================================
+# Set directory and URL locations as global variables
+#==============================================================================
+NNN_LOCATION=https://download.opensuse.org/repositories/home:/stig124:/nnn/CentOS_8/x86_64/
+NNN_FILENAME=nnn-4.1.1-1.3.x86_64.rpm
+
+curl -LOf $NNN_LOCATION$NNN_FILENAME
+chmod +x ./$NNN_FILENAME
+sudo dnf install ./$NNN_FILENAME
 curl -Ls https://raw.githubusercontent.com/jarun/nnn/master/plugins/getplugs | sh
 
 # Download the following script to anywhere in your PATH
@@ -23,11 +29,14 @@ EOL
 
 chmod +x "$HOME/.config/nnn/plugins/addtoplaylist"
 
-cat >>"$HOME/.bashrc" <<'EOL'
-export NNN_PLUG="p:addtoplaylist;f:fzcd"
-export NNN_BMS='d:~/Documents;D:~/Downloads;p:~/Pictures;v:~/Videos;m:~/Music;h:~/'
-export NNN_TRASH=1
+#==============================================================================
+# Add settings to .bashrc 
+#==============================================================================
+function add_to_bashrc() {
+    grep -qxF "$1" "$HOME/.bashrc" || echo "$1" >>"$HOME/.bashrc"
+}
 
-# -e open text in $VISUAL/$EDITOR/vi, -x selection to system clipboard
-alias nnn="nnn -xe"
-EOL
+add_to_bashrc 'export NNN_PLUG="p:addtoplaylist;f:fzcd"'
+add_to_bashrc "export NNN_BMS='d:~/Documents;D:~/Downloads;p:~/Pictures;v:~/Videos;m:~/Music;h:~/'"
+add_to_bashrc "export NNN_TRASH=1"
+add_to_bashrc 'alias nnn="nnn -xe"'
