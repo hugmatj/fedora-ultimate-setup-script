@@ -93,6 +93,7 @@ if [[ $webdev =~ ^[Yy]$ ]]; then
         python36-devel
         gh
         code
+        tmux
         php
         optipng
         gcc-c++
@@ -142,6 +143,9 @@ case " ${packages_to_install[*]} " in
     ;;&
 *' gh '*)
     dnf -y config-manager --add-repo https://cli.github.com/packages/rpm/gh-cli.repo
+    ;;&
+*' tmux '*)
+    dnf -y install http://galaxy4.net/repo/galaxy4-release-8-current.noarch.rpm
     ;;&
 *' brave-browser '*)
     dnf config-manager --add-repo https://brave-browser-rpm-release.s3.brave.com/x86_64/
