@@ -25,8 +25,5 @@ stty -ixon # disable terminal flow control to free ctrl-s for shortcut
 f() { find . -iname "*$1*" -exec ls -1rt "{}" +; } 2>/dev/null
 # copy to clipboard
 clip() { xclip -sel clip -rmlastnl; }
-# set vim keys in terminal
-set -o vi
-bind -m vi-insert '"jk": vi-movement-mode'
 # include hidden files and ignore contents of .git folder
 export FZF_DEFAULT_COMMAND='find . -path './.git' -prune -o -print'
