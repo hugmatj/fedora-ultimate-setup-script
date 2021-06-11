@@ -1,3 +1,6 @@
+if exists('g:vscode')
+else
+
 "======================================="
 "            Load plugins               "
 "======================================="
@@ -174,9 +177,9 @@ let g:markdown_fenced_languages = ['bash=sh', 'javascript', 'js=javascript', 'js
 " enable markdown folding, toggle headings with za, zR & zM toggle all
 let g:markdown_folding = 1
 
-" all folds start open in markdown buffers
+" all folds start open, and bold/italic syntax hidden in markdown buffers
 augroup markdown
-  au FileType markdown setlocal foldlevel=99
+  au FileType markdown setlocal foldlevel=99 conceallevel=2
 augroup END
 
 "=================="
@@ -202,11 +205,12 @@ augroup END
 "                                           "
 "          jk = escape                      "
 "      ctrl-s = save                        "
-"      ctrl-p = open fzf file explorer      "
 "         ESC = search highlighting off     "
 "                                           "
-"  <leader>f  = format buffer (formatprg)   "
+"  <leader>f  = format (formatprg or LSP)   "
 "  <leader>l  = lint using shellcheck       "
+"  <leader>cd = working dir to current file "
+"  <leader>c  = edit init.vim config        "
 "                                           "
 "  <leader>cc = toggle colorcolumn          "
 "  <leader>n  = toggle line numbers         "
@@ -214,18 +218,33 @@ augroup END
 "  <leader>w  = toggle whitespaces          "
 "  <leader>z  = toggle zen mode             "
 "                                           "
-"  <leader>t  = toggle terminal             "
-"  <leader>cd = working dir to current file "
-"  <leader>c  = edit init.vim config        "
-"                                           "
+"  fzf.vim                                  "
+"  -------                                  "
+"  ctrl-p     = open file explorer          "
 "  <leader>b  = open buffers                "
 "  <leader>h  = open file history           "
 "  <leader>rg = ripgrep search results      "
 "                                           "
-"  <leader>gs = git fugitive status         "
+"  <leader>gs = git status                  "
 "  <leader>gc = git commits history         "
 "  <leader>gl = git files (git ls-files)    "
+"                                           " 
+"  nvim-toggleterm                          "
+"  ---------------                          "
+"  <count><leader>t  = toggle terminal      "
+"  <leader>g         = toggle lazygit       "
 "                                           "
+"  text objects                             "
+"  ------------                             "
+"  b  = entire buffer                       "
+"  ]m = @function.outer                     "
+"  ]] = @class.outer                        "
+"  ]M = @function.outer                     "
+"  ][ = @class.outer                        "
+"  [m = @function.outer                     "
+"  [[ = @class.outer                        "
+"  [M = @function.outer                     "
+"  [] = @class.outer                        "
 "==========================================="
 
 " set leader key
@@ -259,6 +278,9 @@ nnoremap <silent><leader>s :set invspell<cr>
 set lcs+=space:.
 nnoremap <silent><leader>w :set list!<cr>
 
+" toggle terminal
+" nnoremap <silent><leader>t :ToggleTerm<CR>
+
 " map jk to escape
 inoremap jk <Esc>
 tnoremap jk <C-\><C-n>
@@ -275,6 +297,7 @@ nnoremap <silent><esc> :noh<cr>
 "       fzf        "
 "=================="
 
+let g:fzf_preview_window = ['right:60%', 'ctrl-/']
 nnoremap <silent><c-p> :Files!<CR>
 nnoremap <silent><leader>b :Buffers!<CR>
 nnoremap <silent><leader>h :History!<CR>
@@ -310,6 +333,8 @@ inoremap <Right> <Nop>
 " entire buffer
 onoremap b :silent normal ggVG<CR>
 xnoremap b :<c-u>silent normal ggVG<CR>
+" line without new line character
+onoremap l :silent normal 0vg_<CR>
 
 lua <<EOF
 require'nvim-treesitter.configs'.setup {
@@ -395,3 +420,4 @@ end
 
 vim.api.nvim_set_keymap("n", "<leader>g", "<cmd>lua _lazygit_toggle()<CR>", {noremap = true, silent = true})
 EOF
+endif
