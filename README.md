@@ -4,7 +4,7 @@
 
 I have written a blog article [CentOS 8 Setup for Developers](https://www.elsewebdevelopment.com/centos-8-setup-for-developers/) that explains how the script works to help with customization.
 
-Enjoy:
+Enjoy!
 
 ### Browsers
 
