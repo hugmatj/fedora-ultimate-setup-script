@@ -20,8 +20,6 @@ call plug#begin('~/.config/nvim/plugged')
   Plug 'junegunn/fzf.vim'
   " zen mode
   Plug 'folke/zen-mode.nvim'
-  " toggle the terminal
-  Plug 'akinsho/nvim-toggleterm.lua'
 call plug#end()
 
 "======================================="
@@ -121,9 +119,9 @@ set linebreak
 set nospell spelllang=en_us
 
 " automatically enter insert mode on new neovim terminals
-" augroup terminal
-"   au TermOpen * startinsert
-" augroup END
+augroup terminal
+  au TermOpen * startinsert
+augroup END
 
 " improve default splitting, ctrl + w = normalize split sizes
 set splitright
@@ -174,7 +172,7 @@ set title
 " set markdown language fencing
 let g:markdown_fenced_languages = ['bash=sh', 'javascript', 'js=javascript', 'json=javascript', 'typescript', 'ts=typescript', 'php', 'html', 'css', 'rust', 'sql']
 
-" enable markdown folding, toggle headings with za, zR & zM toggle all
+" enable markdown folding
 let g:markdown_folding = 1
 
 " all folds start open, and bold/italic syntax hidden in markdown buffers
@@ -229,11 +227,6 @@ augroup END
 "  <leader>gc = git commits history         "
 "  <leader>gl = git files (git ls-files)    "
 "                                           " 
-"  nvim-toggleterm                          "
-"  ---------------                          "
-"  <count><leader>t  = toggle terminal      "
-"  <leader>g         = toggle lazygit       "
-"                                           "
 "  text objects                             "
 "  ------------                             "
 "  b  = entire buffer                       "
@@ -277,9 +270,6 @@ nnoremap <silent><leader>s :set invspell<cr>
 " toggle showing white spaces
 set lcs+=space:.
 nnoremap <silent><leader>w :set list!<cr>
-
-" toggle terminal
-" nnoremap <silent><leader>t :ToggleTerm<CR>
 
 " map jk to escape
 inoremap jk <Esc>
@@ -404,20 +394,3 @@ set statusline+=\[%{&fileformat}\]
 set statusline+=\ %p%%
 set statusline+=\ %l:%c
 set statusline+=\ 
-
-"======================================="
-"          Setup toggleterm             "
-"======================================="
-
-lua <<EOF
-require("toggleterm").setup{ size = 80, direction = 'vertical', open_mapping = [[<leader>t]], insert_mappings = false }
-local Terminal  = require('toggleterm.terminal').Terminal
-local lazygit = Terminal:new({ cmd = "lazygit", hidden = true, direction = "float" })
-
-function _lazygit_toggle()
-  lazygit:toggle()
-end
-
-vim.api.nvim_set_keymap("n", "<leader>g", "<cmd>lua _lazygit_toggle()<CR>", {noremap = true, silent = true})
-EOF
-endif
