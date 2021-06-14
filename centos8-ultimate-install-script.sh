@@ -64,6 +64,7 @@ packages_to_install=(
     xclip
     chromium
     ntfs-3g
+    v4l2loopback
     ImageMagick
     gnome-shell-extension-auto-move-windows
     thunderbird
