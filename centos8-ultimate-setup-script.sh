@@ -162,12 +162,21 @@ if [[ -z $(git config --get user.email) ]]; then
 fi
 
 #==============================================================================================
-# turn on subpixel rendering for fonts without fontconfig support, turn off for 4k
+# turn on subpixel rendering for for screens <=1920 pixels vertical resolution
 #==============================================================================================
-if ! grep -xq "Xft.lcdfilter: lcddefault" "$HOME/.Xresources"; then
-    echo "Xft.lcdfilter: lcddefault" >>"$HOME/.Xresources"
+RESOLUTION=$(xrandr | grep '*' | awk -Fx '{ gsub(/ /,"");print $1 }')
+
+if [[ $RESOLUTION -gt 1920 ]]; then
+    echo "Vertical resolution $RESOLUTION is greater than 1920, skipping sub pixel rendering"
+else
+    echo "Vertical resolution $RESOLUTION is less than or equal to 1920, activating subpixel rendering for fonts without fontconfig support and rgba antialiasing"
+
+    touch "$HOME/.Xresources"
+    if ! grep -xq "Xft.lcdfilter: lcddefault" "$HOME/.Xresources"; then
+        echo "Xft.lcdfilter: lcddefault" >>"$HOME/.Xresources"
+    fi
+    dconf write /org/gnome/settings-daemon/plugins/xsettings/antialiasing "'rgba'"
 fi
-dconf write /org/gnome/settings-daemon/plugins/xsettings/antialiasing "'rgba'"
 
 #==============================================================================================
 # misc
