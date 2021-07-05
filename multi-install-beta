@@ -145,7 +145,6 @@ Flathub: ${GREEN}${common_flathub_packages_to_install[*]}${RESET}
 
 EOL
 read -rp "Press enter to install, or ctrl+c to quit"
-exit 0
 
 #==============================================================================
 # Add common repositories
