@@ -52,7 +52,7 @@ common_flathub_packages_to_install=(
 #==============================================================================
 # For RHEL 8 and clones
 #==============================================================================
-if [[ ("$ID" == "centos" || "$ID" == "rocky") && "$VERSION_ID" == 8 ]]; then
+if [[ ("$ID" == "centos" || "$ID" == "rocky" || "$ID" == "rhel" || "$ID" == "almalinux") && "$VERSION_ID" -gt 7 ]]; then
     rhel_packages_to_remove=(
         evolution
         firefox

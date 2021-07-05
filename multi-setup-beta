@@ -13,7 +13,7 @@ source /etc/os-release
 #==============================================================================
 # For RHEL 8 and clones
 #==============================================================================
-if [[ ("$ID" == "centos" || "$ID" == "rocky") && "$VERSION_ID" == 8 ]]; then
+if [[ ("$ID" == "centos" || "$ID" == "rocky" || "$ID" == "rhel" || "$ID" == "almalinux") && "$VERSION_ID" -gt 7 ]]; then
 
     # Visual Studio Code fix: https://github.com/Microsoft/vscode/issues/48480
     hash code 2>/dev/null &&
@@ -182,7 +182,7 @@ fi
 #==============================================================================================
 # Increase inotify watchers
 #
-# default is 8192, node_modules can go over, to your check usage:  
+# default is 8192, node_modules can go over, to your check usage:
 # curl -s https://raw.githubusercontent.com/fatso83/dotfiles/master/utils/scripts/inotify-consumers | bash
 #==============================================================================================
 echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf && sudo sysctl -p
