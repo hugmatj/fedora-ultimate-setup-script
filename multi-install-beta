@@ -53,81 +53,96 @@ common_flathub_packages_to_install=(
 # For RHEL 8 and clones
 #==============================================================================
 if [[ ("$ID" == "centos" || "$ID" == "rocky" || "$ID" == "rhel" || "$ID" == "almalinux") && "$VERSION_ID" -gt 7 ]]; then
-    rhel_packages_to_remove=(
-        evolution
-        firefox
-        pidgin)
+    setup_redhat_packages() {
+        local rhel_packages_to_remove=(
+            evolution
+            firefox
+            pidgin)
 
-    rhel_packages_to_install=(
-        ntfs-3g
-        python36-devel)
+        local rhel_packages_to_install=(
+            ntfs-3g
+            python36-devel)
 
-    rhel_flathub_packages_to_install=(
-        org.mozilla.firefox
-        org.gnome.Shotwell
-        org.bunkus.mkvtoolnix-gui)
+        local rhel_flathub_packages_to_install=(
+            org.mozilla.firefox
+            org.gnome.Shotwell
+            org.bunkus.mkvtoolnix-gui)
 
-    INSTALL_DIR=/usr/local/bin
-    PANDOC_LOCATION=https://github.com/jgm/pandoc/releases/download/2.11.2/
-    PANDOC_FILENAME=pandoc-2.11.2-linux-amd64.tar.gz
-    SHELLCHECK_LOCATION=https://github.com/koalaman/shellcheck/releases/download/v0.7.2/
-    SHELLCHECK_FILENAME=shellcheck-v0.7.2.linux.x86_64.tar.xz
-    SHFMT_LOCATION=https://github.com/mvdan/sh/releases/download/v3.2.2/
-    SHFMT_FILENAME=shfmt_v3.2.2_linux_amd64
+        common_packages_to_remove+=("${rhel_packages_to_remove[@]}")
+        common_packages_to_install+=("${rhel_packages_to_install[@]}")
+        common_flathub_packages_to_install+=("${rhel_flathub_packages_to_install[@]}")
+    }
 
-    echo -e "${BOLD}Installing binaries for RHEL clones not available in repositories...${RESET}\n"
+    add_redhat_repositories() {
+        dnf module enable -y nodejs:14
+        dnf -y config-manager --enable powertools
+        dnf -y install epel-release
+        dnf -y install --nogpgcheck https://mirrors.rpmfusion.org/free/el/rpmfusion-free-release-8.noarch.rpm https://mirrors.rpmfusion.org/nonfree/el/rpmfusion-nonfree-release-8.noarch.rpm
+    }
 
-    curl -LOf $PANDOC_LOCATION$PANDOC_FILENAME
-    echo "9d265941f224d376514e18fc45d5292e9c2481b04693c96917a0d55ed817b190cf2ea2666097388bfdf30023db2628567ea04ff6b9cc3316130a8190da72c605 ./$PANDOC_FILENAME" |
-        sha512sum --check
-    tar -C $INSTALL_DIR/ -xf $PANDOC_FILENAME --no-anchored 'pandoc' --strip=2
+    install_redhat_binaries() {
+        local INSTALL_DIR=/usr/local/bin
+        local PANDOC_LOCATION=https://github.com/jgm/pandoc/releases/download/2.11.2/
+        local PANDOC_FILENAME=pandoc-2.11.2-linux-amd64.tar.gz
+        local SHELLCHECK_LOCATION=https://github.com/koalaman/shellcheck/releases/download/v0.7.2/
+        local SHELLCHECK_FILENAME=shellcheck-v0.7.2.linux.x86_64.tar.xz
+        local SHFMT_LOCATION=https://github.com/mvdan/sh/releases/download/v3.2.2/
+        local SHFMT_FILENAME=shfmt_v3.2.2_linux_amd64
 
-    curl -LOf $SHELLCHECK_LOCATION$SHELLCHECK_FILENAME
-    echo "067e2b8ee1910218de1e62068f7cc86ed7048e97b2a9d7c475ea29ae81c17a944376ce5c240d5c783ef3251d9bee7d7d010351958314eadd0fc88b5decfd8328 ./$SHELLCHECK_FILENAME" |
-        sha512sum --check
-    tar -C $INSTALL_DIR/ -xf $SHELLCHECK_FILENAME --no-anchored 'shellcheck' --strip=1
+        echo -e "${BOLD}Installing binaries for RHEL clones not available in repositories...${RESET}\n"
 
-    curl -LOf $SHFMT_LOCATION$SHFMT_FILENAME
-    echo "d4e699575899f7c44dbce54f6414fb63c0527e7d743ea724cb0091417e07a353c1d156d4184580a260ca855cdf5e01cdf46b353f04cf5093eba3ffc02223f1c6 ./$SHFMT_FILENAME" |
-        sha512sum --check
-    chmod +x $SHFMT_FILENAME
-    mv $SHFMT_FILENAME $INSTALL_DIR/shfmt
+        curl -LOf $PANDOC_LOCATION$PANDOC_FILENAME
+        echo "9d265941f224d376514e18fc45d5292e9c2481b04693c96917a0d55ed817b190cf2ea2666097388bfdf30023db2628567ea04ff6b9cc3316130a8190da72c605 ./$PANDOC_FILENAME" |
+            sha512sum --check
+        tar -C $INSTALL_DIR/ -xf $PANDOC_FILENAME --no-anchored 'pandoc' --strip=2
 
-    dnf module enable -y nodejs:14
+        curl -LOf $SHELLCHECK_LOCATION$SHELLCHECK_FILENAME
+        echo "067e2b8ee1910218de1e62068f7cc86ed7048e97b2a9d7c475ea29ae81c17a944376ce5c240d5c783ef3251d9bee7d7d010351958314eadd0fc88b5decfd8328 ./$SHELLCHECK_FILENAME" |
+            sha512sum --check
+        tar -C $INSTALL_DIR/ -xf $SHELLCHECK_FILENAME --no-anchored 'shellcheck' --strip=1
 
-    common_packages_to_remove+=("${rhel_packages_to_remove[@]}")
-    common_packages_to_install+=("${rhel_packages_to_install[@]}")
-    common_flathub_packages_to_install+=("${rhel_flathub_packages_to_install[@]}")
+        curl -LOf $SHFMT_LOCATION$SHFMT_FILENAME
+        echo "d4e699575899f7c44dbce54f6414fb63c0527e7d743ea724cb0091417e07a353c1d156d4184580a260ca855cdf5e01cdf46b353f04cf5093eba3ffc02223f1c6 ./$SHFMT_FILENAME" |
+            sha512sum --check
+        chmod +x $SHFMT_FILENAME
+        mv $SHFMT_FILENAME $INSTALL_DIR/shfmt
+    }
 
-    dnf -y config-manager --enable powertools
-    dnf -y install epel-release
-    dnf -y install --nogpgcheck https://mirrors.rpmfusion.org/free/el/rpmfusion-free-release-8.noarch.rpm https://mirrors.rpmfusion.org/nonfree/el/rpmfusion-nonfree-release-8.noarch.rpm
+    setup_redhat_packages
+    add_redhat_repositories
+    install_redhat_binaries
 
     #==============================================================================
     # For Fedora (tested on 34)
     #==============================================================================
 elif [ "$ID" == "fedora" ]; then
-    fedora_packages_to_remove=(
-        gnome-photos)
+    setup_fedora_packages() {
+        local fedora_packages_to_remove=(
+            gnome-photos)
 
-    fedora_packages_to_install=(
-        ShellCheck
-        chromium-libs-media-freeworld
-        java-1.8.0-openjdk
-        lshw
-        mkvtoolnix-gui
-        pandoc
-        shfmt
-        shotwell
-        zathura
-        zathura-bash-completion
-        zathura-pdf-mupdf)
+        local fedora_packages_to_install=(
+            ShellCheck
+            chromium-libs-media-freeworld
+            java-1.8.0-openjdk
+            lshw
+            mkvtoolnix-gui
+            pandoc
+            shfmt
+            shotwell
+            zathura
+            zathura-bash-completion
+            zathura-pdf-mupdf)
 
-    common_packages_to_remove+=("${fedora_packages_to_remove[@]}")
-    common_packages_to_install+=("${fedora_packages_to_install[@]}")
+        common_packages_to_remove+=("${fedora_packages_to_remove[@]}")
+        common_packages_to_install+=("${fedora_packages_to_install[@]}")
+    }
 
-    dnf -y install https://mirrors.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm https://mirrors.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
+    add_fedora_repositories() {
+        dnf -y install https://mirrors.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm https://mirrors.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
+    }
 
+    setup_fedora_packages
+    add_fedora_repositories
 #==============================================================================
 # For Unsupported OS / RHEL or clone version <8
 #==============================================================================
@@ -136,10 +151,11 @@ else
 fi
 
 #==============================================================================
-# Display user settings
+# For all supported OS
 #==============================================================================
-clear
-cat <<EOL
+display_user_settings() {
+    clear
+    cat <<EOL
 $ID $VERSION_ID detected
 
 ${BOLD}Packages to remove${RESET}
@@ -153,53 +169,56 @@ RPM: ${GREEN}${common_packages_to_install[*]}${RESET}
 Flathub: ${GREEN}${common_flathub_packages_to_install[*]}${RESET}
 
 EOL
-read -rp "Press enter to install, or ctrl+c to quit"
+}
 
-#==============================================================================
-# Add common repositories
-#==============================================================================
-flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
+add_common_repositories() {
+    flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
 
-# note the spaces to make sure something like 'notnode' could not trigger 'nodejs' using [*]
-case " ${common_packages_to_install[*]} " in
-*' code '*)
-    rpm --import https://packages.microsoft.com/keys/microsoft.asc
-    sh -c 'echo -e "[code]\nname=Visual Studio Code\nbaseurl=https://packages.microsoft.com/yumrepos/vscode\nenabled=1\ngpgcheck=1\ngpgkey=https://packages.microsoft.com/keys/microsoft.asc" > /etc/yum.repos.d/vscode.repo'
-    ;;&
-*' gh '*)
-    dnf -y config-manager --add-repo https://cli.github.com/packages/rpm/gh-cli.repo
-    ;;
-esac
+    # note the spaces to make sure something like 'notnode' could not trigger 'nodejs' using [*]
+    case " ${common_packages_to_install[*]} " in
+    *' code '*)
+        rpm --import https://packages.microsoft.com/keys/microsoft.asc
+        sh -c 'echo -e "[code]\nname=Visual Studio Code\nbaseurl=https://packages.microsoft.com/yumrepos/vscode\nenabled=1\ngpgcheck=1\ngpgkey=https://packages.microsoft.com/keys/microsoft.asc" > /etc/yum.repos.d/vscode.repo'
+        ;;&
+    *' gh '*)
+        dnf -y config-manager --add-repo https://cli.github.com/packages/rpm/gh-cli.repo
+        ;;
+    esac
+}
 
-#==============================================================================
-# Install
-#==============================================================================
-echo "${BOLD}Removing unwanted programs...${RESET}"
-dnf -y remove "${common_packages_to_remove[@]}"
+install() {
+    echo "${BOLD}Removing unwanted programs...${RESET}"
+    dnf -y remove "${common_packages_to_remove[@]}"
 
-echo "${BOLD}Updating...${RESET}"
-dnf -y --refresh upgrade
+    echo "${BOLD}Updating...${RESET}"
+    dnf -y --refresh upgrade
 
-echo "${BOLD}Installing packages...${RESET}"
-dnf -y install "${common_packages_to_install[@]}"
+    echo "${BOLD}Installing packages...${RESET}"
+    dnf -y install "${common_packages_to_install[@]}"
 
-echo "${BOLD}Installing flathub packages...${RESET}"
-flatpak install -y flathub "${common_flathub_packages_to_install[@]}"
-flatpak uninstall -y --unused
+    echo "${BOLD}Installing flathub packages...${RESET}"
+    flatpak install -y flathub "${common_flathub_packages_to_install[@]}"
+    flatpak uninstall -y --unused
 
-echo "${BOLD}Installing Deno...${RESET}"
-/usr/bin/su - "$SUDO_USER" -c "curl -fsSL https://deno.land/x/install/install.sh | sh"
+    echo "${BOLD}Installing Deno...${RESET}"
+    /usr/bin/su - "$SUDO_USER" -c "curl -fsSL https://deno.land/x/install/install.sh | sh"
+}
 
-cat <<EOL
+display_end_message() {
+    cat <<EOL
 =============================================================================
 Congratulations, everything is installed!
-
 For RHEL clones, sudo dnf install ./abattis-cantarell-fonts-0.111-2.fc30.noarch.rpm to upgrade 0.0.25
 pip3 install --user youtube-dl trash-cli tldr
-
 You can set software to open in a certain workspace with:
 gsettings set org.gnome.shell.extensions.auto-move-windows application-list "['thunderbird.desktop:2','org.signal.Signal.desktop:2']"
-
 Now use the setup script...
 =============================================================================
 EOL
+}
+
+display_user_settings
+read -rp "Press enter to install, or ctrl+c to quit"
+add_common_repositories
+install
+display_end_message
