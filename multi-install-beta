@@ -212,7 +212,8 @@ install() {
     /usr/bin/su - "$SUDO_USER" -c "curl -Ls https://raw.githubusercontent.com/jarun/nnn/master/plugins/getplugs | sh"
 
     echo "${BOLD}Installing umpv script for additional MPV functionality...${RESET}"
-    curl https://raw.githubusercontent.com/mpv-player/mpv/master/TOOLS/umpv -o "$INSTALL_DIR"
+    curl https://raw.githubusercontent.com/mpv-player/mpv/master/TOOLS/umpv -o "$INSTALL_DIR/umpv"
+    chmod +x "$INSTALL_DIR/umpv"
 }
 
 display_end_message() {
