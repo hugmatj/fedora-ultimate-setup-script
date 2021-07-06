@@ -1,7 +1,6 @@
 #!/bin/bash
 set -euo pipefail
 source /etc/os-release
-IFS=. read -ra ver <<< "$VERSION_ID" # split to process float
 
 GREEN=$(tput setaf 2)
 BOLD=$(tput bold)
@@ -59,12 +58,11 @@ common_flathub_packages_to_install=(
 #==============================================================================
 # For RHEL 8 and clones
 #==============================================================================
-if [[ ("$ID" == "centos" || "$ID" == "rocky" || "$ID" == "rhel" || "$ID" == "almalinux") && ver[0] -gt 7 ]]; then
+if [[ ("$ID" == "centos" || "$ID" == "rocky" || "$ID" == "rhel" || "$ID" == "almalinux") && "${VERSION_ID%.*}" -gt 7 ]]; then
     setup_redhat_packages() {
         local rhel_packages_to_remove=(
             evolution
-            firefox
-            pidgin)
+            firefox)
 
         local rhel_packages_to_install=(
             ntfs-3g
