@@ -108,16 +108,16 @@ if [[ ("$ID" == "centos" || "$ID" == "rocky" || "$ID" == "rhel" || "$ID" == "alm
         echo -e "${BOLD}Installing binaries for RHEL clones not available in repositories...${RESET}\n"
 
         download_verify "$PANDOC_LOCATION" "$PANDOC_FILENAME" "$PANDOC_SHA"
-        tar -C $INSTALL_DIR/ -xf $PANDOC_FILENAME --no-anchored 'pandoc' --strip=2
+        tar --no-same-owner -C $INSTALL_DIR/ -xf $PANDOC_FILENAME --no-anchored 'pandoc' --strip=2
 
         download_verify "$SHELLCHECK_LOCATION" "$SHELLCHECK_FILENAME" "$SHELLCHECK_SHA"
-        tar -C $INSTALL_DIR/ -xf $SHELLCHECK_FILENAME --no-anchored 'shellcheck' --strip=1
+        tar --no-same-owner -C $INSTALL_DIR/ -xf $SHELLCHECK_FILENAME --no-anchored 'shellcheck' --strip=1
 
         download_verify "$BAT_LOCATION" "$BAT_FILENAME" "$BAT_SHA"
-        tar -C $INSTALL_DIR/ -xf $BAT_FILENAME --no-anchored 'bat' --strip=1
+        tar --no-same-owner -C $INSTALL_DIR/ -xf $BAT_FILENAME --no-anchored 'bat' --strip=1
 
-        download_verify "$RIP_LOCATION" "$RIPGREP_FILENAME" "$RIPGREP_SHA"
-        tar -C $INSTALL_DIR/ -xf $RIPGREP_FILENAME --no-anchored 'rg' --strip=1
+        download_verify "$RIPGREP_LOCATION" "$RIPGREP_FILENAME" "$RIPGREP_SHA"
+        tar --no-same-owner -C $INSTALL_DIR/ -xf $RIPGREP_FILENAME --no-anchored 'rg' --strip=1
 
         download_verify "$SHFMT_LOCATION" "$SHFMT_FILENAME" "$SHFMT_SHA"
         chmod +x $SHFMT_FILENAME
