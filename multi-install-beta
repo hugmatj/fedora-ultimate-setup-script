@@ -48,7 +48,6 @@ common_packages_to_install=(
     stow
     thunderbird
     transmission-gtk
-    v4l2loopback
     xclip)
 
 common_flathub_packages_to_install=(
