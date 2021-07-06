@@ -13,6 +13,8 @@ RESET=$(tput sgr0)
 
 source /etc/os-release
 
+INSTALL_DIR=/usr/local/bin
+
 common_packages_to_remove=(
     cheese
     gedit
@@ -83,7 +85,6 @@ if [[ ("$ID" == "centos" || "$ID" == "rocky" || "$ID" == "rhel" || "$ID" == "alm
     }
 
     install_redhat_binaries() {
-        local INSTALL_DIR=/usr/local/bin
         local PANDOC_LOCATION=https://github.com/jgm/pandoc/releases/download/2.11.2/
         local PANDOC_FILENAME=pandoc-2.11.2-linux-amd64.tar.gz
         local SHELLCHECK_LOCATION=https://github.com/koalaman/shellcheck/releases/download/v0.7.2/
@@ -209,6 +210,9 @@ install() {
 
     echo "${BOLD}Installing nnn terminal file manager plugins...${RESET}"
     /usr/bin/su - "$SUDO_USER" -c "curl -Ls https://raw.githubusercontent.com/jarun/nnn/master/plugins/getplugs | sh"
+
+    echo "${BOLD}Installing umpv script for additional MPV functionality...${RESET}"
+    curl https://raw.githubusercontent.com/mpv-player/mpv/master/TOOLS/umpv -o "$INSTALL_DIR"
 }
 
 display_end_message() {
