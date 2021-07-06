@@ -34,6 +34,7 @@ common_packages_to_install=(
     libva-intel-driver
     mediainfo
     mpv
+    nnn
     nodejs
     optipng
     podman
@@ -46,7 +47,6 @@ common_packages_to_install=(
 
 common_flathub_packages_to_install=(
     fr.handbrake.ghb
-    org.kde.krita
     org.signal.Signal)
 
 #==============================================================================
@@ -65,6 +65,7 @@ if [[ ("$ID" == "centos" || "$ID" == "rocky" || "$ID" == "rhel" || "$ID" == "alm
 
         local rhel_flathub_packages_to_install=(
             org.mozilla.firefox
+            org.kde.krita
             org.gnome.Shotwell
             org.bunkus.mkvtoolnix-gui)
 
@@ -78,6 +79,7 @@ if [[ ("$ID" == "centos" || "$ID" == "rocky" || "$ID" == "rhel" || "$ID" == "alm
         dnf -y config-manager --enable powertools
         dnf -y install epel-release
         dnf -y install --nogpgcheck https://mirrors.rpmfusion.org/free/el/rpmfusion-free-release-8.noarch.rpm https://mirrors.rpmfusion.org/nonfree/el/rpmfusion-nonfree-release-8.noarch.rpm
+        dnf -y config-manager --add-repo https://download.opensuse.org/repositories/home:stig124:nnn/CentOS_8/home:stig124:nnn.repo
     }
 
     install_redhat_binaries() {
@@ -124,6 +126,7 @@ elif [ "$ID" == "fedora" ]; then
             ShellCheck
             chromium-libs-media-freeworld
             java-1.8.0-openjdk
+            krita
             lshw
             mkvtoolnix-gui
             pandoc
@@ -139,6 +142,7 @@ elif [ "$ID" == "fedora" ]; then
 
     add_fedora_repositories() {
         dnf -y install https://mirrors.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm https://mirrors.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
+        dnf -y config-manager --add-repo https://download.opensuse.org/repositories/home:stig124:nnn/Fedora_34/home:stig124:nnn.repo
     }
 
     setup_fedora_packages
@@ -202,22 +206,25 @@ install() {
 
     echo "${BOLD}Installing Deno...${RESET}"
     /usr/bin/su - "$SUDO_USER" -c "curl -fsSL https://deno.land/x/install/install.sh | sh"
+
+    echo "${BOLD}Installing nnn terminal file manager plugins...${RESET}"
+    /usr/bin/su - "$SUDO_USER" -c "curl -Ls https://raw.githubusercontent.com/jarun/nnn/master/plugins/getplugs | sh"
 }
 
 display_end_message() {
     cat <<EOL
-=============================================================================
-Congratulations, everything is installed!
 
-For RHEL clones, sudo dnf install ./abattis-cantarell-fonts-0.111-2.fc30.noarch.rpm to upgrade 0.0.25
+${BOLD}Congratulations, everything is installed!${RESET}
 
-pip3 install --user youtube-dl trash-cli tldr
+For RHEL clones: ${GREEN}sudo dnf install ./abattis-cantarell-fonts-0.111-2.fc30.noarch.rpm${RESET} to upgrade 0.0.25
 
+To install Python applications: ${GREEN}pip3 install --user youtube-dl trash-cli tldr${RESET}
+ 
 You can set software to open in a certain workspace with:
-gsettings set org.gnome.shell.extensions.auto-move-windows application-list "['thunderbird.desktop:2','org.signal.Signal.desktop:2']"
+${GREEN}gsettings set org.gnome.shell.extensions.auto-move-windows application-list "['thunderbird.desktop:2','org.signal.Signal.desktop:2']"${RESET}
 
 Now use the setup script...
-=============================================================================
+
 EOL
 }
 
