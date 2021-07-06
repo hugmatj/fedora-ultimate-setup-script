@@ -85,28 +85,31 @@ if [[ ("$ID" == "centos" || "$ID" == "rocky" || "$ID" == "rhel" || "$ID" == "alm
     }
 
     install_redhat_binaries() {
+        # Call with arguments (location,filename,sha)
+        download_verify() {
+            curl -LOf "${1}${2}"
+            echo "${3} ./${2}" | sha512sum --check
+        }
+
         local PANDOC_LOCATION=https://github.com/jgm/pandoc/releases/download/2.11.2/
         local PANDOC_FILENAME=pandoc-2.11.2-linux-amd64.tar.gz
+        local PANDOC_SHA=9d265941f224d376514e18fc45d5292e9c2481b04693c96917a0d55ed817b190cf2ea2666097388bfdf30023db2628567ea04ff6b9cc3316130a8190da72c605
         local SHELLCHECK_LOCATION=https://github.com/koalaman/shellcheck/releases/download/v0.7.2/
         local SHELLCHECK_FILENAME=shellcheck-v0.7.2.linux.x86_64.tar.xz
+        local SHELLCHECK_SHA=067e2b8ee1910218de1e62068f7cc86ed7048e97b2a9d7c475ea29ae81c17a944376ce5c240d5c783ef3251d9bee7d7d010351958314eadd0fc88b5decfd8328
         local SHFMT_LOCATION=https://github.com/mvdan/sh/releases/download/v3.2.2/
         local SHFMT_FILENAME=shfmt_v3.2.2_linux_amd64
+        local SHFMT_SHA=d4e699575899f7c44dbce54f6414fb63c0527e7d743ea724cb0091417e07a353c1d156d4184580a260ca855cdf5e01cdf46b353f04cf5093eba3ffc02223f1c6
 
         echo -e "${BOLD}Installing binaries for RHEL clones not available in repositories...${RESET}\n"
 
-        curl -LOf $PANDOC_LOCATION$PANDOC_FILENAME
-        echo "9d265941f224d376514e18fc45d5292e9c2481b04693c96917a0d55ed817b190cf2ea2666097388bfdf30023db2628567ea04ff6b9cc3316130a8190da72c605 ./$PANDOC_FILENAME" |
-            sha512sum --check
+        download_verify "$PANDOC_LOCATION" "$PANDOC_FILENAME" "$PANDOC_SHA"
         tar -C $INSTALL_DIR/ -xf $PANDOC_FILENAME --no-anchored 'pandoc' --strip=2
 
-        curl -LOf $SHELLCHECK_LOCATION$SHELLCHECK_FILENAME
-        echo "067e2b8ee1910218de1e62068f7cc86ed7048e97b2a9d7c475ea29ae81c17a944376ce5c240d5c783ef3251d9bee7d7d010351958314eadd0fc88b5decfd8328 ./$SHELLCHECK_FILENAME" |
-            sha512sum --check
+        download_verify "$SHELLCHECK_LOCATION" "$SHELLCHECK_FILENAME" "$SHELLCHECK_SHA"
         tar -C $INSTALL_DIR/ -xf $SHELLCHECK_FILENAME --no-anchored 'shellcheck' --strip=1
 
-        curl -LOf $SHFMT_LOCATION$SHFMT_FILENAME
-        echo "d4e699575899f7c44dbce54f6414fb63c0527e7d743ea724cb0091417e07a353c1d156d4184580a260ca855cdf5e01cdf46b353f04cf5093eba3ffc02223f1c6 ./$SHFMT_FILENAME" |
-            sha512sum --check
+        download_verify "$SHFMT_LOCATION" "$SHFMT_FILENAME" "$SHFMT_SHA"
         chmod +x $SHFMT_FILENAME
         mv $SHFMT_FILENAME $INSTALL_DIR/shfmt
     }
