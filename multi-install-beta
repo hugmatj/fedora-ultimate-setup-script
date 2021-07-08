@@ -34,12 +34,7 @@ common_packages_to_install=(
     fuse-exfat
     gcc-c++
     gh
-    gnome-shell-extension-auto-move-windows
-    gnome-tweaks
-    keepassxc
-    libva-intel-driver
-    mediainfo
-    mpv
+        mpv
     nnn
     nodejs
     optipng
