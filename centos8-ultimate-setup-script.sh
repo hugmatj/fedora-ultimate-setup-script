@@ -11,19 +11,10 @@ fi
 # >>>>>> start of user settings <<<<<<
 
 #==============================================================================
-# gnome desktop settings
-#==============================================================================
-idle_delay=2400
-title_bar_buttons_on="true"
-clock_show_date="true"
-capslock_delete="true"
-night_light="true"
-
-#==============================================================================
 # git settings
 #==============================================================================
-git_email='example@example.com'
-git_user_name='example_name'
+git_email='hugmatj@gmail.com'
+git_user_name='hugmatj'
 
 #==============================================================================
 # php.ini settings
@@ -111,44 +102,6 @@ EOL
     }
 
 #==============================================================================
-# setup gnome desktop gsettings
-#==============================================================================
-gsettings set org.gnome.desktop.session \
-    idle-delay $idle_delay
-
-if [[ "${title_bar_buttons_on}" == "true" ]]; then
-    gsettings set org.gnome.desktop.wm.preferences \
-        button-layout 'appmenu:minimize,maximize,close'
-fi
-
-if [[ "${clock_show_date}" == "true" ]]; then
-    gsettings set org.gnome.desktop.interface \
-        clock-show-date true
-fi
-
-if [[ "${capslock_delete}" == "true" ]]; then
-    gsettings set org.gnome.desktop.input-sources \
-        xkb-options "['caps:backspace', 'terminate:ctrl_alt_bksp']"
-fi
-
-if [[ "${night_light}" == "true" ]]; then
-    gsettings set org.gnome.settings-daemon.plugins.color \
-        night-light-enabled true
-fi
-
-#==============================================================================
-# setup pulse audio with the best sound quality possible
-#
-# *pacmd list-sinks | grep sample and see bit-depth available for interface
-# *pulseaudio --dump-re-sample-methods and see re-sampling available
-#
-# *MAKE SURE your interface can handle s32le 32bit rather than the default 16bit
-#==============================================================================
-sudo sed -i "s/; default-sample-format = s16le/default-sample-format = s32le/g" /etc/pulse/daemon.conf
-sudo sed -i "s/; resample-method = speex-float-1/resample-method = speex-float-10/g" /etc/pulse/daemon.conf
-sudo sed -i "s/; avoid-resampling = false/avoid-resampling = true/g" /etc/pulse/daemon.conf
-
-#==============================================================================
 # setup git user name and email if none exist
 #==============================================================================
 if [[ -z $(git config --get user.name) ]]; then
@@ -161,22 +114,6 @@ if [[ -z $(git config --get user.email) ]]; then
     echo "No global git email was set, I have set it to ${BOLD}$git_email${RESET}"
 fi
 
-#==============================================================================================
-# turn on subpixel rendering for for screens <=1920 pixels vertical resolution
-#==============================================================================================
-RESOLUTION=$(xrandr | grep '*' | awk -Fx '{ gsub(/ /,"");print $1 }')
-
-if [[ $RESOLUTION -gt 1920 ]]; then
-    echo "Vertical resolution $RESOLUTION is greater than 1920, skipping sub pixel rendering"
-else
-    echo "Vertical resolution $RESOLUTION is less than or equal to 1920, activating subpixel rendering for fonts without fontconfig support and rgba antialiasing"
-
-    touch "$HOME/.Xresources"
-    if ! grep -xq "Xft.lcdfilter: lcddefault" "$HOME/.Xresources"; then
-        echo "Xft.lcdfilter: lcddefault" >>"$HOME/.Xresources"
-    fi
-    dconf write /org/gnome/settings-daemon/plugins/xsettings/antialiasing "'rgba'"
-fi
 
 #==============================================================================================
 # misc
@@ -223,11 +160,6 @@ Force NPM to use your home directory for global packages
 mkdir "$HOME/.npm-global"
 npm config set prefix "$HOME/.npm-global"
 
-A POSIX script that helps you find Youtube videos (without API) and opens/downloads them using mpv/youtube-dl
--------------------------------------------------------------------------------------------------------------
-git clone https://github.com/pystardust/ytfzf
-cd ytfzf
-sudo make install
 
 Please reboot (or things may not work as expected)
 =================================================================
